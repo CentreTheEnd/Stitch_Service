@@ -24,7 +24,7 @@ const errorLogs = [];
 
 const directoryPath = path.join(__dirname, '../../Database/Mongo/Methods');
 
-async function loadRouters(directoryPhath, app) {
+async function loadRouters(directoryPath, app) {
     try {
  const loadFromDirectory = async (directory, version) => {
 
@@ -89,7 +89,7 @@ try {
  } }
  };
 
-        await loadFromDirectory(directoryPhath, "v1");
+        await loadFromDirectory(directoryPath, "v1");
 
     } catch (error) {
         console.error("Error loading tracks:", error.message);
@@ -99,7 +99,7 @@ try {
 
 export async function setupDatabase(app) {
 
-await loadRouters(directoryPhath, app);
+await loadRouters(directoryPath, app);
 
 Object.keys(categorizedApis.data).forEach((key) => {
     app.get(`api/v3/accounts/sections/${key}/api`, (req, res) => {
