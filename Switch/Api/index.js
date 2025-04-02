@@ -25,7 +25,7 @@ const errorLogs = [];
 const directoryPath = path.join(__dirname, '../../Routers');
 
 
-async function loadRouters(directoryPhath, app) {
+async function loadRouters(directoryPath, app) {
     try {
  const loadFromDirectory = async (directory, version) => {
 
@@ -90,7 +90,7 @@ async function loadRouters(directoryPhath, app) {
  } } }
  };
 
-        await loadFromDirectory(directoryPhath, "v2");
+        await loadFromDirectory(directoryPath, "v2");
 
     } catch (error) {
         console.error("Error loading tracks:", error.message);
@@ -100,7 +100,7 @@ async function loadRouters(directoryPhath, app) {
 
 export async function setupRoutes(app) {
 
-await loadRouters(directoryPhath, app);
+await loadRouters(directoryPath, app);
 
 Object.keys(categorizedApis.data).forEach((key) => {
     app.get(`api/v3/apis/sections/${key}/api`, (req, res) => {
