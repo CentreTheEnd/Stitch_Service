@@ -31,7 +31,7 @@ export async function setupApp() {
     app.use(cors());
     app.use(express.json());
     app.use(bodyParser.json());
-    app.use(express.static("public"));
+   // app.use(express.static("public"));
     app.use(express.urlencoded({ extended: true }));
 
     console.log(`Setting up API Routes...`);
