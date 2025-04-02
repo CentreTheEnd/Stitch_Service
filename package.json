@@ -1,15 +1,15 @@
 {
-  "name": "stitch-accounts",
+  "name": "stitch-api",
   "version": "1.0.0",
-  "description": "script create account to website Api",
-  "main": "index.js",
+  "description": "script Api",
+  "main": "start.js",
   "type": "module",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node start.js",
+    "dev": "nodemon start.js"
   },
   "keywords": [
     "theend",
