@@ -1,7 +1,7 @@
-import path from "path";
+import path from 'path';
 import axios from 'axios';
 import { fileURLToPath } from 'url';
-import fs from "fs/promises";
+import fs from 'fs/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,13 +22,13 @@ const categorizedApis = {
 
 const errorLogs = [];
 
-const directoryPath = path.join(__dirname, '../../Routers');
-
+//const directoryPath = path.join(__dirname, '../../Routers');
+const directoryPath =  '../../Routers';
 console.log("directoryPatho:", directoryPath);
 
 async function loadRouters(directoryPath, app) {
     try {
- const loadFromDirectory = async (directory, version) => {
+ const loadFromDirectory = async (directory, version, app) => {
 
  const basePath = path.resolve(directory);
  const folders = (await fs.readdir(basePath)).filter(async (item) => {
@@ -91,7 +91,7 @@ async function loadRouters(directoryPath, app) {
  } } }
  };
 
-        await loadFromDirectory(directoryPath, "v2");
+        await loadFromDirectory(directoryPath, "v2", app);
 
     } catch (error) {
         console.error("Error loading tracks:", error.message);
