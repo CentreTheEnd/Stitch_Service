@@ -24,6 +24,7 @@ const errorLogs = [];
 
 const directoryPath = path.join(__dirname, '../../Routers');
 
+console.log("directoryPatho:", directoryPath);
 
 async function loadRouters(directoryPath, app) {
     try {
