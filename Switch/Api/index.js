@@ -22,9 +22,9 @@ const categorizedApis = {
 
 const errorLogs = [];
 
-//const directoryPath = path.join(__dirname, '../../Routers');
-const directoryPath =  '../../Routes';
-console.log("directoryPatho:", directoryPath);
+const directoryPath = path.join(__dirname, '../../Routes');
+//const directoryPath =  '../../Routes';
+console.log("directoryPath:", directoryPath);
 
 async function loadRouters(directoryPath, app) {
     try {
