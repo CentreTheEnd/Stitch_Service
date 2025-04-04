@@ -22,130 +22,128 @@ const categorizedApis = {
 
 const errorLogs = [];
 
-const directoryPath = path.join(__dirname, '../../Database/Mongo/Methods');
-
-async function loadRouters(directoryPath, app) {
+async function loadRouters(directoryPath, version, app) {
     try {
- const loadFromDirectory = async (directory, version) => {
+        const filesAndDirs = await fs.readdir(directoryPath);
 
- const basePath = path.resolve(directory);
- const folders = (await fs.readdir(basePath)).filter(async (item) => {
-  return (await fs.stat(path.join(basePath, item))).isDirectory();
-  });
+        const folders = [];
+        for (const item of filesAndDirs) {
+            const itemPath = path.join(directoryPath, item);
+            const stats = await fs.stat(itemPath);
 
- for (const folder of folders) {
- const folderPath = path.join(basePath, folder);
- const files = await fs.readdir(folderPath);
+            if (stats.isDirectory()) {
+                folders.push(item);
+            }
+        }
 
- for (const file of files) {
+        const paths = folders.reduce((obj, folder) => {
+            obj[folder] = path.join(directoryPath, folder);
+            return obj;
+        }, {});
 
-try {
+        for (const [key, dirPath] of Object.entries(paths)) {
+            const files = await fs.readdir(dirPath);
 
- if (file.endsWith(".js")) {
- const fileName = file.replace(".js", "");
- const filePath = path.join(folderPath, file);
- const routerModule = await import(filePath);
- const router = routerModule.default;
- const metadata = routerModule;
+            for (const file of files) {
+                if (file.endsWith('.js')) {
+                    try {
+                        const fileName = file.replace('.js', '');
+                        const filePath = path.join(dirPath, file);
+                        const routerModule = await import(filePath);
+                        const router = routerModule.default;
+                        const metadata = routerModule;
 
- if (typeof router === "function") {
- const baseRoute = `/api/${version}/${folder}`;
- app.use(baseRoute, router);
+                        if (typeof router === 'function') {
+                            const baseRoute = `/api/${version}/${key}`;
+                            app.use(baseRoute, router);
 
- if (router.stack) {
- router.stack.forEach((layer) => {
- if (layer.route && layer.route.path) {
- let fullUrl = `${baseRoute}${layer.route.path}`;
- const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
+                            if (router.stack) {
+                                router.stack.forEach(layer => {
+                                    if (layer.route && layer.route.path) {
+                                        let fullUrl = `${baseRoute}${layer.route.path}`;
+                                        const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
 
- const routeData = {
- title: fileName,
- type: folder,
- method: method,
- tag: metadata.tag || "unknown",
- description: metadata.description || "No description",
- query: metadata.query || {},
- limited: metadata.limited || 0,
- status: metadata.status ?? true,
- price: metadata.price || "free",
- url: fullUrl,
- path: layer.route.path,
- };
+                                        const routeData = {
+                                            title: fileName,
+                                            type: key,
+                                            method: method,
+                                            tag: metadata.tag || "unknown",
+                                            description: metadata.description || "No description",
+                                            query: metadata.query || {},
+                                            limited: metadata.limited || 0,
+                                            status: metadata.status ?? true,
+                                            price: metadata.price || "free",
+                                            url: fullUrl,
+                                            path: layer.route.path,
+                                        };
 
-                                        categorizedApis.data[folder] = categorizedApis.data[folder] || { data: [] };
-                                        categorizedApis.data[folder].data.push(routeData);
+                                        categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
+                                        categorizedApis.data[key].data.push(routeData);
 
- if (!apiRoutes[0].data.some((route) => route.url === fullUrl)) {
- apiRoutes[0].data.push(routeData);
-
- } } });
- } } } 
-
- } catch (error) {
- errorLogs.push({ file: path.join(folderPath, file), error: error.message });
- console.error(`Error loading ${file}:`, error.message);
- }
-
- } }
- };
-
-        await loadFromDirectory(directoryPath, "v1");
-
+                                        if (!apiRoutes[0].data.some(route => route.url === fullUrl)) {
+                                            apiRoutes[0].data.push(routeData);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        errorLogs.push({ file: path.join(dirPath, file), error: error.message });
+                        console.error(`Error loading ${file}:`, error.message);
+                    }
+                }
+            }
+        }
     } catch (error) {
-        console.error("Error loading tracks:", error.message);
+        console.error('Error loading routers:', error.message);
     }
 }
 
+export async function setupRoutes(app) {
+    const directoryPath = path.join(__dirname, '../../Database/Mongo/Methods');
+    await loadRouters(directoryPath, "v1", app);
 
-export async function setupDatabase(app) {
-
-await loadRouters(directoryPath, app);
-
-Object.keys(categorizedApis.data).forEach((key) => {
-    app.get(`api/v3/accounts/sections/${key}/api`, (req, res) => {
-        const apisForCategory = categorizedApis.data[key].data.map(api => ({
-            ...api,
-            url: `${req.protocol}://${req.get('host')}${api.url}`,
-        }));
-        res.status(200).json({
-            status: true,
-            author: global.author,
-            data: apisForCategory
-        });
-    });
-});
-
-
-app.get('api/v3/accounts/sections', (req, res) => {
-    const fullApiRoutes = apiRoutes.map(route => ({
-        status: route.status,
-        author: route.author,
-        data: route.data.map(api => ({
-            ...api,
-            url: `${req.protocol}://${req.get('host')}${api.url}`,
-        })),
-    }));
-    res.status(200).json(fullApiRoutes);
-});
-
-app.get('api/v3/accounts', (req, res) => {
-    const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
-        (result, [key, apis]) => {
-            result[key] = apis.data.map(api => ({
+    Object.keys(categorizedApis.data).forEach((key) => {
+        app.get(`/api/v3/database/sections/${key}/api`, (req, res) => {
+            const apisForCategory = categorizedApis.data[key].data.map(api => ({
                 ...api,
                 url: `${req.protocol}://${req.get('host')}${api.url}`,
             }));
-            return result;
-        },
-        {}
-    );
-    res.status(200).json(categorizedWithHost);
-});
+            res.status(200).json({
+                status: true,
+                author: global.author,
+                data: apisForCategory
+            });
+        });
+    });
 
-app.get('api/v3/accounts/errorlog', (req, res) => {
-    res.status(200).json(errorLogs);
-});
+    app.get('/api/v3/database/sections', (req, res) => {
+        const fullApiRoutes = apiRoutes.map(route => ({
+            status: route.status,
+            author: route.author,
+            data: route.data.map(api => ({
+                ...api,
+                url: `${req.protocol}://${req.get('host')}${api.url}`,
+            })),
+        }));
+        res.status(200).json(fullApiRoutes);
+    });
 
+    app.get('/api/v3/database', (req, res) => {
+        const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
+            (result, [key, apis]) => {
+                result[key] = apis.data.map(api => ({
+                    ...api,
+                    url: `${req.protocol}://${req.get('host')}${api.url}`,
+                }));
+                return result;
+            },
+            {}
+        );
+        res.status(200).json(categorizedWithHost);
+    });
+
+    app.get('/api/v3/database/errorlog', (req, res) => {
+        res.status(200).json(errorLogs);
+    });
 }
-
-//______________________________________________
