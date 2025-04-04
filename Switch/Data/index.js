@@ -99,7 +99,7 @@ async function loadRouters(directoryPath, version, app) {
     }
 }
 
-export async function setupRoutes(app) {
+export async function setupDatabase(app) {
     const directoryPath = path.join(__dirname, '../../Database/Mongo/Methods');
     await loadRouters(directoryPath, "v1", app);
 
