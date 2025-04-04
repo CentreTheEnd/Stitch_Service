@@ -65,21 +65,20 @@ return res.status(400).json({
 });
 
 
-const usedRouterKeys = {};
-
-usedRouterKeys.tag = "ai chat";
-usedRouterKeys.description = "ai chat language Arabic Egypt";
-usedRouterKeys.query = { 
-q: "Question text",
-user: "name user",
-key: "key lock"
+const usedRouterKeys = {
+  tag: "ai chat",
+  description: "ai chat language Arabic Egypt",
+  query: { 
+    q: "Question text",
+    user: "name user",
+    key: "key lock"
+  },
+  limited: 2,
+  status: true,
+  price: "free"
 };
-usedRouterKeys.limited = 2;
-usedRouterKeys.status = true;
-usedRouterKeys.price = "free";
 
-
-export usedRouterKeys;
+export { usedRouterKeys };
 
 export default router;
 
