@@ -54,11 +54,11 @@ async function loadRouters(directoryPath, version, app) {
                         //const metadata = routerModule.usedRouterKeys;
 
                         const metadata = Object.keys(routerModule).reduce((acc, key) => {
-                        if (key !== 'default') {
-                        acc[key] = routerModule[key];
-                        }
-                          return acc;
-                        }, {});
+              if (key !== 'default') {
+              Object.assign(acc, routerModule[key]);
+               }
+               return acc;
+               }, {});
 
                         if (typeof router === 'function') {
                             const baseRoute = `/api/${version}/sections/${key}`;
@@ -71,18 +71,14 @@ async function loadRouters(directoryPath, version, app) {
                                         const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
 
                                         const routeData = {
-                                            title: fileName,
-                                            type: key,
-                                            method: method,
-                                            tag: metadata.tag || "unknown",
-                                            description: metadata.description || "No description",
-                                            query: metadata.query || {},
-                                            limited: metadata.limited || 0,
-                                            status: metadata.status ?? true,
-                                            price: metadata.price || "free",
-                                            url: fullUrl,
-                                            path: layer.route.path,
-                                        };
+          title: fileName,
+          type: key,
+          method: method,
+          url: fullUrl,
+          path: layer.route.path,
+          file: path.join(dirPath, file),
+          ...metadata,
+          };
 
                                         categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
                                         categorizedApis.data[key].data.push(routeData);
