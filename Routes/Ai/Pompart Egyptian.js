@@ -65,9 +65,21 @@ return res.status(400).json({
 });
 
 
-const usedQueryKeys = ['?q : add text query questions'];
+const usedRouterKeys = {};
 
-export { usedQueryKeys };
+usedRouterKeys.tag = "ai chat";
+usedRouterKeys.description = "ai chat language Arabic Egypt";
+usedRouterKeys.query = { 
+q: "Question text",
+user: "name user",
+key: "key lock"
+};
+usedRouterKeys.limited = 2;
+usedRouterKeys.status = true;
+usedRouterKeys.price = "free";
+
+
+export { usedRouterKeys };
 
 export default router;
 
