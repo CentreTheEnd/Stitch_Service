@@ -51,7 +51,7 @@ async function loadRouters(directoryPath, version, app) {
                         const filePath = path.join(dirPath, file);
                         const routerModule = await import(filePath);
                         const router = routerModule.default;
-                        const metadata = routerModule;
+                        const metadata = routerModule.usedRouterKeys;
 
                         if (typeof router === 'function') {
                             const baseRoute = `/api/${version}/${key}`;
