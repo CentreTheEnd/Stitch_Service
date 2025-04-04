@@ -117,7 +117,7 @@ export async function setupDatabase(app) {
         });
     });
 
-    app.get('/api/v3/database/sections', (req, res) => {
+    app.get('/api/v3/database', (req, res) => {
         const fullApiRoutes = apiRoutes.map(route => ({
             status: route.status,
             author: route.author,
@@ -129,7 +129,7 @@ export async function setupDatabase(app) {
         res.status(200).json(fullApiRoutes);
     });
 
-    app.get('/api/v3/database', (req, res) => {
+    app.get('/api/v3/database/sections', (req, res) => {
         const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
             (result, [key, apis]) => {
                 result[key] = apis.data.map(api => ({
