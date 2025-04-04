@@ -1,7 +1,7 @@
-import path from 'path';
+import path from "path";
 import axios from 'axios';
 import { fileURLToPath } from 'url';
-import fs from 'fs/promises';
+import fs from "fs/promises";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,47 +22,54 @@ const categorizedApis = {
 
 const errorLogs = [];
 
-const directoryPath = path.join(__dirname, '../../Routes');
-//const directoryPath =  '../../Routes';
-console.log("directoryPath:", directoryPath);
 
-async function loadRouters(directoryPath, app) {
+async function loadRouters(directoryPath, version, app) {
     try {
- const loadFromDirectory = async (directory, version, app) => {
+        const filesAndDirs = await fs.readdir(directoryPath);
 
- const basePath = path.resolve(directory);
- const folders = (await fs.readdir(basePath)).filter(async (item) => {
-  return (await fs.stat(path.join(basePath, item))).isDirectory();
-  });
+        const folders = [];
+        for (const item of filesAndDirs) {
+            const itemPath = path.join(pathToRouter, item);
+            const stats = await fs.stat(itemPath);
 
- for (const folder of folders) {
- const folderPath = path.join(basePath, folder);
- const files = await fs.readdir(folderPath);
+            if (stats.isDirectory()) {
+                folders.push(item);
+            }
+        }
 
- for (const file of files) {
- if (file.endsWith(".js")) {
- 
- try {
- 
- const fileName = file.replace(".js", "");
- const filePath = path.join(folderPath, file);
- const routerModule = await import(filePath);
- const router = routerModule.default;
- const metadata = routerModule;
+        const paths = folders.reduce((obj, folder) => {
+            obj[folder] = path.join(pathToRouter, folder);
+            return obj;
+        }, {});
 
- if (typeof router === "function") {
- const baseRoute = `/api/${version}/${folder}`;
- app.use(baseRoute, router);
+        for (const [key, dirPath] of Object.entries(paths)) {
+            const files = await fs.readdir(dirPath);
 
- if (router.stack) {
- router.stack.forEach((layer) => {
- if (layer.route && layer.route.path) {
- let fullUrl = `${baseRoute}${layer.route.path}`;
- const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
+            for (const file of files) {
+                if (file.endsWith('.js')) {
+                
+                try {
+                
+ const fileName = file.replace('.js', '');
+                    const filePath = path.join(dirPath, file);
+                    const routerModule = await import(filePath);
+                    const router = routerModule.default;
+                    const metadata = routerModule;
 
- const routeData = {
+                    if (typeof router === 'function') {
+
+                        const baseRoute = `/api/${version}/sections/${key}/api`;
+                        app.use(baseRoute, router);
+
+                        if (router.stack) {
+                            router.stack.forEach(layer => {
+                                if (layer.route && layer.route.path) {
+                                    let fullUrl = `${baseRoute}${layer.route.path}`;
+                                    const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
+
+   const routeData = {
  title: fileName,
- type: folder,
+ type: key,
  method: method,
  tag: metadata.tag || "unknown",
  description: metadata.description || "No description",
@@ -74,34 +81,35 @@ async function loadRouters(directoryPath, app) {
  path: layer.route.path,
  };
 
-                                        categorizedApis.data[folder] = categorizedApis.data[folder] || { data: [] };
-                                        categorizedApis.data[folder].data.push(routeData);
+                                    categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
+                                    categorizedApis.data[key].data.push(routeData);
 
- if (!apiRoutes[0].data.some((route) => route.url === fullUrl)) {
- apiRoutes[0].data.push(routeData);
-
- } } });
- } } 
-
- } catch (error) {
- errorLogs.push({ file: path.join(folderPath, file), error: error.message });
+                                    if (!apiRoutes[0].data.some(route => route.url === fullUrl)) {
+                                        apiRoutes[0].data.push(routeData);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                     } catch (error) {
+ errorLogs.push({ file: path.join(dirPath, file), error: error.message });
  console.error(`Error loading ${file}:`, error.message);
  }
-
- } } }
- };
-
-        await loadFromDirectory(directoryPath, "v2", app);
-
+                }
+            }
+        }
     } catch (error) {
-        console.error("Error loading tracks:", error.message);
+        console.error('Error loading routers:', error.message);
     }
 }
 
 
 export async function setupRoutes(app) {
 
-await loadRouters(directoryPath, app);
+
+const directoryPath = path.join(__dirname, '../../Routes');
+
+await loadRouters(directoryPath, "v2", app);
 
 Object.keys(categorizedApis.data).forEach((key) => {
     app.get(`api/v3/apis/sections/${key}/api`, (req, res) => {
