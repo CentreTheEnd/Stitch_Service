@@ -79,7 +79,7 @@ usedRouterKeys.status = true;
 usedRouterKeys.price = "free";
 
 
-export { usedRouterKeys };
+export usedRouterKeys;
 
 export default router;
 
