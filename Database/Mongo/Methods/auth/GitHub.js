@@ -90,7 +90,7 @@ router.get('/github', (req, res, next) => {
 
 // الخطوة الثانية: استلام الكود وإنشاء الحساب
 router.get('/github/callback', (req, res, next) => {
-  passport.authenticate('github', { failureRedirect: '/' }), async (err, user, info) => {
+  passport.authenticate('github', { failureRedirect: '/' }, async (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({ success: false, message: 'GitHub login failed' });
     }
@@ -118,5 +118,6 @@ router.get('/github/callback', (req, res, next) => {
     });
   })(req, res, next);
 });
+
 
 export default router;
