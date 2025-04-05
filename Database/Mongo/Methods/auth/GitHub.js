@@ -119,5 +119,4 @@ router.get('/github/callback', (req, res, next) => {
   })(req, res, next);
 });
 
-
 export default router;
