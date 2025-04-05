@@ -9,7 +9,7 @@ const router = express.Router();
 
 // تعيين القيم المطلوبة في global
 
-global.redirectUri = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';  // عيّن قيمة الرابط المعاد توجيه المستخدم إليه
+global.redirectUri = 'https://stitch-api.vercel.app/api/v1/auth/google/callback';  // عيّن قيمة الرابط المعاد توجيه المستخدم إليه
 
 // إعداد passport
 passport.use(new GoogleStrategy({
