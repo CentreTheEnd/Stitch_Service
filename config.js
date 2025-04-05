@@ -34,9 +34,23 @@ global.loadKayes = async function loadData() {
   const res = await axios.get(url);
   const jsonData = res.data;
 
+  const google = jsonData.auth.google;
+  const github = jsonData.auth.github;
+  const discord = jsonData.auth.discord;
+
   global.githubToken = jsonData.setting?.githubToken;
   global.driveKey = jsonData.setting?.driveKey;
   global.mongoUrl = jsonData.setting?.mongoUrl || mongodbUrl;
+  
+  global.googleID = google.id
+  global.googleSecret = google.secret
+
+  global.githubID = github.id
+  global.githubSecret = github.secret
+
+  global.discordID = discord.id
+  global.discordSecret = discord.secret
+  global.discordUrl = discord.oauth2
 };
 
 //______________________________________________
