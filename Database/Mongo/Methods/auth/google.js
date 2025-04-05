@@ -16,7 +16,7 @@ router.get('/google', (req, res) => {
 // الخطوة الثانية: استلام الكود وإنشاء الحساب
 router.get('/google/callback', async (req, res) => {
   const { code } = req.query;
-  const redirUri = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
+  const redirUri2 = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
   
   if (!code) {
     return res.status(400).json({ success: false, message: 'Missing authorization code' });
@@ -29,7 +29,7 @@ router.get('/google/callback', async (req, res) => {
         code,
         client_id: global.googleID,
         client_secret: global.googleSecret,
-        redirect_uri: redirUri,
+        redirect_uri: redirUri2,
         grant_type: 'authorization_code'
       },
     });
