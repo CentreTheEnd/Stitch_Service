@@ -24,34 +24,46 @@ endKey: "stitch_no_hacking_here"
 
 //______________________________________________
 
+
 global.loadKayes = async function loadData() {
+  try {
+    const fileId = '1Dfq_8uK7W8EH_YKQmwG9brNwIZu_NRZr';
+    const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    
+    const defaultMongoUrl = 'mongodb+srv://shawaza:Ss24-4-2004@cluster0.kz7o9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-  const fileId = '1Dfq_8uK7W8EH_YKQmwG9brNwIZu_NRZr';
-  const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
-  
-  const mongodbUrl = 'mongodb+srv://shawaza:Ss24-4-2004@cluster0.kz7o9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+    const res = await axios.get(url);
+    const jsonData = res.data;
 
-  const res = await axios.get(url);
-  const jsonData = res.data;
+    const { setting, auth } = jsonData;
+    const google = auth?.google;
+    const github = auth?.github;
+    const discord = auth?.discord;
 
-  const google = jsonData?.auth?.google;
-  const github = jsonData?.auth?.github;
-  const discord = jsonData?.auth?.discord;
+    if (!setting || !google || !github || !discord) {
+      throw new Error('Missing one or more required sections (setting/auth/google/...)');
+    }
 
-  global.githubToken = jsonData.setting?.githubToken;
-  global.driveKey = jsonData.setting?.driveKey;
-  global.mongoUrl = jsonData.setting?.mongoUrl || mongodbUrl;
-  
-  global.googleID = google.id;
-  global.googleSecret = google.secret;
+    global.githubToken = setting.githubToken;
+    global.driveKey = setting.driveKey;
+    global.mongoUrl = setting.mongoUrl || defaultMongoUrl;
 
-  global.githubID = github.id;
-  global.githubSecret = github.secret;
+    global.googleID = google.id;
+    global.googleSecret = google.secret;
 
-  global.discordID = discord.id;
-  global.discordSecret = discord.secret;
-  global.discordUrl = discord.oauth2;
+    global.githubID = github.id;
+    global.githubSecret = github.secret;
+
+    global.discordID = discord.id;
+    global.discordSecret = discord.secret;
+    global.discordUrl = discord.oauth2;
+
+    console.log('Keys loaded successfully from remote config.');
+  } catch (error) {
+    console.error('Error loading keys:', error.message);
+  }
 };
+
 
 //______________________________________________
 
