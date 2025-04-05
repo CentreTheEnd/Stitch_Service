@@ -5,20 +5,19 @@ import User from '../../model.js';
 
 const router = express.Router();
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 
 // الخطوة الأولى: إعادة توجيه المستخدم إلى Google OAuth
 router.get('/google', (req, res) => {
-  const redirectUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(GOOGLE_REDIRECT_URI)}&response_type=code&scope=openid%20email%20profile`;
+  const redirUri = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
+  const redirectUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${global.googleID}&redirect_uri=${encodeURIComponent(redirUri)}&response_type=code&scope=openid%20email%20profile`;
   res.redirect(redirectUrl);
 });
 
 // الخطوة الثانية: استلام الكود وإنشاء الحساب
 router.get('/google/callback', async (req, res) => {
   const { code } = req.query;
-
+  const redirUri = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
+  
   if (!code) {
     return res.status(400).json({ success: false, message: 'Missing authorization code' });
   }
@@ -28,9 +27,9 @@ router.get('/google/callback', async (req, res) => {
     const tokenRes = await axios.post('https://oauth2.googleapis.com/token', null, {
       params: {
         code,
-        client_id: GOOGLE_CLIENT_ID,
-        client_secret: GOOGLE_CLIENT_SECRET,
-        redirect_uri: GOOGLE_REDIRECT_URI,
+        client_id: global.googleID,
+        client_secret: global.googleSecret,
+        redirect_uri: redirUri,
         grant_type: 'authorization_code'
       },
     });
