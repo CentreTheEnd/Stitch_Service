@@ -1,106 +1,91 @@
 import express from 'express';
-import axios from 'axios';
+import passport from 'passport';
+import session from 'express-session';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import User from '../../model.js';  // تأكد من أن المسار صحيح
 import crypto from 'crypto';
-import User from '../../model.js';
 
 const router = express.Router();
 
+// تعيين القيم المطلوبة في global
 
-// الخطوة الأولى: إعادة توجيه المستخدم إلى Google OAuth
-router.get('/google', (req, res) => {
-  const redirUri = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';
-    //`${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
-  const redirectUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${global.googleID}&redirect_uri=${encodeURIComponent(redirUri)}&response_type=code&scope=openid%20email%20profile`;
-  res.redirect(redirectUrl);
-});
+global.redirectUri = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';  // عيّن قيمة الرابط المعاد توجيه المستخدم إليه
 
-// الخطوة الثانية: استلام الكود وإنشاء الحساب
-router.get('/google/callback', async (req, res) => {
-  const { code } = req.query;
-  const redirUri2 = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';
-    //`${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
-  
-  if (!code) {
-    return res.status(400).json({ success: false, message: 'Missing authorization code' });
-  }
+// إعداد passport
+passport.use(new GoogleStrategy({
+  clientID: global.googleID,  // استخدام معرف Google في global
+  clientSecret: global.googleSecret,  // استخدام السر من global
+  callbackURL: global.redirectUri  // استخدام الرابط من global
+}, async (accessToken, refreshToken, profile, done) => {
+  // البحث عن المستخدم في قاعدة البيانات بناءً على البريد الإلكتروني
+  let user = await User.findOne({ email: profile.emails[0].value });
 
-  try {
-    // تبادل الكود بـ access_token
-    const tokenRes = await axios.post('https://oauth2.googleapis.com/token', null, {
-      params: {
-        code,
-        client_id: global.googleID,
-        client_secret: global.googleSecret,
-        redirect_uri: redirUri2,
-        grant_type: 'authorization_code'
+  if (!user) {
+    // إذا لم يكن المستخدم موجودًا، إنشاء حساب جديد
+    const username = profile.emails[0].value.split('@')[0] + crypto.randomBytes(2).toString('hex');
+    const apiKey = crypto.randomBytes(16).toString('hex');
+    const token = crypto.randomBytes(32).toString('hex');
+    
+    user = new User({
+      name: profile.displayName,
+      email: profile.emails[0].value,
+      username,
+      loginType: 'google',
+      apiKey,
+      token,
+      avatar: profile.photos[0].value || `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.displayName)}&background=random`,
+      update: { first: new Date() },
+      plan: {
+        name: 'Free',
+        price: 0,
+        description: 'Basic free plan',
+        durationDays: 30,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
       },
+      limited: 1000,
+      coins: 10
     });
 
-    const { access_token } = tokenRes.data;
-
-    // جلب بيانات المستخدم
-    const userInfoRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
-      headers: { Authorization: `Bearer ${access_token}` }
-    });
-
-    const { name, email, picture } = userInfoRes.data;
-
-    if (!email) {
-      return res.status(400).json({ success: false, message: 'Google account missing email' });
-    }
-
-    let user = await User.findOne({ email });
-
-    if (!user) {
-      const username = email.split('@')[0] + crypto.randomBytes(2).toString('hex');
-      const apiKey = crypto.randomBytes(16).toString('hex');
-      const token = crypto.randomBytes(32).toString('hex');
-
-      user = new User({
-        name,
-        email,
-        username,
-        loginType: 'google',
-        apiKey,
-        token,
-        avatar: picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
-        update: { first: new Date() },
-        plan: {
-          name: 'Free',
-          price: 0,
-          description: 'Basic free plan',
-          durationDays: 30,
-          startDate: new Date(),
-          endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-        },
-        limited: 1000,
-        coins: 10
-      });
-
-      await user.save();
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: 'Google OAuth successful',
-      user: {
-        name: user.name,
-        email: user.email,
-        username: user.username,
-        apiKey: user.apiKey,
-        token: user.token,
-        avatar: user.avatar,
-        role: user.role,
-        plan: user.plan,
-        coins: user.coins
-      }
-    });
-
-  } catch (err) {
-    console.error('Google OAuth Error:', err.message);
-    return res.status(500).json({ success: false, message: 'Google login failed', error: err.message });
+    await user.save();
   }
+
+  // إذا كان المستخدم موجودًا، قم بإرجاعه
+  return done(null, user);
+}));
+
+// تهيئة session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+// إعداد session في express واستخدام `token` في `secret`
+router.use(session({
+  secret: (req) => req.user ? req.user.token : 'default_secret',  // استخدام الـ token للمستخدم في الـ secret
+  resave: false,
+  saveUninitialized: true,
+}));
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+// إعادة توجيه المستخدم إلى Google OAuth
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+// التعامل مع رد Google بعد التوثيق
+router.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: '/login',  // في حالة الفشل، التوجيه إلى صفحة تسجيل الدخول
+  successRedirect: '/dashboard'  // في حالة النجاح، التوجيه إلى لوحة التحكم
+}));
+
+
 
 export default router;
-
