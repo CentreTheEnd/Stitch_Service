@@ -1,15 +1,17 @@
 import express from 'express';
 import passport from 'passport';
-import session from 'express-session';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import jwt from 'jsonwebtoken';  // إضافة مكتبة JWT
 import User from '../../model.js';  // تأكد من أن المسار صحيح
 import crypto from 'crypto';
 
 const router = express.Router();
 
 // تعيين القيم المطلوبة في global
-
 global.redirectUri = 'https://stitch-api.vercel.app/api/v1/auth/google/callback';  // عيّن قيمة الرابط المعاد توجيه المستخدم إليه
+
+// توليد jwtSecret عشوائي باستخدام crypto
+global.jwtSecret = crypto.randomBytes(64).toString('hex');  // توليد 64 بايت وتحويله إلى سلسلة هكساديسمل
 
 // إعداد passport
 passport.use(new GoogleStrategy({
@@ -54,38 +56,39 @@ passport.use(new GoogleStrategy({
   return done(null, user);
 }));
 
-// تهيئة session
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
-
-// إعداد session في express واستخدام `token` في `secret`
-router.use(session({
-  secret: (req) => req.user ? req.user.token : 'default_secret',  // استخدام الـ token للمستخدم في الـ secret
-  resave: false,
-  saveUninitialized: true,
-}));
-
-router.use(passport.initialize());
-router.use(passport.session());
-
-// إعادة توجيه المستخدم إلى Google OAuth
-router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}));
-
-// التعامل مع رد Google بعد التوثيق
+// إنشاء JWT بعد التوثيق
 router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/login',  // في حالة الفشل، التوجيه إلى صفحة تسجيل الدخول
-  successRedirect: '/dashboard'  // في حالة النجاح، التوجيه إلى لوحة التحكم
-}));
+}), (req, res) => {
+  // بعد نجاح التوثيق، إنشاء JWT
+  const user = req.user;
+  
+  // إنشاء توكن JWT
+  const token = jwt.sign({ id: user._id, email: user.email, username: user.username }, global.jwtSecret, { expiresIn: '1h' });
+  
+  // إرسال التوكن للمستخدم (يمكن تخزينه في الـ cookie أو في رأس الـ Authorization)
+  res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600 * 1000 }); // إرسال التوكن عبر الـ cookies
+  // أو يمكن إرسال التوكن في الـ header
+  // res.setHeader('Authorization', `Bearer ${token}`);
+  
+  // إعادة التوجيه إلى لوحة التحكم أو الصفحة الرئيسية
+  res.redirect('/dashboard');  // أو إعادة التوجيه إلى صفحة أخرى
+});
 
+// مسار لتوثيق المستخدم باستخدام JWT
+router.get('/profile', (req, res) => {
+  const token = req.cookies.token;  // الحصول على التوكن من الـ cookies (أو من الـ header)
+  
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
+  try {
+    const decoded = jwt.verify(token, global.jwtSecret);
+    res.status(200).json({ user: decoded });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+});
 
 export default router;
