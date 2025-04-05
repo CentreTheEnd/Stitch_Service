@@ -8,7 +8,8 @@ const router = express.Router();
 
 // الخطوة الأولى: إعادة توجيه المستخدم إلى Google OAuth
 router.get('/google', (req, res) => {
-  const redirUri = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
+  const redirUri = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';
+    //`${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
   const redirectUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${global.googleID}&redirect_uri=${encodeURIComponent(redirUri)}&response_type=code&scope=openid%20email%20profile`;
   res.redirect(redirectUrl);
 });
@@ -16,7 +17,8 @@ router.get('/google', (req, res) => {
 // الخطوة الثانية: استلام الكود وإنشاء الحساب
 router.get('/google/callback', async (req, res) => {
   const { code } = req.query;
-  const redirUri2 = `${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
+  const redirUri2 = 'http://stitch-api.vercel.app/api/v1/auth/google/callback';
+    //`${req.protocol}://${req.get('host')}/api/v1/auth/google/callback`;
   
   if (!code) {
     return res.status(400).json({ success: false, message: 'Missing authorization code' });
