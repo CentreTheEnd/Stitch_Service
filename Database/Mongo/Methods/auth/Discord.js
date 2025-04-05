@@ -10,7 +10,7 @@ const router = express.Router();
 passport.use(new DiscordStrategy({
   clientID: global.discordID,  // استخدام المتغير global لتخزين معرّف العميل
   clientSecret: global.discordSecret,  // استخدام المتغير global لتخزين السر
-  callbackURL: 'http://stitch-api.vercel.app/api/v1/auth/discord/callback',  // الرابط الموجه للـ callback
+  callbackURL: 'https://stitch-api.vercel.app/api/v1/auth/discord/callback',  // الرابط الموجه للـ callback
   scope: ['identify', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
   try {
