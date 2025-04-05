@@ -11,7 +11,7 @@ const router = express.Router();
 passport.use(new GitHubStrategy({
   clientID: global.githubID,
   clientSecret: global.githubSecret,
-  callbackURL: 'http://stitch-api.vercel.app/api/v1/auth/github/callback' // قم بتعديل هذه إلى عنوان URL الخاص بك
+  callbackURL: 'https://stitch-api.vercel.app/api/v1/auth/github/callback' // قم بتعديل هذه إلى عنوان URL الخاص بك
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
