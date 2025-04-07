@@ -327,9 +327,9 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
-  const avatarSize = 220;
+  const avatarSize = 230;
   const avatarX = width - avatarSize - 80;
-  const avatarY = 500;
+  const avatarY = 480;
 
   ctx.save();
   ctx.shadowColor = shadow;
@@ -343,23 +343,15 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
 
-  const gradientTitle = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
-  gradientFill.addColorStop(0, accent);
-  gradientFill.addColorStop(1, textColor);
-  
-  const gradientTitlex = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
-  gradientFill.addColorStop(0, textColor);
-  gradientFill.addColorStop(1, accent);
-
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 15;
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 4;
   ctx.font = 'bold 28px CustomFont';
-  ctx.fillStyle = gradientTitle;
+  ctx.fillStyle = accent;
   ctx.textAlign = 'left';
   ctx.fillText('User Name:', 80, 560);
-  ctx.fillStyle = gradientTitlex;
+  ctx.fillStyle = textColor;
   ctx.font = '24px CustomFont';
   ctx.fillText(name, 80, 595);
 
