@@ -1,10 +1,24 @@
 import express from 'express';
-import { makeWASocket, useMultiFileAuthState } from '@whiskeysockets/baileys';
+import fs from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import Pino from 'pino';  
+
+const { 
+      DisconnectReason, 
+      useMultiFileAuthState, 
+      fetchLatestBaileysVersion, 
+      makeCacheableSignalKeyStore, 
+      jidNormalizedUser, 
+      PHONENUMBER_MCC 
+    } = await import("@whiskeysockets/baileys");
 import { saveSession, getSession, deleteSession } from '../../Database/Mongo/Models/whatsClient.js';
-import mongoose from 'mongoose';
+
 
 const router = express.Router();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+global.authFile = 'tmp';
 
 // مسار POST لإنشاء الجلسة باستخدام رقم الهاتف فقط
 router.post('/create-session', async (req, res) => {
@@ -15,28 +29,67 @@ router.post('/create-session', async (req, res) => {
   }
 
   try {
-    // الاتصال بـ Baileys لبدء الجلسة باستخدام رقم الهاتف
-    const { state, saveCreds } = await useMultiFileAuthState('tmp');
-    const conn = makeWASocket({
-      creds: state.creds,
-      keys: state.keys,
-    });
+    const numeroTelefono = phoneNumber.replace(/[^0-9]/g, '');
 
-    // بدأ الاتصال وطلب الكود المكون من 8 أرقام
-    if (phoneNumber) {
-      const pairingCode = await conn.requestPairingCode(phoneNumber);
-      const formattedCode = pairingCode.match(/.{1,4}/g)?.join("-") || pairingCode;
+    if (!Object.keys(PHONENUMBER_MCC).some(v => numeroTelefono.startsWith(v))) {
+      return res.status(400).json({ error: 'الرجاء إدخال الرقم مع كود الدولة الصحيح' });
+    }
 
-      console.log(`تم إنشاء الكود: ${formattedCode}`);
-      res.status(201).json({ message: 'تم إنشاء الجلسة بنجاح', pairingCode: formattedCode });
-      
-      // حفظ الجلسة في MongoDB
-      await saveSession(phoneNumber, state.creds, state.keys);
+    const authPath = join(__dirname, global.authFile, numeroTelefono); 
+    if (!fs.existsSync(authPath)) {
+      fs.mkdirSync(authPath, { recursive: true });
+    }
+
+    const credsPath = join(authPath, 'creds.json');
+
+    if (!fs.existsSync(credsPath)) {
+      const { state, saveCreds } = await useMultiFileAuthState(authPath);
+      const { version } = await fetchLatestBaileysVersion();
+
+      const client = makeWASocket({
+        printQRInTerminal: true,
+        auth: state,
+        logger: Pino({ level: 'silent' }), 
+        waWebSocketUrl: 'wss://web.whatsapp.com/ws/chat?ED=CAIICA',
+        markOnlineOnConnect: true,
+        generateHighQualityLinkPreview: true,
+        version,
+        browser: ['TheEnd-MD', 'Safari', '2.0.0'],
+      });
+
+      client.ev.on('creds.update', saveCreds);
+
+      let codigo = await client.requestPairingCode(numeroTelefono); 
+      codigo = codigo?.match(/.{1,4}/g)?.join("-") || codigo;
+
+      await client.sendMessage(numeroTelefono + '@s.whatsapp.net', { text: `رمز التحقق الخاص بك هو: ${codigo}` });
+
+      await saveSession(numeroTelefono, state.creds, state.keys);
+
+      return res.status(200).json({ verificationCode: codigo });
+    } else {
+      const { state, saveCreds } = await useMultiFileAuthState(authPath);
+      const { version } = await fetchLatestBaileysVersion();
+
+      const client = makeWASocket({
+        printQRInTerminal: false,
+        auth: state,
+        logger: Pino({ level: 'silent' }), 
+        waWebSocketUrl: 'wss://web.whatsapp.com/ws/chat?ED=CAIICA',
+        markOnlineOnConnect: true,
+        generateHighQualityLinkPreview: true,
+        version,
+        browser: ['TheEnd-MD', 'Safari', '2.0.0'],
+      });
+
+      client.ev.on('creds.update', saveCreds);
+
+      return res.status(200).json({ message: 'الجلسة موجودة مسبقًا' });
     }
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'حدث خطأ أثناء إنشاء الجلسة' });
+    res.status(500).json({ message: 'حدث خطأ أثناء إنشاء الجلسة', error: error });
   }
 });
 
