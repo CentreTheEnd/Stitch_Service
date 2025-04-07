@@ -35,7 +35,7 @@ router.post('/create-session', async (req, res) => {
       return res.status(400).json({ error: 'الرجاء إدخال الرقم مع كود الدولة الصحيح' });
     }
 
-    const authPath = join(__dirname, global.authFile, numeroTelefono); 
+    const authPath = join(__dirname, global.authFile); 
 
  /*   if (!fs.existsSync(authPath)) {
       try {
@@ -45,7 +45,7 @@ router.post('/create-session', async (req, res) => {
       }
     } */
 
-    const credsPath = join(authPath, 'creds.json');
+    const credsPath = join(authPath, numeroTelefono + '_creds.json');
 
     if (!fs.existsSync(credsPath)) {
       const { state, saveCreds } = await useMultiFileAuthState(authPath);
