@@ -327,9 +327,9 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
-  const avatarSize = 230;
-  const avatarX = width - avatarSize - 80;
-  const avatarY = 480;
+  const avatarSize = 280;
+  const avatarX = width - avatarSize - 90;
+  const avatarY = 450;
 
   ctx.save();
   ctx.shadowColor = shadow;
