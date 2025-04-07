@@ -309,7 +309,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
 
   const gradientFill = ctx.createLinearGradient(0, 500, 0, 1000);
   gradientFill.addColorStop(0, bg);
-  gradientFill.addColorStop(1, gradient || '#f0f0f0');
+  gradientFill.addColorStop(1, '#f0f0f0');
   ctx.fillStyle = gradientFill;
   ctx.fillRect(0, 500, width, 1100);
 
