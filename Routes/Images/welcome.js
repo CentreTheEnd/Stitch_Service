@@ -278,7 +278,12 @@ glass: {
     },
   };
 
-  return themes[theme] || themes['old'];
+  const themeNames = Object.keys(themes); // استخراج أسماء الثيمات
+const randomThemeName = themeNames[Math.floor(Math.random() * themeNames.length)]; // اختيار اسم عشوائي
+const randomTheme = themes[randomThemeName]; // جلب الثيم العشوائي
+  
+
+  return themes[theme] || randomTheme;
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
