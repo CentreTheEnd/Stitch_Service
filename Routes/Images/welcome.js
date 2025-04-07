@@ -10,14 +10,14 @@ const outPathImage = '/tmp/welcome-image.png';
 const outPathFont = '/tmp/font.ttf';
 
 router.get('/welcome', async (req, res) => {
-  const { background, icon, name, group, creator, members, description, iswelcome, theme } = req.query;
+  const { background, icon, name, group, creator, members, description, iswelcome, text, theme } = req.query;
 
   try {
     const { data: fontData } = await axios.get(fontUrl, { responseType: 'arraybuffer' });
     fs.writeFileSync(outPathFont, Buffer.from(fontData));
     registerFont(outPathFont, { family: 'CustomFont' });
 
-    const buffer = await createWelcomImage(background, icon, name, group, creator, members, description, iswelcome, theme);
+    const buffer = await createWelcomImage(background, icon, name, group, creator, members, description, iswelcome, text, theme);
     fs.writeFileSync(outPathImage, buffer);
 
     res.status(200)
@@ -57,7 +57,8 @@ const usedRouterKeys = {
     members: "Number of group members", 
     description: "Group description", 
     iswelcome: "welcome = true", 
-    theme: "...."
+    theme: "....",
+    text: "additional text under welcome message"
   },
   limited: 2,
   status: true,
@@ -76,21 +77,11 @@ function getThemeColors(theme) {
       return { bg: '#e3f2fd', accent: '#42a5f5', text: '#0d47a1' };
     case 'work':
       return { bg: '#f3e5f5', accent: '#7e57c2', text: '#311b92' };
-      case 'classic':
+    case 'classic':
       return { bg: '#ffffff', accent: '#444', text: '#1c1c1c' };
     default: 
       return { bg: '#1c1c1c', accent: '#444', text: '#ffffff' };
   }
-}
-
-
-function drawLine(ctx, y, color = '#ccc') {
-  ctx.beginPath();
-  ctx.moveTo(80, y);
-  ctx.lineTo(820, y);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1;
-  ctx.stroke();
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
@@ -122,25 +113,32 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
   }
 }
 
-async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, creatorName, members, description, iswelcome, theme = 'default') {
+async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, creatorName, members, description, iswelcome, text, theme = 'default') {
   const width = 900;
   const height = 1600;
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
-  const { bg, accent, text } = getThemeColors(theme);
+  const { bg, accent, text: textColor } = getThemeColors(theme);
 
   const background = await loadImage(backgroundUrl);
   ctx.drawImage(background, 0, 0, width, 500);
 
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 500, width, 250);
+  const gradient = ctx.createLinearGradient(0, 500, 0, 1000);
+  gradient.addColorStop(0, bg);
+  gradient.addColorStop(1, '#f0f0f0');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
-  const avatarSize = 220;
-  const avatarX = width / 2 - avatarSize / 2;
-  const avatarY = 380;
+  const avatarSize = 220;  // Increased avatar size for HD effect
+  const avatarX = width - avatarSize - 100;  // Adjusted position for HD look
+  const avatarY = 520;
 
   ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';  // Stronger shadow for better contrast
+  ctx.shadowBlur = 20;  // Increased blur for sharper shadows
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 8;  // Slightly offset for a better shadow effect
   ctx.beginPath();
   ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
   ctx.closePath();
@@ -148,46 +146,57 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
 
-  ctx.strokeStyle = '#fff';
-  ctx.lineWidth = 8;
-  ctx.beginPath();
-  ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2 + 4, 0, Math.PI * 2);
-  ctx.stroke();
+  ctx.font = 'bold 32px CustomFont';  // Larger font size for HD readability
+  ctx.fillStyle = '#555';
+  ctx.textAlign = 'left';
+  ctx.fillText('User Name:', 80, 560);
+  ctx.fillStyle = '#222';
+  ctx.font = '28px CustomFont';
+  ctx.fillText(name, 80, 595);
+
+  ctx.font = 'bold 32px CustomFont';
+  ctx.fillStyle = '#555';
+  ctx.fillText('Group Name:', 80, 635);
+  ctx.fillStyle = '#222';
+  ctx.font = '28px CustomFont';
+  ctx.fillText(groupName, 80, 670);
+
+  ctx.font = 'bold 30px CustomFont';
+  ctx.fillStyle = '#555';
+  ctx.fillText('Members:', 80, 730);
+  ctx.fillStyle = '#222';
+  ctx.font = '28px CustomFont';
+  ctx.fillText(`${members}`, 200, 730);
+
+  ctx.font = 'bold 30px CustomFont';
+  ctx.fillStyle = '#555';
+  ctx.fillText('Description:', 80, 800);
+  ctx.fillStyle = '#222';
+  ctx.font = '24px CustomFont';
+  wrapText(ctx, description, 80, 835, width - 160, 30);
+
+  const welcomeText = iswelcome === 'true'
+    ? `Welcome ${name} to ${groupName}!`
+    : `${name} has left ${groupName}.`;
+
+  const welcomeGradient = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
+  welcomeGradient.addColorStop(0, accent);
+  welcomeGradient.addColorStop(1, '#fff');
 
   ctx.textAlign = 'center';
+  ctx.fillStyle = welcomeGradient;
+  ctx.font = 'bold 48px CustomFont';  // Larger text for better visibility
+  ctx.fillText(welcomeText, width / 2, 1100);
 
-  ctx.font = 'bold 50px CustomFont';
-  ctx.fillStyle = text;
-  ctx.fillText(name, width / 2, 650);
-  drawLine(ctx, 670, accent);
+  if (text) {
+    ctx.fillStyle = '#666';
+    ctx.font = '28px CustomFont';
+    ctx.fillText(text, width / 2, 1140);
+  }
 
-  ctx.font = '36px CustomFont';
-  ctx.fillStyle = text;
-  ctx.fillText(groupName, width / 2, 700);
-
-  ctx.font = '28px CustomFont';
-  ctx.fillStyle = '#666';
-  ctx.fillText(`${members} members`, width / 2, 740);
-  drawLine(ctx, 760, accent);
-
-  ctx.font = '38px CustomFont';
-  ctx.fillStyle = iswelcome === 'true' ? '#2e7d32' : '#c62828';
-  ctx.fillText(
-    iswelcome === 'true' ? `Welcome ${name} to ${groupName}!` : `${name} has left ${groupName}.`,
-    width / 2, 860
-  );
-  drawLine(ctx, 880, accent);
-
-  ctx.font = '28px CustomFont';
-  ctx.fillStyle = '#444';
-  wrapText(ctx, description, 80, 940, width - 160, 38, 5);
-
-  drawLine(ctx, height - 80, accent);
-
-  ctx.font = 'italic 26px CustomFont';
   ctx.fillStyle = '#888';
+  ctx.font = 'italic 26px CustomFont';
   ctx.fillText(`Group created by ${creatorName}`, width / 2, height - 40);
 
   return canvas.toBuffer();
 }
-
