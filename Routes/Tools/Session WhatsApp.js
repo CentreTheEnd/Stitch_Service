@@ -36,8 +36,13 @@ router.post('/create-session', async (req, res) => {
     }
 
     const authPath = join(__dirname, global.authFile, numeroTelefono); 
+
     if (!fs.existsSync(authPath)) {
-      fs.mkdirSync(authPath, { recursive: true });
+      try {
+        fs.mkdirSync(authPath, { recursive: true });
+      } catch (error) {
+        return res.status(500).json({ error: 'خطأ في إنشاء المجلد', details: error });
+      }
     }
 
     const credsPath = join(authPath, 'creds.json');
