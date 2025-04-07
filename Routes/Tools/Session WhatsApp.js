@@ -100,4 +100,4 @@ router.post('/send-message', async (req, res) => {
   }
 });
 
-export default handler;
+export default router;
