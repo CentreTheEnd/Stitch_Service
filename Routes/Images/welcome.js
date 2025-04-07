@@ -139,7 +139,7 @@ function getThemeColors(theme) {
       bg: '#fdf6e3',
       accent: '#b58900',
       text: '#657b83',
-      shadow: 'rgba(101, 123, 131, 0.2)',
+      shadow: 'rgba(0, 0, 0, 0.8)',
       gradient: 'linear-gradient(145deg, #fdf6e3, #eee8d5)'
     },
     rose: {
@@ -278,7 +278,7 @@ glass: {
     },
   };
 
-  return themes[theme] || themes['darkGoldRed'];
+  return themes[theme] || themes['old'];
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
