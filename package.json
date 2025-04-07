@@ -72,6 +72,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-discord": "*",
     "passport-github2": "*",
+    "pino": "^7.8.0",
     "qs": "^6.11.2",    
     "ws": "^8.15.1",
     "lowdb": "^5.0.0",
