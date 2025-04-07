@@ -343,11 +343,13 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
 
-  const gradientTitle = ctx.createLinearGradient(0, 500, 0, 1000);
+  const gradientTitle = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
   gradientFill.addColorStop(0, accent);
   gradientFill.addColorStop(1, textColor);
   
-  const gradientTitlex = getContrastingColor(gradientTitle);
+  const gradientTitlex = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
+  gradientFill.addColorStop(0, textColor);
+  gradientFill.addColorStop(1, accent);
 
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 15;
