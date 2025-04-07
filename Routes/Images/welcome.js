@@ -72,75 +72,100 @@ export default router;
 function getThemeColors(theme) {
   const themes = {
     classic: {
-      bg: '#ffffff', // خلفية بيضاء
-      accent: '#444', // لون أكسنت داكن
-      text: '#1c1c1c', // نص داكن
+      bg: '#ffffff',
+      accent: '#444',
+      text: '#1c1c1c',
+      shadow: 'rgba(0, 0, 0, 0.2)', // الظل الخفيف
+      gradient: 'linear-gradient(45deg, #ffffff, #f0f0f0)'
     },
     dark: {
-      bg: '#121212', // خلفية داكنة
-      accent: '#bb86fc', // اللون الأرجواني الفاتح
-      text: '#e0e0e0', // نص باللون الفاتح
+      bg: '#121212',
+      accent: '#bb86fc',
+      text: '#e0e0e0',
+      shadow: 'rgba(0, 0, 0, 0.7)', // ظل داكن
+      gradient: 'linear-gradient(45deg, #121212, #333333)'
     },
     light: {
-      bg: '#ffffff', // خلفية بيضاء
-      accent: '#03a9f4', // لون أكسنت أزرق فاقع
-      text: '#212121', // نص داكن
+      bg: '#ffffff',
+      accent: '#03a9f4',
+      text: '#212121',
+      shadow: 'rgba(0, 0, 0, 0.1)', // ظل خفيف
+      gradient: 'linear-gradient(45deg, #ffffff, #e0e0e0)'
     },
     vibrant: {
-      bg: '#ffeb3b', // خلفية صفراء زاهية
-      accent: '#ff5722', // أكسنت برتقالي قوي
-      text: '#00bcd4', // نص أزرق فاقع
+      bg: '#ffeb3b',
+      accent: '#ff5722',
+      text: '#00bcd4',
+      shadow: 'rgba(0, 0, 0, 0.4)', // ظل معتدل
+      gradient: 'linear-gradient(45deg, #ffeb3b, #ff5722)'
     },
     retro: {
-      bg: '#d50000', // خلفية حمراء زاهية
-      accent: '#ffc107', // أكسنت أصفر داكن
-      text: '#ff4081', // نص وردي فاقع
+      bg: '#d50000',
+      accent: '#ffc107',
+      text: '#ff4081',
+      shadow: 'rgba(0, 0, 0, 0.5)', // ظل داكن مع تأثيرات
+      gradient: 'linear-gradient(45deg, #d50000, #ffc107)'
     },
     neon: {
-      bg: '#000000', // خلفية سوداء
-      accent: '#39ff14', // أكسنت نيون أخضر
-      text: '#ff007f', // نص نيون وردي
+      bg: '#000000',
+      accent: '#39ff14',
+      text: '#ff007f',
+      shadow: 'rgba(0, 0, 0, 0.3)', // ظل نيون
+      gradient: 'linear-gradient(45deg, #000000, #39ff14)'
     },
     pastel: {
-      bg: '#fce4ec', // خلفية وردية فاتحة
-      accent: '#ffb3c1', // أكسنت وردي هادئ
-      text: '#bb2d3b', // نص بلون وردي داكن
+      bg: '#fce4ec',
+      accent: '#ffb3c1',
+      text: '#bb2d3b',
+      shadow: 'rgba(0, 0, 0, 0.1)', // ظل ناعم
+      gradient: 'linear-gradient(45deg, #fce4ec, #ffb3c1)'
     },
     gradient: {
-      bg: 'linear-gradient(45deg, #ff6f00, #ff8f00)', // خلفية بتدرج بين البرتقالي والأصفر
-      accent: '#ffeb3b', // أكسنت أصفر زاهي
-      text: '#ffffff', // نص أبيض
+      bg: 'linear-gradient(45deg, #ff6f00, #ff8f00)',
+      accent: '#ffeb3b',
+      text: '#ffffff',
+      shadow: 'rgba(0, 0, 0, 0.2)', // ظل خفيف
+      gradient: 'linear-gradient(45deg, #ff6f00, #ff8f00)'
     },
     cyberpunk: {
-      bg: '#2c3e50', // خلفية داكنة مع تأثيرات ضوء
-      accent: '#e74c3c', // أكسنت أحمر فاتح
-      text: '#8e44ad', // نص بنفسجي مائل للرمادي
+      bg: '#2c3e50',
+      accent: '#e74c3c',
+      text: '#8e44ad',
+      shadow: 'rgba(0, 0, 0, 0.6)', // ظل قوي
+      gradient: 'linear-gradient(45deg, #2c3e50, #34495e)'
     },
     nature: {
-      bg: '#388e3c', // خلفية خضراء
-      accent: '#2e7d32', // أكسنت أخضر داكن
-      text: '#1b5e20', // نص أخضر داكن جدًا
+      bg: '#388e3c',
+      accent: '#2e7d32',
+      text: '#1b5e20',
+      shadow: 'rgba(0, 0, 0, 0.2)', // ظل خفيف مع تأثير طبيعي
+      gradient: 'linear-gradient(45deg, #388e3c, #2e7d32)'
     },
     ocean: {
-      bg: '#0277bd', // خلفية زرقاء كالمحيط
-      accent: '#0288d1', // أكسنت أزرق غامق
-      text: '#b3e5fc', // نص أزرق فاتح
+      bg: '#0277bd',
+      accent: '#0288d1',
+      text: '#b3e5fc',
+      shadow: 'rgba(0, 0, 0, 0.3)', // ظل ناعم
+      gradient: 'linear-gradient(45deg, #0277bd, #0288d1)'
     },
     old: {
-      bg: '#f4e1d2', // خلفية بيج قديمة
-      accent: '#6a4f47', // أكسنت بني داكن
-      text: '#3e2a47', // نص بني داكن مائل إلى البنفسجي
+      bg: '#f4e1d2',
+      accent: '#6a4f47',
+      text: '#3e2a47',
+      shadow: 'rgba(0, 0, 0, 0.4)', // ظل خفيف
+      gradient: 'linear-gradient(45deg, #f4e1d2, #6a4f47)'
     },
     custom: (customColors) => {
       return {
         bg: customColors.bg || '#1c1c1c',
         accent: customColors.accent || '#444',
         text: customColors.text || '#ffffff',
+        shadow: customColors.shadow || 'rgba(0, 0, 0, 0.3)',
+        gradient: customColors.gradient || 'linear-gradient(45deg, #ffffff, #f0f0f0)'
       };
     },
   };
 
-  // إرجاع الثيم المناسب أو الثيم الافتراضي إذا لم يكن موجودًا
   return themes[theme] || themes['classic'];
 }
 
@@ -178,15 +203,15 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   const height = 1600;
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
-  const { bg, accent, text: textColor } = getThemeColors(theme);
+  const { bg, accent, text: textColor, shadow, gradient } = getThemeColors(theme);
 
   const background = await loadImage(backgroundUrl);
   ctx.drawImage(background, 0, 0, width, 500);
 
-  const gradient = ctx.createLinearGradient(0, 500, 0, 1000);
-  gradient.addColorStop(0, bg);
-  gradient.addColorStop(1, '#f0f0f0');
-  ctx.fillStyle = gradient;
+  const gradientFill = ctx.createLinearGradient(0, 500, 0, 1000);
+  gradientFill.addColorStop(0, bg);
+  gradientFill.addColorStop(1, '#f0f0f0');
+  ctx.fillStyle = gradientFill;
   ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
@@ -195,7 +220,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   const avatarY = 520;
 
   ctx.save();
-  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowColor = shadow;
   ctx.shadowBlur = 15;
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 4;
