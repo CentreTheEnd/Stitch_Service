@@ -327,15 +327,15 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
-  const avatarSize = 280;
+  const avatarSize = 300;
   const avatarX = width - avatarSize - 90;
-  const avatarY = 450;
+  const avatarY = 400;
 
   ctx.save();
   ctx.shadowColor = shadow;
-  ctx.shadowBlur = 15;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 4;
+  ctx.shadowBlur = 25;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
   ctx.beginPath();
   ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
   ctx.closePath();
@@ -344,22 +344,22 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.restore();
 
   ctx.shadowColor = shadow;
-  ctx.shadowBlur = 15;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 4;
-  ctx.font = 'bold 28px CustomFont';
+  ctx.shadowBlur = 10;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
+  ctx.font = 'bold 29px CustomFont';
   ctx.fillStyle = accent;
   ctx.textAlign = 'left';
   ctx.fillText('User Name:', 80, 560);
   ctx.fillStyle = textColor;
-  ctx.font = '24px CustomFont';
+  ctx.font = '26px CustomFont';
   ctx.fillText(name, 80, 595);
 
-  ctx.font = 'bold 28px CustomFont';
+  ctx.font = 'bold 29px CustomFont';
   ctx.fillStyle = accent;
   ctx.fillText('Group Name:', 80, 635);
   ctx.fillStyle = textColor;
-  ctx.font = '24px CustomFont';
+  ctx.font = '26px CustomFont';
   ctx.fillText(groupName, 80, 670);
 
   ctx.font = 'bold 26px CustomFont';
@@ -373,7 +373,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillStyle = accent;
   ctx.fillText('Description:', 80, 800);
   ctx.fillStyle = textColor;
-  ctx.font = '22px CustomFont';
+  ctx.font = '24px CustomFont';
   wrapText(ctx, description, 80, 835, width - 160, 30);
 
   const welcomeText = iswelcome === 'true'
@@ -391,7 +391,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
 
   if (text) {
     ctx.fillStyle = bg;
-    ctx.font = '24px CustomFont';
+    ctx.font = '35px CustomFont';
     ctx.fillText(text, width / 2, 1140);
   }
 
