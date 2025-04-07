@@ -69,7 +69,20 @@ export { usedRouterKeys };
 
 export default router;
 
-
+function getContrastingColor(hexColor) {
+    let color = hexColor.substring(1); // إزالة # من بداية الكود
+    let r = parseInt(color.substring(0, 2), 16);
+    let g = parseInt(color.substring(2, 4), 16);
+    let b = parseInt(color.substring(4, 6), 16);
+    
+    // حساب العكس عن طريق الحصول على نغمة متعاكسة
+    r = 255 - r;
+    g = 255 - g;
+    b = 255 - b;
+    
+    // إرجاع اللون العكسي بصيغة hex
+    return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
+  }
 
 function getThemeColors(theme) {
   const themes = {
@@ -303,13 +316,13 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
   const { bg, accent, text: textColor, shadow, gradient } = getThemeColors(theme);
-
+  const bgx = getContrastingColor(bg);
   const background = await loadImage(backgroundUrl);
   ctx.drawImage(background, 0, 0, width, 500);
 
   const gradientFill = ctx.createLinearGradient(0, 500, 0, 1000);
   gradientFill.addColorStop(0, bg);
-  gradientFill.addColorStop(1, '#f0f0f0');
+  gradientFill.addColorStop(1, bgx);
   ctx.fillStyle = gradientFill;
   ctx.fillRect(0, 500, width, 1100);
 
