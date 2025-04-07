@@ -344,7 +344,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.restore();
 
   ctx.shadowColor = shadow;
-  ctx.shadowBlur = 10;
+  ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 2;
   ctx.shadowOffsetY = 2;
   ctx.font = 'bold 29px CustomFont';
