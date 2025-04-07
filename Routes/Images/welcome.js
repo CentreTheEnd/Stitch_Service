@@ -69,92 +69,191 @@ export { usedRouterKeys };
 
 export default router;
 
+
+
 function getThemeColors(theme) {
   const themes = {
-    classic: {
+    light: {
       bg: '#ffffff',
-      accent: '#444',
-      text: '#1c1c1c',
-      shadow: 'rgba(0, 0, 0, 0.2)', // الظل الخفيف
-      gradient: 'linear-gradient(45deg, #ffffff, #f0f0f0)'
+      accent: '#2196f3',
+      text: '#212121',
+      shadow: 'rgba(0, 0, 0, 0.1)',
+      gradient: 'linear-gradient(145deg, #ffffff, #f0f0f0)'
     },
     dark: {
       bg: '#121212',
       accent: '#bb86fc',
       text: '#e0e0e0',
-      shadow: 'rgba(0, 0, 0, 0.7)', // ظل داكن
-      gradient: 'linear-gradient(45deg, #121212, #333333)'
+      shadow: 'rgba(0, 0, 0, 0.6)',
+      gradient: 'linear-gradient(145deg, #1e1e1e, #2c2c2c)'
     },
-    light: {
-      bg: '#ffffff',
-      accent: '#03a9f4',
-      text: '#212121',
-      shadow: 'rgba(0, 0, 0, 0.1)', // ظل خفيف
-      gradient: 'linear-gradient(45deg, #ffffff, #e0e0e0)'
-    },
-    vibrant: {
-      bg: '#ffeb3b',
-      accent: '#ff5722',
-      text: '#00bcd4',
-      shadow: 'rgba(0, 0, 0, 0.4)', // ظل معتدل
-      gradient: 'linear-gradient(45deg, #ffeb3b, #ff5722)'
-    },
-    retro: {
-      bg: '#d50000',
-      accent: '#ffc107',
-      text: '#ff4081',
-      shadow: 'rgba(0, 0, 0, 0.5)', // ظل داكن مع تأثيرات
-      gradient: 'linear-gradient(45deg, #d50000, #ffc107)'
-    },
+    terbo: {
+  bg: '#0d1b2a',
+  accent: '#1b263b',
+  text: '#e0e1dd',
+  shadow: 'rgba(0, 0, 0, 0.5)',
+  gradient: 'linear-gradient(135deg, #0d1b2a, #1b263b)'
+},
     neon: {
       bg: '#000000',
       accent: '#39ff14',
-      text: '#ff007f',
-      shadow: 'rgba(0, 0, 0, 0.3)', // ظل نيون
-      gradient: 'linear-gradient(45deg, #000000, #39ff14)'
-    },
-    pastel: {
-      bg: '#fce4ec',
-      accent: '#ffb3c1',
-      text: '#bb2d3b',
-      shadow: 'rgba(0, 0, 0, 0.1)', // ظل ناعم
-      gradient: 'linear-gradient(45deg, #fce4ec, #ffb3c1)'
-    },
-    gradient: {
-      bg: 'linear-gradient(45deg, #ff6f00, #ff8f00)',
-      accent: '#ffeb3b',
       text: '#ffffff',
-      shadow: 'rgba(0, 0, 0, 0.2)', // ظل خفيف
-      gradient: 'linear-gradient(45deg, #ff6f00, #ff8f00)'
-    },
-    cyberpunk: {
-      bg: '#2c3e50',
-      accent: '#e74c3c',
-      text: '#8e44ad',
-      shadow: 'rgba(0, 0, 0, 0.6)', // ظل قوي
-      gradient: 'linear-gradient(45deg, #2c3e50, #34495e)'
-    },
-    nature: {
-      bg: '#388e3c',
-      accent: '#2e7d32',
-      text: '#1b5e20',
-      shadow: 'rgba(0, 0, 0, 0.2)', // ظل خفيف مع تأثير طبيعي
-      gradient: 'linear-gradient(45deg, #388e3c, #2e7d32)'
+      shadow: 'rgba(57, 255, 20, 0.4)',
+      gradient: 'linear-gradient(145deg, #0f0f0f, #1a1a1a)'
     },
     ocean: {
-      bg: '#0277bd',
-      accent: '#0288d1',
-      text: '#b3e5fc',
-      shadow: 'rgba(0, 0, 0, 0.3)', // ظل ناعم
-      gradient: 'linear-gradient(45deg, #0277bd, #0288d1)'
+      bg: '#e0f7fa',
+      accent: '#00acc1',
+      text: '#004d40',
+      shadow: 'rgba(0, 172, 193, 0.3)',
+      gradient: 'linear-gradient(145deg, #e0f7fa, #b2ebf2)'
+    },
+    forest: {
+      bg: '#e8f5e9',
+      accent: '#388e3c',
+      text: '#1b5e20',
+      shadow: 'rgba(56, 142, 60, 0.3)',
+      gradient: 'linear-gradient(145deg, #e8f5e9, #c8e6c9)'
+    },
+    fire: {
+      bg: '#fff3e0',
+      accent: '#f57c00',
+      text: '#e65100',
+      shadow: 'rgba(245, 124, 0, 0.3)',
+      gradient: 'linear-gradient(145deg, #fff3e0, #ffe0b2)'
     },
     old: {
-      bg: '#f4e1d2',
-      accent: '#6a4f47',
-      text: '#3e2a47',
-      shadow: 'rgba(0, 0, 0, 0.4)', // ظل خفيف
-      gradient: 'linear-gradient(45deg, #f4e1d2, #6a4f47)'
+      bg: '#fdf6e3',
+      accent: '#b58900',
+      text: '#657b83',
+      shadow: 'rgba(101, 123, 131, 0.2)',
+      gradient: 'linear-gradient(145deg, #fdf6e3, #eee8d5)'
     },
+    rose: {
+      bg: '#fff1f3',
+      accent: '#f06292',
+      text: '#880e4f',
+      shadow: 'rgba(240, 98, 146, 0.3)',
+      gradient: 'linear-gradient(145deg, #fff1f3, #fce4ec)'
+    },
+    nightSky: {
+      bg: '#1a237e',
+      accent: '#536dfe',
+      text: '#e8eaf6',
+      shadow: 'rgba(83, 109, 254, 0.4)',
+      gradient: 'linear-gradient(145deg, #1a237e, #283593)'
+    },
+    sunset: {
+      bg: '#ffecb3',
+      accent: '#ff7043',
+      text: '#bf360c',
+      shadow: 'rgba(255, 112, 67, 0.3)',
+      gradient: 'linear-gradient(145deg, #ffecb3, #ffe0b2)'
+    },
+    lavender: {
+      bg: '#f3e5f5',
+      accent: '#ab47bc',
+      text: '#4a148c',
+      shadow: 'rgba(171, 71, 188, 0.3)',
+      gradient: 'linear-gradient(145deg, #f3e5f5, #e1bee7)'
+    },
+    cyberpunk: {
+      bg: '#0f0f0f',
+      accent: '#ff00ff',
+      text: '#00ffff',
+      shadow: 'rgba(255, 0, 255, 0.4)',
+      gradient: 'linear-gradient(145deg, #0f0f0f, #1a1a1a)'
+    },
+    infernoBlack: {
+  bg: '#0a0a0a',
+  accent: '#ff1a1a',
+  text: '#ffeaea',
+  shadow: 'rgba(255, 26, 26, 0.3)',
+  gradient: 'linear-gradient(145deg, #0a0a0a, #1a0000)',
+},
+flameShadow: {
+  bg: '#121212',
+  accent: '#ff4500',
+  text: '#ffdad0',
+  shadow: 'rgba(255, 69, 0, 0.25)',
+  gradient: 'linear-gradient(145deg, #121212, #240000)',
+},
+blackLava: {
+  bg: '#0f0f0f',
+  accent: '#e60000',
+  text: '#ffd6d6',
+  shadow: 'rgba(230, 0, 0, 0.2)',
+  gradient: 'linear-gradient(145deg, #0f0f0f, #1c0000)',
+},
+rubyAsh: {
+  bg: '#101010',
+  accent: '#ff0033',
+  text: '#fff0f0',
+  shadow: 'rgba(255, 0, 51, 0.25)',
+  gradient: 'linear-gradient(145deg, #101010, #2b0008)',
+},
+darkGold: {
+  bg: '#1b1b1b',
+  accent: '#d4af37', // ذهب غامق
+  text: '#f5f5dc',
+  shadow: 'rgba(212, 175, 55, 0.3)',
+  gradient: 'linear-gradient(145deg, #1b1b1b, #2c2c2c)',
+},
+goldNight: {
+  bg: '#0f0f0f',
+  accent: '#ffd700', // ذهبي لامع
+  text: '#fff8dc',
+  shadow: 'rgba(255, 215, 0, 0.25)',
+  gradient: 'linear-gradient(145deg, #0f0f0f, #292929)',
+},
+royalBlack: {
+  bg: '#121212',
+  accent: '#e6c200', // ذهبي ملكي
+  text: '#fff1c1',
+  shadow: 'rgba(230, 194, 0, 0.3)',
+  gradient: 'linear-gradient(145deg, #121212, #1e1e1e)',
+},
+darkGoldRed: {
+  bg: '#0d0d0d', // أسود عميق
+  accent: '#ff0000', // أحمر ناري
+  text: '#f0f0f0', // نص رمادي فاتح
+  highlight: '#d4af37', // ذهبي ملكي
+  shadow: 'rgba(255, 0, 0, 0.25)',
+  gradient: 'linear-gradient(135deg, #0d0d0d, #1a1a1a)',
+},
+royalDark: {
+  bg: '#1a1a1a', // أسود محايد
+  accent: '#ffd700', // ذهبي لامع
+  text: '#ffffff', // أبيض نقي
+  highlight: '#990000', // أحمر ملكي داكن
+  shadow: 'rgba(212, 175, 55, 0.2)',
+  gradient: 'linear-gradient(145deg, #1a1a1a, #2a2a2a)',
+},
+luxuryNight: {
+  bg: '#121212', // أسود ليلي
+  accent: '#b30000', // أحمر فاخر
+  text: '#f8f8f8',
+  highlight: '#f5c518', // ذهبي فاتح
+  shadow: 'rgba(179, 0, 0, 0.2)',
+  gradient: 'linear-gradient(145deg, #121212, #1e1e1e)',
+},
+obsidianFire: {
+  bg: '#0a0a0a', // أسود حجري
+  accent: '#e60000', // أحمر مشع
+  text: '#eeeeee',
+  highlight: '#ffc107', // ذهبي جذاب
+  shadow: 'rgba(230, 0, 0, 0.3)',
+  gradient: 'linear-gradient(145deg, #0a0a0a, #161616)',
+},
+glass: {
+  bg: '#1a1a1a',
+  accent: '#ffd700',
+  text: '#ffffff',
+  highlight: '#990000',
+  shadow: 'rgba(212, 175, 55, 0.2)',
+  gradient: 'linear-gradient(145deg, #1a1a1a, #2a2a2a)',
+},
+
     custom: (customColors) => {
       return {
         bg: customColors.bg || '#1c1c1c',
@@ -166,7 +265,7 @@ function getThemeColors(theme) {
     },
   };
 
-  return themes[theme] || themes['classic'];
+  return themes[theme] || themes['darkGoldRed'];
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
@@ -210,7 +309,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
 
   const gradientFill = ctx.createLinearGradient(0, 500, 0, 1000);
   gradientFill.addColorStop(0, bg);
-  gradientFill.addColorStop(1, '#f0f0f0');
+  gradientFill.addColorStop(1, gradient || '#f0f0f0');
   ctx.fillStyle = gradientFill;
   ctx.fillRect(0, 500, width, 1100);
 
