@@ -70,18 +70,78 @@ export { usedRouterKeys };
 export default router;
 
 function getThemeColors(theme) {
-  switch (theme) {
-    case 'fun':
-      return { bg: '#fff0f5', accent: '#ff69b4', text: '#c2185b' };
-    case 'education':
-      return { bg: '#e3f2fd', accent: '#42a5f5', text: '#0d47a1' };
-    case 'work':
-      return { bg: '#f3e5f5', accent: '#7e57c2', text: '#311b92' };
-    case 'classic':
-      return { bg: '#ffffff', accent: '#444', text: '#1c1c1c' };
-    default: 
-      return { bg: '#1c1c1c', accent: '#444', text: '#ffffff' };
-  }
+  const themes = {
+    classic: {
+      bg: '#ffffff', // خلفية بيضاء
+      accent: '#444', // لون أكسنت داكن
+      text: '#1c1c1c', // نص داكن
+    },
+    dark: {
+      bg: '#121212', // خلفية داكنة
+      accent: '#bb86fc', // اللون الأرجواني الفاتح
+      text: '#e0e0e0', // نص باللون الفاتح
+    },
+    light: {
+      bg: '#ffffff', // خلفية بيضاء
+      accent: '#03a9f4', // لون أكسنت أزرق فاقع
+      text: '#212121', // نص داكن
+    },
+    vibrant: {
+      bg: '#ffeb3b', // خلفية صفراء زاهية
+      accent: '#ff5722', // أكسنت برتقالي قوي
+      text: '#00bcd4', // نص أزرق فاقع
+    },
+    retro: {
+      bg: '#d50000', // خلفية حمراء زاهية
+      accent: '#ffc107', // أكسنت أصفر داكن
+      text: '#ff4081', // نص وردي فاقع
+    },
+    neon: {
+      bg: '#000000', // خلفية سوداء
+      accent: '#39ff14', // أكسنت نيون أخضر
+      text: '#ff007f', // نص نيون وردي
+    },
+    pastel: {
+      bg: '#fce4ec', // خلفية وردية فاتحة
+      accent: '#ffb3c1', // أكسنت وردي هادئ
+      text: '#bb2d3b', // نص بلون وردي داكن
+    },
+    gradient: {
+      bg: 'linear-gradient(45deg, #ff6f00, #ff8f00)', // خلفية بتدرج بين البرتقالي والأصفر
+      accent: '#ffeb3b', // أكسنت أصفر زاهي
+      text: '#ffffff', // نص أبيض
+    },
+    cyberpunk: {
+      bg: '#2c3e50', // خلفية داكنة مع تأثيرات ضوء
+      accent: '#e74c3c', // أكسنت أحمر فاتح
+      text: '#8e44ad', // نص بنفسجي مائل للرمادي
+    },
+    nature: {
+      bg: '#388e3c', // خلفية خضراء
+      accent: '#2e7d32', // أكسنت أخضر داكن
+      text: '#1b5e20', // نص أخضر داكن جدًا
+    },
+    ocean: {
+      bg: '#0277bd', // خلفية زرقاء كالمحيط
+      accent: '#0288d1', // أكسنت أزرق غامق
+      text: '#b3e5fc', // نص أزرق فاتح
+    },
+    old: {
+      bg: '#f4e1d2', // خلفية بيج قديمة
+      accent: '#6a4f47', // أكسنت بني داكن
+      text: '#3e2a47', // نص بني داكن مائل إلى البنفسجي
+    },
+    custom: (customColors) => {
+      return {
+        bg: customColors.bg || '#1c1c1c',
+        accent: customColors.accent || '#444',
+        text: customColors.text || '#ffffff',
+      };
+    },
+  };
+
+  // إرجاع الثيم المناسب أو الثيم الافتراضي إذا لم يكن موجودًا
+  return themes[theme] || themes['classic'];
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 5) {
@@ -130,15 +190,15 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillRect(0, 500, width, 1100);
 
   const avatar = await loadImage(avatarUrl);
-  const avatarSize = 220;  // Increased avatar size for HD effect
-  const avatarX = width - avatarSize - 100;  // Adjusted position for HD look
+  const avatarSize = 200;
+  const avatarX = width - avatarSize - 80;
   const avatarY = 520;
 
   ctx.save();
-  ctx.shadowColor = 'rgba(0,0,0,0.5)';  // Stronger shadow for better contrast
-  ctx.shadowBlur = 20;  // Increased blur for sharper shadows
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur = 15;
   ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 8;  // Slightly offset for a better shadow effect
+  ctx.shadowOffsetY = 4;
   ctx.beginPath();
   ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
   ctx.closePath();
@@ -146,33 +206,33 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
 
-  ctx.font = 'bold 32px CustomFont';  // Larger font size for HD readability
+  ctx.font = 'bold 28px CustomFont';
   ctx.fillStyle = '#555';
   ctx.textAlign = 'left';
   ctx.fillText('User Name:', 80, 560);
   ctx.fillStyle = '#222';
-  ctx.font = '28px CustomFont';
+  ctx.font = '24px CustomFont';
   ctx.fillText(name, 80, 595);
 
-  ctx.font = 'bold 32px CustomFont';
+  ctx.font = 'bold 28px CustomFont';
   ctx.fillStyle = '#555';
   ctx.fillText('Group Name:', 80, 635);
   ctx.fillStyle = '#222';
-  ctx.font = '28px CustomFont';
+  ctx.font = '24px CustomFont';
   ctx.fillText(groupName, 80, 670);
 
-  ctx.font = 'bold 30px CustomFont';
+  ctx.font = 'bold 26px CustomFont';
   ctx.fillStyle = '#555';
   ctx.fillText('Members:', 80, 730);
   ctx.fillStyle = '#222';
-  ctx.font = '28px CustomFont';
+  ctx.font = '24px CustomFont';
   ctx.fillText(`${members}`, 200, 730);
 
-  ctx.font = 'bold 30px CustomFont';
+  ctx.font = 'bold 26px CustomFont';
   ctx.fillStyle = '#555';
   ctx.fillText('Description:', 80, 800);
   ctx.fillStyle = '#222';
-  ctx.font = '24px CustomFont';
+  ctx.font = '22px CustomFont';
   wrapText(ctx, description, 80, 835, width - 160, 30);
 
   const welcomeText = iswelcome === 'true'
@@ -185,17 +245,17 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
 
   ctx.textAlign = 'center';
   ctx.fillStyle = welcomeGradient;
-  ctx.font = 'bold 48px CustomFont';  // Larger text for better visibility
+  ctx.font = 'bold 40px CustomFont';
   ctx.fillText(welcomeText, width / 2, 1100);
 
   if (text) {
     ctx.fillStyle = '#666';
-    ctx.font = '28px CustomFont';
+    ctx.font = '24px CustomFont';
     ctx.fillText(text, width / 2, 1140);
   }
 
   ctx.fillStyle = '#888';
-  ctx.font = 'italic 26px CustomFont';
+  ctx.font = 'italic 22px CustomFont';
   ctx.fillText(`Group created by ${creatorName}`, width / 2, height - 40);
 
   return canvas.toBuffer();
