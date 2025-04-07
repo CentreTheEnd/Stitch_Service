@@ -48,7 +48,7 @@ router.post('/create-session', async (req, res) => {
     const credsPath = join(authPath, numeroTelefono + '_creds.json');
 
     if (!fs.existsSync(credsPath)) {
-      const { state, saveCreds } = await useMultiFileAuthState(authPath);
+      const { state, saveCreds } = await useMultiFileAuthState(credsPath);
       const { version } = await fetchLatestBaileysVersion();
 
       const client = makeWASocket({
