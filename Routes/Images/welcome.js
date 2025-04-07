@@ -344,7 +344,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.restore();
 
   ctx.font = 'bold 28px CustomFont';
-  ctx.fillStyle = accent;
+  ctx.fillStyle = bgx;
   ctx.textAlign = 'left';
   ctx.fillText('User Name:', 80, 560);
   ctx.fillStyle = textColor;
@@ -378,7 +378,7 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
 
   const welcomeGradient = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
   welcomeGradient.addColorStop(0, accent);
-  welcomeGradient.addColorStop(1, textColor);
+  welcomeGradient.addColorStop(1, bg);
 
   ctx.textAlign = 'center';
   ctx.fillStyle = welcomeGradient;
@@ -386,12 +386,12 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillText(welcomeText, width / 2, 1100);
 
   if (text) {
-    ctx.fillStyle = textColor;
+    ctx.fillStyle = bg;
     ctx.font = '24px CustomFont';
     ctx.fillText(text, width / 2, 1140);
   }
 
-  ctx.fillStyle = textColor;
+  ctx.fillStyle = bg;
   ctx.font = 'italic 22px CustomFont';
   ctx.fillText(`Group created by ${creatorName}`, width / 2, height - 40);
 
