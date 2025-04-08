@@ -18,7 +18,7 @@ import { saveSession, getSession, deleteSession } from '../../Database/Mongo/Mod
 const router = express.Router();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-global.authFile = 'tmp';
+global.authFile = '../tmp';
 
 // مسار POST لإنشاء الجلسة باستخدام رقم الهاتف فقط
 router.post('/create-session', async (req, res) => {
