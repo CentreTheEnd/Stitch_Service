@@ -362,8 +362,100 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.strokeStyle = gradientAvatar; 
   ctx.stroke();
   ctx.closePath();
-  
 
+ctx.shadowColor = shadow;
+ctx.shadowBlur = 5;
+ctx.shadowOffsetX = 2;
+ctx.shadowOffsetY = 2;
+
+ctx.textAlign = 'left';
+ctx.lineWidth = 2;
+ctx.strokeStyle = shadow; // لون الحد لجميع النصوص
+
+// User Name
+ctx.font = 'bold 29px CustomFont';
+ctx.strokeText('User Name:', 80, 560);
+ctx.fillStyle = accent;
+ctx.fillText('User Name:', 80, 560);
+
+ctx.font = '26px CustomFont';
+ctx.lineWidth = 1.5;
+ctx.strokeText(name, 80, 595);
+ctx.fillStyle = textColor;
+ctx.fillText(name, 80, 595);
+
+// Group Name
+ctx.font = 'bold 29px CustomFont';
+ctx.lineWidth = 2;
+ctx.strokeText('Group Name:', 80, 635);
+ctx.fillStyle = accent;
+ctx.fillText('Group Name:', 80, 635);
+
+ctx.font = '26px CustomFont';
+ctx.lineWidth = 1.5;
+ctx.strokeText(groupName, 80, 670);
+ctx.fillStyle = textColor;
+ctx.fillText(groupName, 80, 670);
+
+// Members
+ctx.font = 'bold 26px CustomFont';
+ctx.lineWidth = 2;
+ctx.strokeText('Members:', 80, 730);
+ctx.fillStyle = accent;
+ctx.fillText('Members:', 80, 730);
+
+ctx.font = '24px CustomFont';
+ctx.lineWidth = 1.5;
+ctx.strokeText(`${members}`, 200, 730);
+ctx.fillStyle = textColor;
+ctx.fillText(`${members}`, 200, 730);
+
+// Description
+ctx.font = 'bold 26px CustomFont';
+ctx.lineWidth = 2;
+ctx.strokeText('Description:', 80, 800);
+ctx.fillStyle = accent;
+ctx.fillText('Description:', 80, 800);
+
+ctx.font = '24px CustomFont';
+ctx.lineWidth = 1.5;
+ctx.fillStyle = textColor;
+wrapText(ctx, description, 80, 835, width - 160, 30, true); // تعديل بسيط لاحقًا
+
+// Welcome Text
+const welcomeText = iswelcome === 'true'
+  ? `Welcome ${name} to ${groupName}!`
+  : `${name} has left ${groupName}.`;
+
+ctx.textAlign = 'center';
+ctx.font = 'bold 40px CustomFont';
+ctx.lineWidth = 2;
+ctx.strokeStyle = textColor;
+ctx.strokeText(welcomeText, width / 2, 1100);
+
+const welcomeGradient = ctx.createLinearGradient(width / 2 - 150, 0, width / 2 + 150, 0);
+welcomeGradient.addColorStop(0, accent);
+welcomeGradient.addColorStop(1, bg);
+ctx.fillStyle = welcomeGradient;
+ctx.fillText(welcomeText, width / 2, 1100);
+
+// النص الإضافي (اختياري)
+if (text) {
+  ctx.font = '35px CustomFont';
+  ctx.lineWidth = 1.5;
+  ctx.strokeText(text, width / 2, 1140);
+  ctx.fillStyle = bg;
+  ctx.fillText(text, width / 2, 1140);
+}
+
+// منشئ المجموعة
+ctx.font = 'italic 22px CustomFont';
+ctx.lineWidth = 1.5;
+ctx.strokeText(`Group created by ${creatorName}`, width / 2, height - 40);
+ctx.fillStyle = bg;
+ctx.fillText(`Group created by ${creatorName}`, width / 2, height - 40);
+
+/*
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 2;
@@ -419,6 +511,6 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.fillStyle = bg;
   ctx.font = 'italic 22px CustomFont';
   ctx.fillText(`Group created by ${creatorName}`, width / 2, height - 40);
-
+*/
   return canvas.toBuffer();
 }
