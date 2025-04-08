@@ -37,7 +37,7 @@ export async function setupApp() {
     console.log(`Setting up API Database...`);
     await setupDatabase(app);
     
-
+/*
     app.use(async (req, res, next) => {
         const authHeader = req.headers['authorization'];
         
@@ -51,6 +51,8 @@ export async function setupApp() {
              });
         }
     });
+
+*/
     
     console.log(`Setting up API Routes...`);
     await setupRoutes(app);
