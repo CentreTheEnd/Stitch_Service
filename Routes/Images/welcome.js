@@ -334,14 +334,14 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   const avatar = await loadImage(avatarUrl);
   const avatarSize = 300;
   const avatarX = width - avatarSize - 90;
-  const avatarY = 400;
+  const avatarY = 350;
 
   const gradientAvatar = ctx.createLinearGradient(
   avatarX, avatarY,
   avatarX, avatarY + avatarSize
 );
-  gradientAvatar.addColorStop(0, bgx); // اللون في الأعلى
-  gradientAvatar.addColorStop(1, bg); // اللون في الأسفل
+  gradientAvatar.addColorStop(0, bg); 
+  gradientAvatar.addColorStop(1, bgx); 
   
   
   ctx.save();
