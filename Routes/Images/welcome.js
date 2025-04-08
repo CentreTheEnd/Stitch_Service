@@ -139,7 +139,7 @@ function getThemeColors(theme) {
       bg: '#fdf6e3',
       accent: '#b58900',
       text: '#ffffff', //#657b83
-      shadow: 'rgba(101, 123, 131, 0.6)',
+      shadow: 'rgba(0, 0, 0, 0.6)',
       gradient: 'linear-gradient(145deg, #fdf6e3, #eee8d5)'
     },
     rose: {
