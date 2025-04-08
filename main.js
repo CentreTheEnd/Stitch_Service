@@ -34,11 +34,27 @@ export async function setupApp() {
    // app.use(express.static("public"));
     app.use(express.urlencoded({ extended: true }));
 
+    console.log(`Setting up API Database...`);
+    await setupDatabase(app);
+    
+
+    app.use(async (req, res, next) => {
+        const authHeader = req.headers['authorization'];
+        
+        if (authHeader) {
+            const apiKey = authHeader.split(' ')[1];
+            next();
+        } else {
+             return res.status(401).json({
+             success: false,
+             message: 'API key missing or malformed',
+             });
+        }
+    });
+    
     console.log(`Setting up API Routes...`);
     await setupRoutes(app);
-
-    console.log(`Setting up Database Switch...`);
-    await setupDatabase(app);
+    
 
     console.log(`Server Setup Complete!`);
 
