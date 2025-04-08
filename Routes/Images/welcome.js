@@ -336,6 +336,14 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   const avatarX = width - avatarSize - 90;
   const avatarY = 400;
 
+  const gradient = ctx.createLinearGradient(
+  avatarX, avatarY,
+  avatarX, avatarY + avatarSize
+);
+  gradient.addColorStop(0, bgx); // اللون في الأعلى
+  gradient.addColorStop(1, bg); // اللون في الأسفل
+  
+  
   ctx.save();
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 25;
@@ -347,6 +355,12 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.clip();
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
+  ctx.beginPath();
+  ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = gradient; 
+  ctx.stroke();
+  ctx.closePath();
 
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 5;
