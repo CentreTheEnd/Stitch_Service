@@ -351,21 +351,18 @@ async function createWelcomImage(backgroundUrl, avatarUrl, name, groupName, crea
   ctx.shadowOffsetY = 2;
   ctx.beginPath();
   ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = gradientAvatar; 
-  ctx.stroke();
   ctx.closePath();
   ctx.clip();
   ctx.drawImage(avatar, avatarX, avatarY, avatarSize, avatarSize);
   ctx.restore();
-  /*
+  
   ctx.beginPath();
   ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
-  ctx.lineWidth = 10;
+  ctx.lineWidth = 5;
   ctx.strokeStyle = gradientAvatar; 
   ctx.stroke();
   ctx.closePath();
-  */
+  
 
   ctx.shadowColor = shadow;
   ctx.shadowBlur = 5;
