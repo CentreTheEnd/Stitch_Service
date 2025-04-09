@@ -80,8 +80,8 @@ const body = {
     text: text, 
     model_id: 'eleven_multilingual_v2', 
     voice_settings: {
-      stability: stability,
-      similarity_boost: similarity_boost,
+     // stability: stability,
+     //  similarity_boost: similarity_boost,
       speed: speed
     }
     };
