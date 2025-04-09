@@ -7,7 +7,7 @@ import { fileTypeFromBuffer } from 'file-type';
 const router = express.Router();
 
 router.get('/text2speech', async (req, res) => {
-  const { q, gender, name, speed, stability, similarity } = req.query;
+  const { q, gender, name, speed } = req.query;
   const genders = ["female", "male"];
 
   if (!q) {
@@ -34,7 +34,7 @@ router.get('/text2speech', async (req, res) => {
     }
 
     const voiceId = voiceData.id;
-    const data = await textToSpeech(q, voiceId, speed, stability, similarity);
+    const data = await textToSpeech(q, voiceId, speed);
 
     return res.status(200).json({ status: true, author: "sayed-hamdey", data: data });
 
@@ -51,9 +51,7 @@ const usedRouterKeys = {
     q: "text",
     gender: "Voice gender",
     name: "Speaker's name",
-    speed: "speed of sound",
-    stability: "stability of sound",
-    similarity: "similarity of sound",
+    speed: "Speed of sound",
     key: "key lock"
   },
   limited: 5,
@@ -67,69 +65,40 @@ export default router;
 
 
 
-async function textToSpeech(text, id, voicespeed, voicestability, voicesimilarity) {
+async function textToSpeech(text, voiceid, voicespeed) {
 
-let userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/${Math.floor(Math.random() * 700) + 500}.36 (KHTML, like Gecko) Chrome/${Math.floor(Math.random() * 20) + 60}.0.3163.100 Safari/${Math.floor(Math.random() * 20) + 60}.36`;
-
-const speed = voicespeed || 1.8;
-const stability = voicestability || 0.85;
-const similarity_boost = voicesimilarity || 0.88;
-
-const apiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${id}`;
-const body = { 
-    text: text, 
-    model_id: 'eleven_multilingual_v2', 
-    voice_settings: {
-     // stability: stability,
-     //  similarity_boost: similarity_boost,
-      speed: speed
-    }
-    };
-    
-    const headers = { 
-    params: { 
-    allow_unauthenticated: '1' 
-    }, 
-    headers: { 
-    'Content-Type': 'application/json', 
-    'Origin': 'https://elevenlabs.io', 
-    'Referer': 'https://elevenlabs.io/', 
-    'User-Agent': userAgent, 
-    'Accept': '*/*' 
-    }, 
-    responseType: 'arraybuffer' 
-    };
-
-try {
-    const response = await axios.post(apiUrl, 
-    body, headers);
+  try {
+  
+  const speed = voicespeed || 0.8;
+  
+  const response = await axios.post('https://api.elevenlabs.io/v1/text-to-speech/' + voiceid,
+  { 
+  text: text, 
+  model_id: 'eleven_multilingual_v2', 
+  voice_settings: { speed: speed } 
+  }, 
+  { 
+  params: { allow_unauthenticated: '1' }, 
+  headers: { 'Content-Type': 'application/json', 'Origin': 'https://elevenlabs.io', 'Referer': 'https://elevenlabs.io/', 'User-Agent': 'Mozilla/5.0', 'Accept': '*/*' }, 
+  responseType: 'arraybuffer' });
+  
     const audioBuffer = response.data;
-    const audioUrl = await voiceToUrl(audioBuffer);
+    const { ext } = await fileTypeFromBuffer(audioBuffer);
+    const form = new FormData();
+    form.append('fileToUpload', audioBuffer, `voice.${ext}`);
+    form.append('reqtype', 'fileupload');
     
-    return audioUrl;
+    const uploadRes = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form });
+    const uploadLink = await uploadRes.text();
+    if (!uploadLink.startsWith('https://')) throw new Error('فشل رفع الملف');
+    return uploadLink;
     
   } catch (error) {
     throw new Error(error.message);
   }
 
-
 }
 
-async function voiceToUrl(media) {
-try {
-    const { ext } = await fileTypeFromBuffer(media);
-    const form = new FormData();
-    form.append('fileToUpload', media, `voice.${ext}`);
-    form.append('reqtype', 'fileupload');
-    const uploadRes = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form });
-    const uploadLink = await uploadRes.text();
-    if (!uploadLink.startsWith('https://')) throw new Error('فشل رفع الملف');
-    return uploadLink;
-     } catch (error) {
-     throw new Error(error.message);
-     }
-
-}
 
 async function gatModels() {
 
