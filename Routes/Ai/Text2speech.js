@@ -124,6 +124,7 @@ try {
     const uploadRes = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form });
     const uploadLink = await uploadRes.text();
     if (!uploadLink.startsWith('https://')) throw new Error('فشل رفع الملف');
+    return uploadLink;
      } catch (error) {
      throw new Error(error.message);
      }
