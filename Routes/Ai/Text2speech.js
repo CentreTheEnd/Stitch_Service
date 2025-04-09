@@ -34,9 +34,15 @@ router.get('/text2speech', async (req, res) => {
     }
 
     const voiceId = voiceData.id;
+    const voiceUsege = voiceData.usege;
+
+    if (!voiceUsege || voiceUsege === 0) {
+    return res.status(400).json({ status: false, message: 'استهلكت كل النقاط نقاطك الآن: ' + voiceUsege });
+    }
+    
     const data = await textToSpeech(q, voiceId, s1, s2, s3);
 
-    return res.status(200).json({ status: true, author: "sayed-hamdey", data: data });
+    return res.status(200).json({ status: true, author: "sayed-hamdey", usege: voiceUsege, data: data });
 
   } catch (error) {
     return res.status(500).json({ status: false, message: 'حدث خطأ أثناء تحويل النص أو رفع الصوت.', error: error.message });
@@ -138,6 +144,7 @@ for (const voice of voices) {
   const info = {
     id: voice.voice_id,
     language: voice.fine_tuning?.language || 'unknown',
+    usege: voice.fine_tuning?.next_max_verification_attempts_reset_unix_ms,
     preview: voice.preview_url
   };
 
