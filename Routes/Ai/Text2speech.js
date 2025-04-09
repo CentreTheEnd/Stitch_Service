@@ -7,7 +7,7 @@ import { fileTypeFromBuffer } from 'file-type';
 const router = express.Router();
 
 router.get('/text2speech', async (req, res) => {
-  const { q, gender, name, speed } = req.query;
+  const { q, gender, name, s1, s2, s3 } = req.query;
   const genders = ["female", "male"];
 
   if (!q) {
@@ -34,7 +34,7 @@ router.get('/text2speech', async (req, res) => {
     }
 
     const voiceId = voiceData.id;
-    const data = await textToSpeech(q, voiceId, speed);
+    const data = await textToSpeech(q, voiceId, s1, s2, s3);
 
     return res.status(200).json({ status: true, author: "sayed-hamdey", data: data });
 
@@ -51,7 +51,9 @@ const usedRouterKeys = {
     q: "text",
     gender: "Voice gender",
     name: "Speaker's name",
-    speed: "Speed of sound",
+    s1: "Speed of sound",
+    s2: "stability of sound",
+    s3: "similarity of sound",
     key: "key lock"
   },
   limited: 5,
@@ -65,13 +67,13 @@ export default router;
 
 
 
-async function textToSpeech(text, voiceid, voicespeed) {
+async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimilarity) {
 
   try {
   
   const speed = voicespeed || 0.8;
-  const stability = 0.85;
-  const similarity = 0.88;
+  const stability = voicestability || 0.85;
+  const similarity = voicesimilarity || 0.88;
     
   const response = await axios.post('https://api.elevenlabs.io/v1/text-to-speech/' + voiceid,
   { 
