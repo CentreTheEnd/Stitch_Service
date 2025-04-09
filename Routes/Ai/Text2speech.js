@@ -7,7 +7,7 @@ import { fileTypeFromBuffer } from 'file-type';
 const router = express.Router();
 
 router.get('/text2speech', async (req, res) => {
-  const { q, gender, name, s1, s2, s3, key } = req.query;
+  const { q, gender, name, key, s1, s2, s3 } = req.query;
   const genders = ["female", "male"];
 
   if (!q) {
