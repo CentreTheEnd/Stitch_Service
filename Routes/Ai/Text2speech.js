@@ -74,6 +74,8 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
   const speed = voicespeed || 0.8;
   const stability = voicestability || 0.85;
   const similarity = voicesimilarity || 0.88;
+
+  const userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/${Math.floor(Math.random() * 700) + 500}.36 (KHTML, like Gecko) Chrome/${Math.floor(Math.random() * 20) + 60}.0.3163.100 Safari/${Math.floor(Math.random() * 20) + 60}.36`;
     
   const response = await axios.post('https://api.elevenlabs.io/v1/text-to-speech/' + voiceid,
   { 
@@ -87,7 +89,7 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
   }, 
   { 
   params: { allow_unauthenticated: '1' }, 
-  headers: { 'Content-Type': 'application/json', 'Origin': 'https://elevenlabs.io', 'Referer': 'https://elevenlabs.io/', 'User-Agent': 'Mozilla/5.0', 'Accept': '*/*' }, 
+  headers: { 'Content-Type': 'application/json', 'Origin': 'https://elevenlabs.io', 'Referer': 'https://elevenlabs.io/', 'User-Agent': userAgent, 'Accept': '*/*' }, 
   responseType: 'arraybuffer' });
   
     const audioBuffer = response.data;
