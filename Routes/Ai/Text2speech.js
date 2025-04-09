@@ -70,12 +70,18 @@ async function textToSpeech(text, voiceid, voicespeed) {
   try {
   
   const speed = voicespeed || 0.8;
-  
+  const stability = 0.85;
+  const similarity = 0.88;
+    
   const response = await axios.post('https://api.elevenlabs.io/v1/text-to-speech/' + voiceid,
   { 
   text: text, 
   model_id: 'eleven_multilingual_v2', 
-  voice_settings: { speed: speed } 
+  voice_settings: { 
+    stability: stability,
+    similarity_boost: similarity,
+    speed: speed 
+  } 
   }, 
   { 
   params: { allow_unauthenticated: '1' }, 
