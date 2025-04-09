@@ -115,7 +115,7 @@ let { data } = await axios.get("https://api.elevenlabs.io/v1/voices");
 const voices = data.voices;
 const allmodel = {
   male: {},
-  fmale: {}
+  female: {}
 };
 
 for (const voice of voices) {
@@ -129,7 +129,7 @@ for (const voice of voices) {
   if (gender === 'male') {
     allmodel.male[voice.name] = info;
   } else if (gender === 'female') {
-    allmodel.fmale[voice.name] = info;
+    allmodel.female[voice.name] = info;
   }
 }
 
