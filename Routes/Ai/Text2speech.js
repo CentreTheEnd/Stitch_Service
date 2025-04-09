@@ -104,14 +104,14 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
     return uploadLink;
     
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error( 'خطا: ' + error.message);
   }
 
 }
 
 
 async function gatModels() {
-
+try {
 let { data } = await axios.get("https://api.elevenlabs.io/v1/voices");
 
 const voices = data.voices;
@@ -135,5 +135,9 @@ for (const voice of voices) {
   }
 }
 
-return allmodel;
+return allmodel; 
+  } catch (error) {
+    throw new Error( 'خطا: ' + error.message);
+}
+  
 }
