@@ -28,16 +28,16 @@ router.get('/text2speech', async (req, res) => {
       return res.status(400).json({ status: false, message: `الأسماء المتاحة لجنس "${selectedGender}"`, names: namesList });
     }
 
+    if (!key || key !== '2004') {
+    return res.status(400).json({ status: false, message: 'من فضلك أدخل المفتاح (key).' });
+    }
+
     const voiceData = genderModels[name];
     if (!voiceData) {
       return res.status(404).json({ status: false, message: `الصوت "${name}" غير موجود في قائمة ${selectedGender}.` });
     }
 
     const voiceId = voiceData.id;
-
-    if (!key || key !== 2004) {
-    return res.status(400).json({ status: false, message: 'من فضلك أدخل المفتاح (key).' });
-  }
     
     const data = await textToSpeech(q, voiceId, s1, s2, s3);
 
