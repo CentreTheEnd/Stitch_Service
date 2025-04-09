@@ -75,12 +75,25 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
   const stability = voicestability || 0.85;
   const similarity = voicesimilarity || 0.88;
 
+  const models = [
+  "eleven_v2_flash",
+  "eleven_flash_v2",
+  "eleven_turbo_v2_5",
+  "eleven_multilingual_v1",
+  "eleven_multilingual_v2",
+  "eleven_v2_5_flash",
+  "eleven_flash_v2_5",
+  "eleven_turbo_v2"
+];
+
+  const model = models[Math.floor(Math.random() * models.length)];
+
   const userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/${Math.floor(Math.random() * 700) + 500}.36 (KHTML, like Gecko) Chrome/${Math.floor(Math.random() * 20) + 60}.0.3163.100 Safari/${Math.floor(Math.random() * 20) + 60}.36`;
     
   const response = await axios.post('https://api.elevenlabs.io/v1/text-to-speech/' + voiceid,
   { 
   text: text, 
-  model_id: 'eleven_multilingual_v2', 
+  model_id: model, 
   voice_settings: { 
     stability: stability,
     similarity_boost: similarity,
