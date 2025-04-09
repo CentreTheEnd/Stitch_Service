@@ -80,7 +80,7 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
   const stability = voicestability || 0.85;
   const similarity = voicesimilarity || 0.88;
 
-  const models = [
+/*  const models = [
   "eleven_v2_flash",
   "eleven_flash_v2",
   "eleven_turbo_v2_5",
@@ -89,6 +89,11 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
   "eleven_v2_5_flash",
   "eleven_flash_v2_5",
   "eleven_turbo_v2"
+]; */
+
+    const models = [
+  "eleven_multilingual_v1",
+  "eleven_multilingual_v2"
 ];
 
   const model = models[Math.floor(Math.random() * models.length)];
