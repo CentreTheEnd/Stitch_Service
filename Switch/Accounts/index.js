@@ -103,7 +103,7 @@ async function loadRouters(directoryPath, version, app) {
 }
 
 export async function setupDatabase(app) {
-    const directoryPath = path.join(__dirname, '../../Database/Mongo/Methods');
+    const directoryPath = path.join(__dirname, '../../Accounts');
     await loadRouters(directoryPath, "v1", app);
 
     Object.keys(categorizedApis.data).forEach((key) => {
