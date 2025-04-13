@@ -4,6 +4,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { Low, JSONFile } from 'lowdb';
+import { fileURLToPath } from 'url';
+import fs from "fs/promises";
 
 
 
@@ -16,7 +18,12 @@ import { connectDB } from './Database/Mongo/connect.js';
 
 //______________________________________________
 
-const dbFilePath = path.join('Database', 'Storage', 'database.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dbFilePath = path.join(__dirname, 'Database', 'Storage', 'database.json');
+
+//______________________________________________
 
 global.db = new Low(new JSONFile(dbFilePath));
 
