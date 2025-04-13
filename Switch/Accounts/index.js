@@ -185,7 +185,7 @@ export async function setupDatabase(app) {
     await loadRouters(directoryPath, "v1", app);
 
     Object.keys(categorizedApis.data).forEach((key) => {
-        app.get(`/api/v3/database/sections/${key}/api`, (req, res) => {
+        app.get(`/api/v3/accounts/sections/${key}/api`, (req, res) => {
             const apisForCategory = categorizedApis.data[key].data.map(api => ({
                 ...api,
                 url: `${req.protocol}://${req.get('host')}${api.url}`,
@@ -198,7 +198,7 @@ export async function setupDatabase(app) {
         });
     });
 
-    app.get('/api/v3/database', (req, res) => {
+    app.get('/api/v3/accounts', (req, res) => {
         const fullApiRoutes = apiRoutes.map(route => ({
             status: route.status,
             author: route.author,
@@ -210,7 +210,7 @@ export async function setupDatabase(app) {
         res.status(200).json(fullApiRoutes);
     });
 
-    app.get('/api/v3/database/sections', (req, res) => {
+    app.get('/api/v3/accounts/sections', (req, res) => {
         const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
             (result, [key, apis]) => {
                 result[key] = apis.data.map(api => ({
@@ -224,7 +224,7 @@ export async function setupDatabase(app) {
         res.status(200).json(categorizedWithHost);
     });
 
-    app.get('/api/v3/database/errorlog', (req, res) => {
+    app.get('/api/v3/accounts/errorlog', (req, res) => {
         res.status(200).json(errorLogs);
     });
 }
