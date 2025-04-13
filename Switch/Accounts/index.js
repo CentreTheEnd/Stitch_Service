@@ -2,6 +2,7 @@ import path from "path";
 import axios from 'axios';
 import { fileURLToPath } from 'url';
 import fs from "fs/promises";
+import { User } from '../../Database/Mongo/models.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
