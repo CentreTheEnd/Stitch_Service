@@ -13,6 +13,8 @@ import {fileTypeFromBuffer} from 'file-type';
 
 import moment from 'moment-timezone';
 
+import dotenv from "dotenv";
+dotenv.config();
 //______________________________________________
 
 global.author = '⛊  𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
@@ -25,7 +27,7 @@ endKey: "stitch_no_hacking_here"
 //______________________________________________
 
 
-// تخزين البيانات في متغير const
+/*
 const config = {
   owner: {
     name: "Sayed Hamdey",
@@ -56,7 +58,42 @@ const config = {
   }
 };
 
-// تخزين القيم في `global`
+*/
+
+//______________________________________________
+
+const config = {
+  owner: {
+    name: process.env.OWNER_NAME,
+    email: process.env.OWNER_EMAIL,
+  },
+  github: {
+    repoOwner: process.env.GITHUB_REPO_OWNER,
+  },
+  setting: {
+    githubToken: process.env.GITHUB_TOKEN,
+    driveKey: process.env.DRIVE_KEY,
+    mongoUrl: process.env.MONGO_URL,
+  },
+  auth: {
+    google: {
+      id: process.env.GOOGLE_ID,
+      secret: process.env.GOOGLE_SECRET,
+    },
+    github: {
+      id: process.env.GITHUB_ID,
+      secret: process.env.GITHUB_SECRET,
+    },
+    discord: {
+      id: process.env.DISCORD_ID,
+      secret: process.env.DISCORD_SECRET,
+      oauth2: process.env.DISCORD_OAUTH2,
+    },
+  },
+};
+
+//______________________________________________
+
 global.owner = config.owner;
 global.github = config.github;
 global.setting = config.setting;
