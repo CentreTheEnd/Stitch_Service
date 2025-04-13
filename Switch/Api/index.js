@@ -103,7 +103,7 @@ async function loadRouters(directoryPath, version, app) {
 }
 
 export async function setupRoutes(app) {
-    const directoryPath = path.join(__dirname, '../../Routes');
+    const directoryPath = path.join(__dirname, '../../Api');
     await loadRouters(directoryPath, "v2", app);
 
     Object.keys(categorizedApis.data).forEach((key) => {
