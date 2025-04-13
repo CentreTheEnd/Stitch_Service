@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 
 import './config.js';
 import { setupRoutes } from './Switch/Api/index.js';
-import { setupDatabase } from './Switch/Data/index.js';
+import { setupDatabase } from './Switch/Accounts/index.js';
 import { connectDB } from './Database/Mongo/connect.js';
 
 //______________________________________________
