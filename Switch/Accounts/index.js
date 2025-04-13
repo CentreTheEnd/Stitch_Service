@@ -114,7 +114,7 @@ export async function setupDatabase(app) {
     if (!apiKeyHeader) {
         return res.status(400).json({ status: false, message: 'Missing API Key' });
     }
-
+/*
     let matchedApi = null;
     let section = null;
 
@@ -171,11 +171,14 @@ export async function setupDatabase(app) {
 
         await user.save();
         req.user = user;
+        
         next();
     } catch (err) {
         console.error('Middleware error:', err);
         return res.status(500).json({ status: false, message: 'Internal server error' });
     }
+    */
+       next();
 });
 
     await loadRouters(directoryPath, "v1", app);
