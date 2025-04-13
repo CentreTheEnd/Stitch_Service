@@ -2,6 +2,10 @@ import os from 'os';
 import cors from "cors";
 import express from 'express';
 import bodyParser from 'body-parser';
+import path from 'path';
+import { Low, JSONFile } from 'lowdb';
+
+
 
 //______________________________________________
 
@@ -11,6 +15,53 @@ import { setupDatabase } from './Switch/Accounts/index.js';
 import { connectDB } from './Database/Mongo/connect.js';
 
 //______________________________________________
+
+const dbFilePath = path.join('Database', 'Storage', 'database.json');
+
+global.db = new Low(new JSONFile(dbFilePath));
+
+//______________________________________________
+
+global.loadDatabase = async function loadDatabase() {
+  if (global.db.READ) {
+    return new Promise((resolve) => setInterval(async function () {
+      if (!global.db.READ) {
+        clearInterval(this);
+        resolve(global.db.data == null ? global.loadDatabase() : global.db.data);
+      }
+    }, 1 * 1000));
+  }
+
+  if (global.db.data !== null) return;
+  global.db.READ = true;
+  await global.db.read().catch(console.error);
+  global.db.READ = null;
+
+  
+  global.db.data = {
+    users: {},
+    posties: {},
+    ...(global.db.data || {}),
+  };
+
+  
+  global.db.data = new Proxy(global.db.data, {
+    set: async function (target, prop, value) {
+      target[prop] = value;
+   
+      await global.db.write();
+      console.log(`Data saved after change to property: ${prop}`);
+      return true;
+    }
+  });
+    
+  await global.db.write();
+};
+
+
+
+//______________________________________________
+
 export async function setupApp() {
 
     console.log(`Connecting to MongoDB...`);
@@ -26,6 +77,9 @@ export async function setupApp() {
 
     console.log(`oInitializing Express App...`);
 
+    console.log(`Setting up Database...`);
+    await loadDatabase();
+
     const app = express();
 
     app.use(cors());
@@ -34,7 +88,7 @@ export async function setupApp() {
    // app.use(express.static("public"));
     app.use(express.urlencoded({ extended: true }));
 
-    console.log(`Setting up API Database...`);
+    console.log(`Setting up API Accounts...`);
     await setupDatabase(app);
     
 /*
@@ -56,10 +110,13 @@ export async function setupApp() {
     
     console.log(`Setting up API Routes...`);
     await setupRoutes(app);
-    
 
     console.log(`Server Setup Complete!`);
 
     return app;
 } 
+//______________________________________________
+   
+//______________________________________________
 
+//______________________________________________
