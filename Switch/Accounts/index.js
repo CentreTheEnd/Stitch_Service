@@ -104,6 +104,80 @@ async function loadRouters(directoryPath, version, app) {
 
 export async function setupDatabase(app) {
     const directoryPath = path.join(__dirname, '../../Accounts');
+    
+    app.use(async (req, res, next) => {
+    if (req.originalUrl.toLowerCase().includes('/api/v1/Auth')) return next();
+    if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
+    if (!req.originalUrl.toLowerCase().includes('/api/v1') && !req.originalUrl.toLowerCase().includes('/api/v2')) return next();
+
+    const apiKeyHeader = req.headers['apikey'];
+    if (!apiKeyHeader) {
+        return res.status(400).json({ status: false, message: 'Missing API Key' });
+    }
+
+    let matchedApi = null;
+    let section = null;
+
+    for (const [sec, secData] of Object.entries(categorizedApis.data)) {
+        const foundApi = secData.data.find(api => req.originalUrl.startsWith(api.url));
+        if (foundApi) {
+            matchedApi = foundApi;
+            section = sec;
+            break;
+        }
+    }
+
+    if (!matchedApi) {
+        return res.status(404).json({ status: false, message: 'API not found in catalog' });
+    }
+
+    const limitedUsage = parseInt(matchedApi.limited || 1); 
+    const apiType = matchedApi.title;
+
+    try {
+        const user = await User.findOne({ 'apiKey.value': apiKeyHeader });
+        if (!user) return res.status(401).json({ status: false, message: 'Invalid API Key' });
+
+        if (user.limited < limitedUsage) {
+            return res.status(403).json({ status: false, message: 'Usage limit exceeded' });
+        }
+
+        user.limited -= limitedUsage;
+        user.usage.total += limitedUsage;
+        user.usage.lastUse = new Date();
+
+        const sectionUsage = user.usage.sections.get(section) || {
+            usage: 0,
+            lastUse: new Date(),
+            api: new Map()
+        };
+
+        sectionUsage.usage += limitedUsage;
+        sectionUsage.lastUse = new Date();
+
+        const apiData = sectionUsage.api.get(apiType) || {
+            type: apiType,
+            usage: 0,
+            lastUse: new Date(),
+            lastRequest: req.originalUrl
+        };
+
+        apiData.usage += limitedUsage;
+        apiData.lastUse = new Date();
+        apiData.lastRequest = req.originalUrl;
+
+        sectionUsage.api.set(apiType, apiData);
+        user.usage.sections.set(section, sectionUsage);
+
+        await user.save();
+        req.user = user;
+        next();
+    } catch (err) {
+        console.error('Middleware error:', err);
+        return res.status(500).json({ status: false, message: 'Internal server error' });
+    }
+});
+
     await loadRouters(directoryPath, "v1", app);
 
     Object.keys(categorizedApis.data).forEach((key) => {
