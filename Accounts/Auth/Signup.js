@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import User from '../../model.js';
+import User from '../../Database/Mongo/models.js';
 
 const router = express.Router();
 
