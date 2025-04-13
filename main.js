@@ -25,10 +25,11 @@ const dbFilePath = path.join(__dirname, 'Database', 'Storage', 'database.json');
 
 //______________________________________________
 
-global.db = new Low(new JSONFile(dbFilePath));
+// global.db = new Low(new JSONFile(dbFilePath));
 
 //______________________________________________
 
+/* 
 global.loadDatabase = async function loadDatabase() {
   if (global.db.READ) {
     return new Promise((resolve) => setInterval(async function () {
@@ -64,7 +65,7 @@ global.loadDatabase = async function loadDatabase() {
     
   await global.db.write();
 };
-
+*/
 
 
 //______________________________________________
@@ -84,8 +85,8 @@ export async function setupApp() {
 
     console.log(`oInitializing Express App...`);
 
-    console.log(`Setting up Database...`);
-    await loadDatabase();
+  //  console.log(`Setting up Database...`);
+  //  await loadDatabase();
 
     const app = express();
 
