@@ -328,9 +328,30 @@ export async function setupRoutes(app) {
     });
 
 
-   app.get('/api/v3/req', (req, res) => {
-        res.status(200).json(req);
-    });
+   app.get('/api/v3/data', (req, res) => {
+
+  const reqData = {
+    method: req.method,
+    url: req.originalUrl,
+    headers: req.headers,
+    query: req.query,
+    params: req.params,
+    body: req.body,
+    ip: req.ip,
+    ips: req.ips,
+    protocol: req.protocol,
+    hostname: req.hostname,
+    path: req.path,
+    secure: req.secure,
+    xhr: req.xhr,
+    cookies: req.cookies || {},
+    signedCookies: req.signedCookies || {},
+    user: req.user || null
+    
+  };
+
+  res.status(200).json(reqData);
+});
 
     
 }
