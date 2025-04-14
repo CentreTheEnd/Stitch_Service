@@ -12,9 +12,11 @@ import fs from "fs/promises";
 //______________________________________________
 
 import './config.js';
-import { setupRoutes } from './Switch/Api/index.js';
-import { setupDatabase } from './Switch/Accounts/index.js';
+//import { setupRoutes } from './Switch/Api/index.js';
+//import { setupDatabase } from './Switch/Accounts/index.js';
 import { connectDB } from './Database/Mongo/connect.js';
+
+import { setupRoutes } from './Switch/index.js';
 
 //______________________________________________
 
@@ -96,8 +98,11 @@ export async function setupApp() {
    // app.use(express.static("public"));
     app.use(express.urlencoded({ extended: true }));
 
-    console.log(`Setting up API Accounts...`);
-    await setupDatabase(app);
+    console.log(`Setting up Routes...`);
+    await setupRoutes(app);
+
+    //console.log(`Setting up API Accounts...`);
+    //await setupDatabase(app);
     
 /*
     app.use(async (req, res, next) => {
@@ -116,8 +121,8 @@ export async function setupApp() {
 
 */
     
-    console.log(`Setting up API Routes...`);
-    await setupRoutes(app);
+    //console.log(`Setting up API Routes...`);
+    //await setupRoutes(app);
 
     console.log(`Server Setup Complete!`);
 
