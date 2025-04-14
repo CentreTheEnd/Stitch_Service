@@ -2,7 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import GitHubStrategy from 'passport-github2';
-import User from '../../model.js'; // استيراد نموذج المستخدم
+import { User } from '../../Database/Mongo/models.js';
 import crypto from 'crypto';
 
 const router = express.Router();
