@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { Strategy as DiscordStrategy } from 'passport-discord';
-import User from '../../model.js';  // أو المسار الخاص بنموذج المستخدم لديك
+import { User } from '../../Database/Mongo/models.js';
 import crypto from 'crypto';
 
 const router = express.Router();
