@@ -38,12 +38,17 @@ const userSchema = new mongoose.Schema({
     durationDays: { type: Number, default: Infinity },
     startDate: { type: Date, default: Date.now },
     endDate: { type: Date, default: Date.now },
+    isSelected: { type: Boolean, default: false },
   },
   
   limited: { type: Number, default: 1000 },
   coins: { type: Number, default: 10 },
   
   lastLimitedUpdate: { type: Date, default: Date.now },
+
+  isVerified: { type: Boolean, default: false },
+  verificationCode: { type: String, default: null },
+  verificationExpires: { type: Date, default: null },
     
   registeredAt: { type: Date, default: Date.now },
   
