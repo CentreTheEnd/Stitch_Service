@@ -40,7 +40,7 @@ const categorizedAccount = {
 const errorLogsAccount = [];
 
 
-async function loadRouters(directoryPath, version, app) {
+async function loadRouters(directoryPath, version, app, methodRouter) {
     try {
         const filesAndDirs = await fs.readdir(directoryPath);
 
@@ -79,7 +79,14 @@ async function loadRouters(directoryPath, version, app) {
                }, {});
 
                         if (typeof router === 'function') {
-                            const baseRoute = `/api/${version}/sections/${key}`;
+
+                            let baseRout;
+                            
+                            if ( methodRouter === 'api' ) {
+                             baseRoute = `/api/${version}/sections/${key}`;
+                            } else {
+                             baseRoute = `/api/${version}/${key}`;
+                            }
                             app.use(baseRoute, router);
 
                             if (router.stack) {
@@ -89,27 +96,40 @@ async function loadRouters(directoryPath, version, app) {
                                         const method = Object.keys(layer.route.methods)[0]?.toUpperCase() || "UNKNOWN";
 
                                         const routeData = {
-          title: fileName,
-          type: key,
-          method: method,
-          url: fullUrl,
-          path: layer.route.path,
-          file: path.join(dirPath, file),
-          ...metadata,
-          };
+                                           title: fileName,
+                                           type: key,
+                                           method: method,
+                                           url: fullUrl,
+                                           path: layer.route.path,
+                                           file: path.join(dirPath, file),
+                                           ...metadata,
+                                           };
 
+                                        if ( methodRouter === 'api' ) {
                                         categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
                                         categorizedApis.data[key].data.push(routeData);
 
                                         if (!apiRoutes[0].data.some(route => route.url === fullUrl)) {
                                             apiRoutes[0].data.push(routeData);
                                         }
+                                        } else {
+                                        categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
+                                        categorizedApis.data[key].data.push(routeData);
+
+                                        if (!apiRoutes[0].data.some(route => route.url === fullUrl)) {
+                                            apiRoutes[0].data.push(routeData);
+                                        }
+                                        }
                                     }
                                 });
                             }
                         }
                     } catch (error) {
+                        if ( methodRouter === 'api' ) {
                         errorLogs.push({ file: path.join(dirPath, file), error: error.message });
+                        } else {
+                        errorLogs.push({ file: path.join(dirPath, file), error: error.message });
+                        }
                         console.error(`Error loading ${file}:`, error.message);
                     }
                 }
@@ -202,6 +222,52 @@ export async function setupRoutes(app) {
 
     
     await loadRouters(directoryPathApi, "v2", app, 'api');
+
+    Object.keys(categorizedApis.data).forEach((key) => {
+        app.get(`/api/v3/accounts/sections/${key}/api`, (req, res) => {
+            const apisForCategory = categorizedApis.data[key].data.map(api => ({
+                ...api,
+                url: `${req.protocol}://${req.get('host')}${api.url}`,
+            }));
+            res.status(200).json({
+                status: true,
+                author: global.author,
+                data: apisForCategory
+            });
+        });
+    });
+
+    app.get('/api/v3/accounts', (req, res) => {
+        const fullApiRoutes = apiRoutes.map(route => ({
+            status: route.status,
+            author: route.author,
+            data: route.data.map(api => ({
+                ...api,
+                url: `${req.protocol}://${req.get('host')}${api.url}`,
+            })),
+        }));
+        res.status(200).json(fullApiRoutes);
+    });
+
+    app.get('/api/v3/accounts/sections', (req, res) => {
+        const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
+            (result, [key, apis]) => {
+                result[key] = apis.data.map(api => ({
+                    ...api,
+                    url: `${req.protocol}://${req.get('host')}${api.url}`,
+                }));
+                return result;
+            },
+            {}
+        );
+        res.status(200).json(categorizedWithHost);
+    });
+
+    app.get('/api/v3/accounts/errorlog', (req, res) => {
+        res.status(200).json(errorLogs);
+    });
+
+    // ┄┄┄┄┄┄┄┄⌲
 
     Object.keys(categorizedApis.data).forEach((key) => {
         app.get(`/api/v3/apis/sections/${key}/api`, (req, res) => {
