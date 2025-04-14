@@ -113,11 +113,11 @@ async function loadRouters(directoryPath, version, app, methodRouter) {
                                             apiRoutes[0].data.push(routeData);
                                         }
                                         } else {
-                                        categorizedApis.data[key] = categorizedApis.data[key] || { data: [] };
-                                        categorizedApis.data[key].data.push(routeData);
+                                        categorizedAccount.data[key] = categorizedAccount.data[key] || { data: [] };
+                                        categorizedAccount.data[key].data.push(routeData);
 
-                                        if (!apiRoutes[0].data.some(route => route.url === fullUrl)) {
-                                            apiRoutes[0].data.push(routeData);
+                                        if (!accountRoutes[0].data.some(route => route.url === fullUrl)) {
+                                            accountRoutes[0].data.push(routeData);
                                         }
                                         }
                                     }
@@ -126,9 +126,9 @@ async function loadRouters(directoryPath, version, app, methodRouter) {
                         }
                     } catch (error) {
                         if ( methodRouter === 'api' ) {
-                        errorLogs.push({ file: path.join(dirPath, file), error: error.message });
+                        errorLogsApi.push({ file: path.join(dirPath, file), error: error.message });
                         } else {
-                        errorLogs.push({ file: path.join(dirPath, file), error: error.message });
+                        errorLogsAccount.push({ file: path.join(dirPath, file), error: error.message });
                         }
                         console.error(`Error loading ${file}:`, error.message);
                     }
@@ -141,11 +141,14 @@ async function loadRouters(directoryPath, version, app, methodRouter) {
 }
 
 export async function setupRoutes(app) {
+    
     const directoryPathAccounts = path.join(__dirname, '../Accounts');
     await loadRouters(directoryPathAccounts, "v1", app, 'account');
     
+    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
+    
     const directoryPathApi = path.join(__dirname, '../Api');
-
+   // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
     app.use(async (req, res, next) => {
     
     if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
@@ -222,10 +225,12 @@ export async function setupRoutes(app) {
 
     
     await loadRouters(directoryPathApi, "v2", app, 'api');
-
-    Object.keys(categorizedApis.data).forEach((key) => {
+    
+    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
+    
+    Object.keys(categorizedAccount.data).forEach((key) => {
         app.get(`/api/v3/accounts/sections/${key}/api`, (req, res) => {
-            const apisForCategory = categorizedApis.data[key].data.map(api => ({
+            const apisForCategory = categorizedAccount.data[key].data.map(api => ({
                 ...api,
                 url: `${req.protocol}://${req.get('host')}${api.url}`,
             }));
@@ -238,7 +243,7 @@ export async function setupRoutes(app) {
     });
 
     app.get('/api/v3/accounts', (req, res) => {
-        const fullApiRoutes = apiRoutes.map(route => ({
+        const fullApiRoutes = accountRoutes.map(route => ({
             status: route.status,
             author: route.author,
             data: route.data.map(api => ({
@@ -250,7 +255,7 @@ export async function setupRoutes(app) {
     });
 
     app.get('/api/v3/accounts/sections', (req, res) => {
-        const categorizedWithHost = Object.entries(categorizedApis.data).reduce(
+        const categorizedWithHost = Object.entries(categorizedAccount.data).reduce(
             (result, [key, apis]) => {
                 result[key] = apis.data.map(api => ({
                     ...api,
@@ -264,10 +269,10 @@ export async function setupRoutes(app) {
     });
 
     app.get('/api/v3/accounts/errorlog', (req, res) => {
-        res.status(200).json(errorLogs);
+        res.status(200).json(errorLogsAccount);
     });
 
-    // ┄┄┄┄┄┄┄┄⌲
+    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
 
     Object.keys(categorizedApis.data).forEach((key) => {
         app.get(`/api/v3/apis/sections/${key}/api`, (req, res) => {
@@ -310,6 +315,11 @@ export async function setupRoutes(app) {
     });
 
     app.get('/api/v3/apis/errorlog', (req, res) => {
-        res.status(200).json(errorLogs);
+        res.status(200).json(errorLogsApi);
     });
 }
+
+
+
+
+
