@@ -80,7 +80,7 @@ async function loadRouters(directoryPath, version, app, methodRouter) {
 
                         if (typeof router === 'function') {
 
-                            let baseRout = null;
+                            let baseRoute = null;
                             
                             if ( methodRouter === 'api' ) {
                              baseRoute = `/api/${version}/sections/${key}`;
