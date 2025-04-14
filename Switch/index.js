@@ -152,6 +152,7 @@ export async function setupRoutes(app) {
     
     const directoryPathApi = path.join(__dirname, '../Api');
    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
+    /*
     app.use(async (req, res, next) => {
     
     //if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
@@ -228,6 +229,7 @@ export async function setupRoutes(app) {
     }
 });
 
+    */
     
     await loadRouters(directoryPathApi, "v2", app, 'api');
     
