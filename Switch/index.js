@@ -39,6 +39,8 @@ const categorizedAccount = {
 
 const errorLogsAccount = [];
 
+const errorLogs= [];
+
 
 async function loadRouters(directoryPath, version, app, methodRouter) {
     try {
@@ -137,6 +139,7 @@ async function loadRouters(directoryPath, version, app, methodRouter) {
         }
     } catch (error) {
         console.error('Error loading routers:', error.message);
+        errorLogs.push({ message: 'Error loading routers', error: error.message });
     }
 }
 
@@ -318,6 +321,10 @@ export async function setupRoutes(app) {
 
     app.get('/api/v3/apis/errorlog', (req, res) => {
         res.status(200).json(errorLogsApi);
+    });
+
+    app.get('/api/v3/errorlog', (req, res) => {
+        res.status(200).json(errorLogs);
     });
 }
 
