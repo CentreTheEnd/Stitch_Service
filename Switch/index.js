@@ -326,6 +326,13 @@ export async function setupRoutes(app) {
     app.get('/api/v3/errorlog', (req, res) => {
         res.status(200).json(errorLogs);
     });
+
+
+   app.get('/api/v3/req', (req, res) => {
+        res.status(200).json(req);
+    });
+
+    
 }
 
 
