@@ -21,7 +21,24 @@ const categorizedApis = {
     data: {},
 };
 
-const errorLogs = [];
+const errorLogsApi = [];
+
+const accountRoutes = [
+    {
+        status: true,
+        author: global.author,
+        data: [],
+    }
+];
+
+const categorizedAccount = {
+    status: true,
+    author: global.author,
+    data: {},
+};
+
+const errorLogsAccount = [];
+
 
 async function loadRouters(directoryPath, version, app) {
     try {
@@ -104,7 +121,10 @@ async function loadRouters(directoryPath, version, app) {
 }
 
 export async function setupRoutes(app) {
-    const directoryPath = path.join(__dirname, '../Api');
+    const directoryPathAccounts = path.join(__dirname, '../Accounts');
+    await loadRouters(directoryPathAccounts, "v1", app, 'account');
+    
+    const directoryPathApi = path.join(__dirname, '../Api');
 
     app.use(async (req, res, next) => {
     
@@ -181,7 +201,7 @@ export async function setupRoutes(app) {
 });
 
     
-    await loadRouters(directoryPath, "v2", app);
+    await loadRouters(directoryPathApi, "v2", app, 'api');
 
     Object.keys(categorizedApis.data).forEach((key) => {
         app.get(`/api/v3/apis/sections/${key}/api`, (req, res) => {
