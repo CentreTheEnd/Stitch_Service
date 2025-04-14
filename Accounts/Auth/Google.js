@@ -1,20 +1,19 @@
 import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import User from '../../model.js';  // تأكد من أن المسار صحيح
+import { User } from '../../Database/Mongo/models.js';
+
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// تعيين القيم المطلوبة في global
 global.redirectUri = 'https://stitch-api.vercel.app/api/v1/auth/google/callback';  // عيّن قيمة الرابط المعاد توجيه المستخدم إليه
 
-// إعداد passport
 passport.use(new GoogleStrategy({
   clientID: global.googleID,
   clientSecret: global.googleSecret,
-  callbackURL: global.redirectUri  // استخدام الرابط من global
+  callbackURL: global.redirectUri
 }, async (accessToken, refreshToken, profile, done) => {
   let user = await User.findOne({ email: profile.emails[0].value });
 
