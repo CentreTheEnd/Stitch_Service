@@ -107,10 +107,11 @@ export async function setupRoutes(app) {
     const directoryPath = path.join(__dirname, '../../Api');
 
     app.use(async (req, res, next) => {
-    if (req.originalUrl.toLowerCase().includes('/api/v1/Auth')) return next();
+    
     if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
     if (!req.originalUrl.toLowerCase().includes('/api/v1') && !req.originalUrl.toLowerCase().includes('/api/v2')) return next();
-
+    if (req.originalUrl.toLowerCase().includes('/api/v1/Auth')) return next();
+        
     const apiKeyHeader = req.headers['apikey'];
     if (!apiKeyHeader) {
         return res.status(400).json({ status: false, message: 'Missing API Key' });
