@@ -98,7 +98,7 @@ async function textToSpeech(text, voiceid, voicespeed, voicestability, voicesimi
 
  // const model = models[Math.floor(Math.random() * models.length)];
 
-    const model = "eleven_multilingual_v1";
+    const model = "eleven_multilingual_v2";
 
   const userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/${Math.floor(Math.random() * 700) + 500}.36 (KHTML, like Gecko) Chrome/${Math.floor(Math.random() * 20) + 60}.0.3163.100 Safari/${Math.floor(Math.random() * 20) + 60}.36`;
     
