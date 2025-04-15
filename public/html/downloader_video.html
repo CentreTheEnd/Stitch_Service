@@ -232,9 +232,11 @@
 
     async function loadApis() {
       try {
-        const res = await fetch("https://stitch-api.vercel.app/api/v3/apis/sections/Download/api");
-        const json = await res.json();
-        apis = json.data;
+      //  const res = await fetch("https://stitch-api.vercel.app/api/v3/apis/sections/Download/api");
+      //  const json = await res.json();
+        const res = await axios.get("api/v3/apis/sections/Download/api")
+       // apis = json.data;
+        apis = res.data.data;
 
         const tags = [...new Set(apis.map(api => api.tag))];
         tags.forEach(tag => {
@@ -272,14 +274,18 @@
       if (!selectedApi) return alert("Model not found.");
 
       const queryKey = Object.keys(selectedApi.query)[0];
-      const url = selectedApi.url + `?${queryKey}=${encodeURIComponent(query)}`;
+      const apiUrl = selectedApi.url;
+      const url = `${apiUrl}?${queryKey}=${encodeURIComponent(query)}`;
 
       loading.style.display = "block"; // Show loading
       resultDiv.innerHTML = "";
 
       try {
-        const res = await fetch(url);
-        const json = await res.json();
+       // const res = await fetch(url);
+      //  const json = await res.json();
+
+        const res = await axios.get(url);
+        const json = res.data;
         loading.style.display = "none"; // Hide loading
 
         if (!json.status || !json.data) {
