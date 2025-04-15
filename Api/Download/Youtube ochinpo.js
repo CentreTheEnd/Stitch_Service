@@ -37,6 +37,8 @@ router.get('/Youtube/ochinpo', async (req, res) => {
   }
 });
 
+  
+const usedRouterKeys = {
   tag: "Downloader YouTube",
   description: "Downloader video from YouTube",
   query: { 
@@ -48,6 +50,8 @@ router.get('/Youtube/ochinpo', async (req, res) => {
 };
 
 export { usedRouterKeys };
+
+
 
 export default router;
 
