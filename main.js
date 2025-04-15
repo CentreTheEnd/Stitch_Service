@@ -139,24 +139,22 @@ export async function setupApp() {
   let errorCode = 500;
 
   
-
+  if (err) {
+    
   if (err.status === 404) {
-    errorCode = 404; // Not Found
-  }
-
-  else if (err.status === 401) {
-    errorCode = 401; // Unauthorized
-  }
-
-  else if (err.status === 403) {
+    errorCode = 404; 
+  } else if (err.status === 401) {
+    errorCode = 401; 
+  } else if (err.status === 403) {
     errorCode = 403; 
+  } else if (err.status === 500) {
+    errorCode = 500; 
+  } else if (err.status === 400) {
+    errorCode = 400; 
   }
 
-
-  
-
-  else if (err.status === 400) {
-    errorCode = 400; 
+  } else {
+    errorCode = 404;
   }
 
  
