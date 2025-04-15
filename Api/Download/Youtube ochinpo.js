@@ -39,7 +39,8 @@ router.get('/Youtube/ochinpo', async (req, res) => {
 
   
 const usedRouterKeys = {
-  tag: "Downloader YouTube",
+  tag: "YouTube",
+  model: "ochinpo",
   description: "Downloader video from YouTube",
   query: { 
     q: "text or url video",
