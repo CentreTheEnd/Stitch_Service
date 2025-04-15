@@ -5,281 +5,356 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Video Downloader</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --primary: #0d6efd;
+      --bg: #f0f2f5;
+      --white: #ffffff;
+      --text: #333;
+      --shadow: rgba(0,0,0,0.1);
+    }
 
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg);
+      color: var(--text);
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 30px 15px;
+      align-items: center;
+      height: 100vh;
     }
 
-    .container {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      max-width: 1000px;
-      width: 100%;
-    }
-
-    h1 {
+    h2 {
       text-align: center;
-      color: #333;
-      margin-bottom: 25px;
-      font-size: 28px;
+      margin-bottom: 30px;
+      font-size: 2em;
+      color: var(--primary);
     }
 
-    input[type="text"] {
+    .selectors, .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
+      max-width: 600px;
+    }
+
+    select, input, button {
+      padding: 12px 15px;
+      font-size: 1em;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      min-width: 250px;
+      background-color: var(--white);
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
     }
 
     button {
-      background: #007bff;
+      background-color: var(--primary);
       color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      border: none;
+      min-width: 100px;
     }
 
     button:hover {
-      background: #0056b3;
+      background-color: #0b5ed7;
     }
 
     #loading {
       display: none;
-      justify-content: center;
-      margin: 15px 0;
+      text-align: center;
+      margin-top: 20px;
     }
 
-    .spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #007bff;
-      border-radius: 50%;
+    #loading::after {
+      content: "";
       width: 40px;
       height: 40px;
-      animation: spin 1s linear infinite;
+      border: 4px solid var(--primary);
+      border-top-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin {
-      0% {transform: rotate(0deg);}
-      100% {transform: rotate(360deg);}
+      to { transform: rotate(360deg); }
     }
 
     #result {
-      display: none;
-      margin-top: 25px;
-    }
-
-    .video-preview {
       width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-      margin-bottom: 25px;
+      max-width: 800px;
     }
 
-    .info-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .thumbnail {
-      flex: 1 1 280px;
-    }
-
-    .thumbnail img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .details {
-      flex: 2 1 400px;
-    }
-
-    .details h2 {
-      margin-top: 0;
-      font-size: 22px;
-      color: #333;
-    }
-
-    .details p {
-      font-size: 15px;
-      margin: 8px 0;
-    }
-
-    .channel-info {
-      margin-top: 10px;
-      background: #f5f5f5;
-      padding: 10px 15px;
-      border-radius: 10px;
-    }
-
-    .channel-info a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .download-section {
+    .media-block {
+      background-color: var(--white);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px var(--shadow);
       margin-top: 30px;
+    }
+
+    .media-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+      gap: 15px;
+      justify-content: center;
     }
 
-    select {
-      padding: 10px;
+    img, video, audio {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+
+    .info {
+      margin-top: 15px;
+    }
+
+    .info p {
+      margin: 6px 0;
       font-size: 15px;
-      border-radius: 8px;
-      flex: 1;
     }
 
-    #downloadBtn {
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      border: none;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      flex: 1;
+    .info strong {
+      color: var(--primary);
+      display: inline-block;
+      min-width: 120px;
     }
 
-    #downloadBtn:hover {
-      background: linear-gradient(to right, #00f2fe, #4facfe);
+    .download-select {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    @media (max-width: 1024px) {
-      .info-section {
-        flex-direction: column;
-      }
+    .download-select select {
+      width: 100%;
+      max-width: 400px;
     }
 
     @media (max-width: 768px) {
-      .download-section {
-        flex-direction: column;
-      }
-
-      select, #downloadBtn {
+      select, input, button {
         width: 100%;
       }
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 22px; }
-      .details h2 { font-size: 18px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Video Downloader</h1>
-    <input type="text" id="videoUrl" placeholder="Paste the video URL here..." />
-    <button onclick="handleDownload()">Download</button>
 
-    <div id="loading"><div class="spinner"></div></div>
+  <h2>Video Downloader</h2>
 
-    <div id="result">
-      <video id="videoPlayer" class="video-preview" controls></video>
-      <div class="info-section">
-        <div class="thumbnail"><img id="thumbnail" src="" alt="Thumbnail" /></div>
-        <div class="details" id="videoDetails"></div>
-      </div>
-      <div class="download-section">
-        <select id="downloadType">
-          <option value="video">Video</option>
-          <option value="audio">Audio</option>
-          <option value="thumbnail">Thumbnail</option>
-        </select>
-        <button id="downloadBtn">Download</button>
-      </div>
-    </div>
+  <div class="selectors">
+    <select id="typeSelect">
+      <option disabled selected>Select type...</option>
+    </select>
+    <select id="modelSelect">
+      <option disabled selected>Select model...</option>
+    </select>
   </div>
 
+  <div class="input-group">
+    <input type="text" id="queryInput" placeholder="Enter video URL or text..." />
+    <button onclick="handleDownload()">Download</button>
+  </div>
+
+  <div id="loading"></div>
+  <div id="result"></div>
+
   <script>
-    function getPlatform(url) {
-      if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
-      return null;
+    const typeSelect = document.getElementById("typeSelect");
+    const modelSelect = document.getElementById("modelSelect");
+    const queryInput = document.getElementById("queryInput");
+    const resultDiv = document.getElementById("result");
+    const loading = document.getElementById("loading");
+
+    let apis = [];
+
+    async function loadApis() {
+      try {
+        const res = await fetch("https://stitch-api.vercel.app/api/v3/apis/sections/Download/api");
+        const json = await res.json();
+        apis = json.data;
+
+        const tags = [...new Set(apis.map(api => api.tag))];
+        tags.forEach(tag => {
+          const opt = document.createElement("option");
+          opt.value = tag;
+          opt.textContent = tag;
+          typeSelect.appendChild(opt);
+        });
+      } catch (err) {
+        alert("Failed to load APIs: " + err.message);
+      }
     }
 
+    typeSelect.addEventListener("change", () => {
+      modelSelect.innerHTML = '<option disabled selected>Select model...</option>';
+      const filtered = apis.filter(api => api.tag === typeSelect.value);
+      filtered.forEach(api => {
+        const opt = document.createElement("option");
+        opt.value = api.model;
+        opt.textContent = api.model;
+        modelSelect.appendChild(opt);
+      });
+    });
+
     async function handleDownload() {
-      const url = document.getElementById("videoUrl").value.trim();
-      const platform = getPlatform(url);
-      const resultDiv = document.getElementById("result");
-      const loading = document.getElementById("loading");
+      const type = typeSelect.value;
+      const model = modelSelect.value;
+      const query = queryInput.value.trim();
 
-      resultDiv.style.display = "none";
-      loading.style.display = "flex";
-
-      if (platform !== "youtube") {
-        loading.style.display = "none";
-        alert("Only YouTube is supported currently.");
+      if (!type || !model || !query) {
+        alert("Please fill all fields.");
         return;
       }
 
-      const apiUrl = `https://stitch-api.vercel.app/api/v2/sections/Download/Youtube/ochinpo?q=${encodeURIComponent(url)}`;
+      const selectedApi = apis.find(api => api.tag === type && api.model === model);
+      if (!selectedApi) {
+        alert("Model not found.");
+        return;
+      }
+
+      const queryKey = Object.keys(selectedApi.query)[0];
+      const url = `${selectedApi.url}?${queryKey}=${encodeURIComponent(query)}`;
+
+      loading.style.display = "block";
+      resultDiv.innerHTML = "";
 
       try {
-        const res = await fetch(apiUrl);
-        const result = await res.json();
-
+        const res = await fetch(url);
+        const json = await res.json();
         loading.style.display = "none";
 
-        if (result.status && result.data) {
-          const data = result.data;
-
-          document.getElementById("videoPlayer").src = data.video;
-          document.getElementById("thumbnail").src = data.thumbnail;
-
-          const detailsDiv = document.getElementById("videoDetails");
-          detailsDiv.innerHTML = `
-            <h2>${data.title}</h2>
-            <p><strong>Description:</strong> ${data.description}</p>
-            <p><strong>Duration:</strong> ${data.time}</p>
-            <p><strong>Uploaded:</strong> ${data.ago}</p>
-            <p><strong>Views:</strong> ${data.views.toLocaleString()}</p>
-            <div class="channel-info">
-              <p><strong>Channel:</strong> <a href="${data.channel}" target="_blank">${data.author}</a></p>
-              <p><strong>Watch:</strong> <a href="${data.url}" target="_blank">Click here</a></p>
-            </div>
-          `;
-
-          document.getElementById("result").style.display = "block";
-
-          document.getElementById("downloadBtn").onclick = function () {
-            const downloadType = document.getElementById("downloadType").value;
-            let downloadUrl = "";
-
-            if (downloadType === "video") downloadUrl = data.video;
-            else if (downloadType === "audio") downloadUrl = data.audio;
-            else if (downloadType === "thumbnail") downloadUrl = data.thumbnail;
-            else return;
-
-            window.open(downloadUrl, "_blank");
-          };
-        } else {
-          alert("Failed to fetch video data.");
+        if (!json.status || !json.data) {
+          resultDiv.innerHTML = `
+            <div class="media-block">
+              <p style="text-align:center; font-size: 18px;">No valid data found.</p>
+            </div>`;
+          return;
         }
+
+        const container = renderData(json.data);
+        resultDiv.appendChild(container);
       } catch (err) {
         loading.style.display = "none";
-        alert("An error occurred.");
+        resultDiv.innerHTML = `<p style="color:red">Error fetching data: ${err.message}</p>`;
         console.error(err);
       }
     }
+
+    function renderData(obj) {
+      const container = document.createElement("div");
+      container.className = "media-block";
+
+      let info = "", mediaSections = { thumb: "", image: "", video: "", audio: "" }, downloadOptions = [];
+
+      function appendMedia(key, val, type) {
+        const values = Array.isArray(val) ? val : [val];
+        values.forEach((v, i) => {
+          if (!v) return;
+          const mediaElement = {
+            thumb: `<img src="${v}" alt="Thumbnail ${i}" />`,
+            image: `<img src="${v}" alt="Image ${i}" />`,
+            video: `<video src="${v}" controls></video>`,
+            audio: `<audio src="${v}" controls></audio>`,
+          }[type];
+          mediaSections[type] += mediaElement;
+          downloadOptions.push({ label: `${type.toUpperCase()} ${i + 1}`, url: v });
+        });
+      }
+
+      for (const key in obj) {
+        const val = obj[key];
+        if (!val) continue;
+        const lowerKey = key.toLowerCase();
+
+        if (lowerKey.includes("thumb")) appendMedia(key, val, "thumb");
+        else if (lowerKey.includes("image")) appendMedia(key, val, "image");
+        else if (lowerKey.includes("video")) appendMedia(key, val, "video");
+        else if (lowerKey.includes("audio")) appendMedia(key, val, "audio");
+        else if (typeof val === "object") {
+          if (Array.isArray(val)) {
+            val.forEach((v, i) => {
+              if (typeof v === "object") {
+                for (const k in v) {
+                  info += `<p><strong>${key}[${i}].${k}</strong>: ${v[k]}</p>`;
+                }
+              } else {
+                info += `<p><strong>${key}[${i}]</strong>: ${v}</p>`;
+              }
+            });
+          } else {
+            for (const subKey in val) {
+              info += `<p><strong>${key}.${subKey}</strong>: ${val[subKey]}</p>`;
+            }
+          }
+        } else {
+          info += `<p><strong>${key}</strong>: ${val}</p>`;
+        }
+      }
+
+      let mediaHTML = "";
+      if (mediaSections.thumb) mediaHTML += `<h3>Thumbnails</h3><div class="media-group">${mediaSections.thumb}</div>`;
+      if (mediaSections.image) mediaHTML += `<h3>Images</h3><div class="media-group">${mediaSections.image}</div>`;
+      if (mediaSections.video) mediaHTML += `<h3>Videos</h3><div class="media-group">${mediaSections.video}</div>`;
+      if (mediaSections.audio) mediaHTML += `<h3>Audios</h3><div class="media-group">${mediaSections.audio}</div>`;
+
+      container.innerHTML = `${mediaHTML}<div class="info">${info}</div>`;
+
+      if (downloadOptions.length > 0) {
+        const selectBox = document.createElement("select");
+        selectBox.innerHTML = `<option disabled selected>Select file to download</option>`;
+        downloadOptions.forEach(opt => {
+          const option = document.createElement("option");
+          option.value = opt.url;
+          option.textContent = opt.label;
+          selectBox.appendChild(option);
+        });
+
+        const downloadBtn = document.createElement("button");
+        downloadBtn.textContent = "Download File";
+        downloadBtn.onclick = () => {
+          const selectedUrl = selectBox.value;
+          if (!selectedUrl) return alert("Select a file first.");
+          const link = document.createElement("a");
+          link.href = selectedUrl;
+          link.setAttribute("download", "");
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener noreferrer");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+
+        const downloadWrap = document.createElement("div");
+        downloadWrap.className = "download-select";
+        downloadWrap.appendChild(selectBox);
+        downloadWrap.appendChild(downloadBtn);
+        container.appendChild(downloadWrap);
+      }
+
+      return container;
+    }
+
+    loadApis();
   </script>
+
 </body>
 </html>
