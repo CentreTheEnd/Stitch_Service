@@ -121,13 +121,13 @@ global.discordUrl = config.auth.discord.oauth2;
 
 
 //______________________________________________
-/*
+
 global.fs = fs;
 global.cheerio = cheerio;
 global.axios = axios;
 global.fetch = fetch;
 global.moment = moment;
-*/
+
 //______________________________________________
 
 
