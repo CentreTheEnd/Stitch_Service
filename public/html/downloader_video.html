@@ -2,134 +2,217 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YouTube Downloader</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #eef2f3, #cfd9df);
+      background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      padding: 20px;
-      margin: 0;
+      padding: 30px 15px;
     }
 
     .container {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 25px 30px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 1000px;
       width: 100%;
-      max-width: 800px;
     }
 
     h1 {
       text-align: center;
       color: #333;
       margin-bottom: 25px;
+      font-size: 28px;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 16px;
-      margin-bottom: 15px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 15px;
     }
 
     button {
-      background-color: #007bff;
+      background: #007bff;
       color: white;
-      padding: 10px 20px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     button:hover {
-      background-color: #0056b3;
-    }
-
-    video, img {
-      max-width: 100%;
-      margin-top: 15px;
-      border-radius: 10px;
-    }
-
-    #result p {
-      margin: 6px 0;
-      font-size: 15px;
-    }
-
-    select {
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 15px;
-      margin-top: 10px;
-      margin-right: 10px;
+      background: #0056b3;
     }
 
     #loading {
       display: none;
-      text-align: center;
-      font-weight: bold;
-      color: #555;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {transform: rotate(0deg);}
+      100% {transform: rotate(360deg);}
+    }
+
+    #result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .video-preview {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 25px;
+    }
+
+    .info-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .thumbnail {
+      flex: 1 1 280px;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .details {
+      flex: 2 1 400px;
+    }
+
+    .details h2 {
+      margin-top: 0;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .details p {
+      font-size: 15px;
+      margin: 8px 0;
+    }
+
+    .channel-info {
       margin-top: 10px;
+      background: #f5f5f5;
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+
+    .channel-info a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .download-section {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 8px;
+      flex: 1;
+    }
+
+    #downloadBtn {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    #downloadBtn:hover {
+      background: linear-gradient(to right, #00f2fe, #4facfe);
+    }
+
+    @media (max-width: 1024px) {
+      .info-section {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .download-section {
+        flex-direction: column;
+      }
+
+      select, #downloadBtn {
+        width: 100%;
+      }
     }
 
     @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      input[type="text"], select, button {
-        font-size: 14px;
-      }
-
-      #result p {
-        font-size: 14px;
-      }
+      h1 { font-size: 22px; }
+      .details h2 { font-size: 18px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Video Downloader</h1>
+    <h1>YouTube Downloader</h1>
     <input type="text" id="videoUrl" placeholder="Paste the video URL here..." />
     <button onclick="handleDownload()">Download</button>
-    <div id="loading">Loading, please wait...</div>
 
-    <div id="result" style="display: none;"></div>
+    <div id="loading"><div class="spinner"></div></div>
 
-    <div id="downloadOptions" style="display: none;">
-      <label for="downloadType">Choose download type:</label>
-      <select id="downloadType">
-        <option value="video">Video</option>
-        <option value="audio">Audio</option>
-        <option value="thumbnail">Thumbnail</option>
-      </select>
-      <button id="downloadBtn">Download</button>
+    <div id="result">
+      <video id="videoPlayer" class="video-preview" controls></video>
+      <div class="info-section">
+        <div class="thumbnail"><img id="thumbnail" src="" alt="Thumbnail" /></div>
+        <div class="details" id="videoDetails"></div>
+      </div>
+      <div class="download-section">
+        <select id="downloadType">
+          <option value="video">Video</option>
+          <option value="audio">Audio</option>
+          <option value="thumbnail">Thumbnail</option>
+        </select>
+        <button id="downloadBtn">Download</button>
+      </div>
     </div>
   </div>
 
   <script>
     function getPlatform(url) {
       if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
-      if (url.includes("tiktok.com")) return "tiktok";
-      if (url.includes("facebook.com") || url.includes("fb.watch")) return "facebook";
-      if (url.includes("instagram.com")) return "instagram";
       return null;
     }
 
@@ -138,15 +221,13 @@
       const platform = getPlatform(url);
       const resultDiv = document.getElementById("result");
       const loading = document.getElementById("loading");
-      const downloadOptions = document.getElementById("downloadOptions");
 
       resultDiv.style.display = "none";
-      downloadOptions.style.display = "none";
-      loading.style.display = "block";
+      loading.style.display = "flex";
 
       if (platform !== "youtube") {
         loading.style.display = "none";
-        alert("Currently, only YouTube is supported in this example.");
+        alert("Only YouTube is supported currently.");
         return;
       }
 
@@ -160,68 +241,42 @@
 
         if (result.status && result.data) {
           const data = result.data;
-          resultDiv.innerHTML = "";
 
-          const title = document.createElement("h2");
-          title.textContent = "Video Details:";
-          resultDiv.appendChild(title);
+          document.getElementById("videoPlayer").src = data.video;
+          document.getElementById("thumbnail").src = data.thumbnail;
 
-          const thumbnail = document.createElement("img");
-          thumbnail.src = data.thumbnail;
-          thumbnail.alt = "Thumbnail";
-          resultDiv.appendChild(thumbnail);
+          const detailsDiv = document.getElementById("videoDetails");
+          detailsDiv.innerHTML = `
+            <h2>${data.title}</h2>
+            <p><strong>Description:</strong> ${data.description}</p>
+            <p><strong>Duration:</strong> ${data.time}</p>
+            <p><strong>Uploaded:</strong> ${data.ago}</p>
+            <p><strong>Views:</strong> ${data.views.toLocaleString()}</p>
+            <div class="channel-info">
+              <p><strong>Channel:</strong> <a href="${data.channel}" target="_blank">${data.author}</a></p>
+              <p><strong>Watch:</strong> <a href="${data.url}" target="_blank">Click here</a></p>
+            </div>
+          `;
 
-          const videoPlayer = document.createElement("video");
-          videoPlayer.controls = true;
-          videoPlayer.src = data.video;
-          resultDiv.appendChild(videoPlayer);
+          document.getElementById("result").style.display = "block";
 
-          const infoList = [
-            ["Title", data.title],
-            ["Description", data.description],
-            ["Duration", data.time],
-            ["Uploaded", data.ago],
-            ["Views", data.views.toLocaleString()],
-            ["Channel", `<a href="${data.channel}" target="_blank">${data.author}</a>`],
-            ["Original Video Link", `<a href="${data.url}" target="_blank">Watch</a>`],
-          ];
-
-          for (const [label, value] of infoList) {
-            const p = document.createElement("p");
-            p.innerHTML = `<strong>${label}:</strong> ${value}`;
-            resultDiv.appendChild(p);
-          }
-
-          downloadOptions.style.display = "block";
           document.getElementById("downloadBtn").onclick = function () {
             const downloadType = document.getElementById("downloadType").value;
             let downloadUrl = "";
 
-            switch (downloadType) {
-              case "video":
-                downloadUrl = data.video;
-                break;
-              case "audio":
-                downloadUrl = data.audio;
-                break;
-              case "thumbnail":
-                downloadUrl = data.thumbnail;
-                break;
-              default:
-                alert("Download type not supported");
-                return;
-            }
+            if (downloadType === "video") downloadUrl = data.video;
+            else if (downloadType === "audio") downloadUrl = data.audio;
+            else if (downloadType === "thumbnail") downloadUrl = data.thumbnail;
+            else return;
 
             window.open(downloadUrl, "_blank");
           };
-
-          resultDiv.style.display = "block";
         } else {
           alert("Failed to fetch video data.");
         }
       } catch (err) {
         loading.style.display = "none";
-        alert("An error occurred while connecting to the API.");
+        alert("An error occurred.");
         console.error(err);
       }
     }
