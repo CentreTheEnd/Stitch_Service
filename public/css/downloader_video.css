@@ -1,0 +1,123 @@
+/* إعدادات الصفحة العامة */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+  padding: 30px;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#result {
+  margin-top: 30px;
+  text-align: left;
+}
+
+#result h2 {
+  font-size: 20px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+#result img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+#result p {
+  font-size: 16px;
+  color: #555;
+}
+
+#downloadOptions {
+  margin-top: 20px;
+}
+
+#downloadOptions select, #downloadOptions button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+}
+
+#downloadOptions button {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+}
+
+#downloadOptions button:hover {
+  background-color: #218838;
+}
+
+.hidden {
+  display: none;
+}
+
+/* تحسين واجهة للموبايل */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  input, button {
+    width: 100%;
+  }
+
+  #result {
+    margin-top: 20px;
+  }
+
+  #result h2 {
+    font-size: 18px;
+  }
+}
