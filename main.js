@@ -133,6 +133,13 @@ export async function setupApp() {
   }
 };
 
+
+  app.use((req, res) => {
+  redirectToError(res, 404); 
+});
+
+  
+ /*
   app.use((err, req, res) => {
   console.error('خطأ في الخادم:', err.stack);
 
@@ -160,7 +167,8 @@ export async function setupApp() {
  
   redirectToError(res, errorCode);
 });
-    
+
+*/
 
     return app;
 } 
