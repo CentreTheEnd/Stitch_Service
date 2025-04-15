@@ -90,7 +90,7 @@ async function handleDownload() {
       alert("Failed to fetch video data.");
     }
   } catch (err) {
-    alert("An error occurred while connecting to the API.");
+    alert("An error occurred while connecting to the API: " + err.message);
     console.error(err);
   }
 }
