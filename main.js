@@ -138,9 +138,7 @@ export async function setupApp() {
 
   let errorCode = 500;
 
-  if (err.name === 'MongoError') {
-    errorCode = 500;
-  }
+  
 
   else if (err.status === 404) {
     errorCode = 404; // Not Found
@@ -154,13 +152,8 @@ export async function setupApp() {
     errorCode = 403; 
   }
 
-  else if (err.code === 'ETIMEOUT') {
-    errorCode = 504; 
-  }
 
-  else if (err.name === 'Error') {
-    errorCode = 500; 
-  }
+  
 
   else if (err.status === 400) {
     errorCode = 400; 
