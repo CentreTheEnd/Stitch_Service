@@ -242,7 +242,8 @@
 
       } catch (err) {
         loading.style.display = "none";
-        resultDiv.innerHTML = "<p>Error fetching data.</p>";
+        resultDiv.innerHTML = `<p>Error fetching data :
+        ${err.message}</p>`;
       }
     }
 
