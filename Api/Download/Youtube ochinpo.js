@@ -37,6 +37,18 @@ router.get('/Youtube/ochinpo', async (req, res) => {
   }
 });
 
+  tag: "Downloader YouTube",
+  description: "Downloader video from YouTube",
+  query: { 
+    q: "text or url video",
+  },
+  limited: 5,
+  status: true,
+  price: "free"
+};
+
+export { usedRouterKeys };
+
 export default router;
 
 // دالة لتحميل البيانات من API
