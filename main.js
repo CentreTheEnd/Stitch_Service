@@ -126,6 +126,50 @@ export async function setupApp() {
     //await setupRoutes(app);
 
     console.log(`Server Setup Complete!`);
+  
+    const redirectToError = (res, code) => {
+  if (!res.headersSent) {
+    res.status(code).redirect(`/html/error.html?code=${code}`);
+  }
+};
+
+  app.use((err, req, res) => {
+  console.error('خطأ في الخادم:', err.stack);
+
+  let errorCode = 500;
+
+  if (err.name === 'MongoError') {
+    errorCode = 500;
+  }
+
+  else if (err.status === 404) {
+    errorCode = 404; // Not Found
+  }
+
+  else if (err.status === 401) {
+    errorCode = 401; // Unauthorized
+  }
+
+  else if (err.status === 403) {
+    errorCode = 403; 
+  }
+
+  else if (err.code === 'ETIMEOUT') {
+    errorCode = 504; 
+  }
+
+  else if (err.name === 'Error') {
+    errorCode = 500; 
+  }
+
+  else if (err.status === 400) {
+    errorCode = 400; 
+  }
+
+ 
+  redirectToError(res, errorCode);
+});
+    
 
     return app;
 } 
