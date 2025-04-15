@@ -127,7 +127,11 @@ export async function setupApp() {
 
     console.log(`Server Setup Complete!`);
   
-    const redirectToError = (res, code) => {
+    app.get('/downloader/video', (req, res) => {
+        res.status(200).redirect(`/html/downloader_video.html`);
+    });
+  
+  const redirectToError = (res, code) => {
   if (!res.headersSent) {
     res.status(code).redirect(`/html/error.html?code=${code}`);
   }
