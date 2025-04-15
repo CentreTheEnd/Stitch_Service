@@ -133,6 +133,15 @@ export async function setupApp() {
   }
 };
 
+  app.use((req, res, next) => {
+  const timeoutMs = 9000;
+  const timer = setTimeout(() => {
+    redirectToError(res, 504); 
+  }, timeoutMs);
+
+  res.on('finish', () => clearTimeout(timer));
+  next();
+});
 
   app.use((req, res) => {
   redirectToError(res, 404); 
