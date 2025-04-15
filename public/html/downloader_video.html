@@ -19,19 +19,28 @@
       padding: 20px;
       background-color: var(--bg);
       color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      font-size: 2em;
+      color: var(--primary);
     }
 
-    .selectors, .input-group, .download-select {
+    .selectors, .input-group {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 15px;
+      gap: 15px;
+      margin-bottom: 25px;
+      width: 100%;
+      max-width: 600px;
     }
 
     select, input, button {
@@ -42,6 +51,7 @@
       min-width: 250px;
       background-color: var(--white);
       transition: 0.3s;
+      box-sizing: border-box;
     }
 
     select:focus, input:focus {
@@ -55,6 +65,7 @@
       color: white;
       cursor: pointer;
       border: none;
+      min-width: 100px;
     }
 
     button:hover {
@@ -82,23 +93,36 @@
       to { transform: rotate(360deg); }
     }
 
-    #result .media-block {
+    #result {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .media-block {
       background-color: var(--white);
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
       box-shadow: 0 2px 12px var(--shadow);
-      margin-top: 25px;
+      margin-top: 30px;
+    }
+
+    .media-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
     }
 
     img, video, audio {
       max-width: 100%;
+      max-height: 300px;
       border-radius: 10px;
       margin-bottom: 15px;
       box-shadow: 0 2px 6px var(--shadow);
     }
 
     .info {
-      margin-bottom: 10px;
+      margin-top: 15px;
     }
 
     .info p {
@@ -110,6 +134,19 @@
       color: var(--primary);
       display: inline-block;
       min-width: 120px;
+    }
+
+    .download-select {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .download-select select {
+      width: 100%;
+      max-width: 400px;
     }
 
     @media (max-width: 768px) {
