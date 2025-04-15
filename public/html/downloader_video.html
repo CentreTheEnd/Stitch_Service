@@ -5,21 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Video Downloader</title>
   <style>
-    :root {
-      --primary: #0d6efd;
-      --bg: #f8f9fa;
-      --white: #ffffff;
-      --text: #212529;
-      --shadow: rgba(0, 0, 0, 0.08);
-      --border: #dee2e6;
-    }
-
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: #f8f9fa; /* --bg */
+      color: #212529; /* --text */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -29,14 +20,14 @@
     h2 {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: var(--primary);
+      color: #0d6efd; /* --primary */
     }
 
     .card {
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: #ffffff; /* --white */
+      border: 1px solid #dee2e6; /* --border */
       border-radius: 12px;
-      box-shadow: 0 4px 12px var(--shadow);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* --shadow */
       padding: 20px;
       width: 100%;
       max-width: 850px;
@@ -52,7 +43,7 @@
 
     select, input, button {
       padding: 12px 15px;
-      border: 1px solid var(--border);
+      border: 1px solid #dee2e6; /* --border */
       border-radius: 8px;
       font-size: 1rem;
       flex: 1;
@@ -62,13 +53,13 @@
 
     select:focus, input:focus {
       outline: none;
-      border-color: var(--primary);
+      border-color: #0d6efd; /* --primary */
       box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
     }
 
     button {
-      background-color: var(--primary);
-      color: var(--white);
+      background-color: #0d6efd; /* --primary */
+      color: #ffffff; /* --white */
       border: none;
       cursor: pointer;
       transition: background 0.3s;
@@ -82,13 +73,14 @@
     #loading {
       text-align: center;
       margin-top: 20px;
+      display: none; /* Hide initially */
     }
 
     #loading::after {
       content: "";
       width: 40px;
       height: 40px;
-      border: 4px solid var(--primary);
+      border: 4px solid #0d6efd; /* --primary */
       border-top-color: transparent;
       border-radius: 50%;
       display: inline-block;
@@ -101,10 +93,10 @@
 
     .media-block {
       padding: 20px;
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: #ffffff; /* --white */
+      border: 1px solid #dee2e6; /* --border */
       border-radius: 10px;
-      box-shadow: 0 4px 10px var(--shadow);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* --shadow */
       margin-top: 30px;
       opacity: 0;
       animation: fadeIn 1s forwards;
@@ -122,9 +114,9 @@
     .media-block h3 {
       margin-top: 20px;
       margin-bottom: 10px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #dee2e6; /* --border */
       padding-bottom: 5px;
-      color: var(--primary);
+      color: #0d6efd; /* --primary */
     }
 
     .media-group {
@@ -139,7 +131,7 @@
       max-width: 100%;
       max-height: 300px;
       border-radius: 10px;
-      box-shadow: 0 2px 6px var(--shadow);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* --shadow */
     }
 
     .info p {
@@ -149,7 +141,7 @@
     }
 
     .info strong {
-      color: var(--primary);
+      color: #0d6efd; /* --primary */
     }
 
     .download-select {
@@ -169,13 +161,13 @@
     .media-block .info {
       margin-top: 20px;
       padding: 15px;
-      background: var(--bg);
+      background: #f8f9fa; /* --bg */
       border-radius: 8px;
-      box-shadow: 0 4px 6px var(--shadow);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08); /* --shadow */
     }
 
     .media-block .info strong {
-      color: var(--primary);
+      color: #0d6efd; /* --primary */
     }
 
     @media (max-width: 768px) {
@@ -185,6 +177,23 @@
 
       select, input, button {
         width: 100%;
+      }
+
+      .media-block {
+        padding: 15px;
+      }
+
+      .media-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      img, video, audio {
+        max-height: 250px;
+      }
+
+      .info {
+        padding: 10px;
       }
     }
   </style>
@@ -265,13 +274,13 @@
       const queryKey = Object.keys(selectedApi.query)[0];
       const url = selectedApi.url + `?${queryKey}=${encodeURIComponent(query)}`;
 
-      loading.style.display = "block";
+      loading.style.display = "block"; // Show loading
       resultDiv.innerHTML = "";
 
       try {
         const res = await fetch(url);
         const json = await res.json();
-        loading.style.display = "none";
+        loading.style.display = "none"; // Hide loading
 
         if (!json.status || !json.data) {
           resultDiv.innerHTML = "<p>No valid data found.</p>";
@@ -282,7 +291,7 @@
         resultDiv.appendChild(container);
 
       } catch (err) {
-        loading.style.display = "none";
+        loading.style.display = "none"; // Hide loading
         resultDiv.innerHTML = `<p>Error: ${err.message}</p>`;
       }
     }
@@ -315,59 +324,40 @@
         else if (k.includes("image")) renderMedia("image", val);
         else if (k.includes("video")) renderMedia("video", val);
         else if (k.includes("audio")) renderMedia("audio", val);
-        else if (typeof val === "object") {
-          if (Array.isArray(val)) {
-            val.forEach((v, i) => {
-              if (typeof v === "object") {
-                for (const k in v) info += `<p><strong>${key}[${i}].${k}</strong>: ${v[k]}</p>`;
-              } else {
-                info += `<p><strong>${key}[${i}]</strong>: ${v}</p>`;
-              }
-            });
+        else {
+          if (typeof val === "object") {
+            for (const sub in val) {
+              info += `<p><strong>${key}.${sub}</strong>: ${val[sub]}</p>`;
+            }
           } else {
-            for (const sub in val) info += `<p><strong>${key}.${sub}</strong>: ${val[sub]}</p>`;
+            info += `<p><strong>${key}</strong>: ${val}</p>`;
           }
-        } else {
-          info += `<p><strong>${key}</strong>: ${val}</p>`;
         }
       }
 
-      let mediaHTML = "";
-      for (const type in media) {
-        if (media[type]) mediaHTML += `<h3>${type.charAt(0).toUpperCase() + type.slice(1)}s</h3><div class="media-group">${media[type]}</div>`;
-      }
+      const mediaGroup = document.createElement("div");
+      mediaGroup.className = "media-group";
+      mediaGroup.innerHTML = media.thumb + media.image + media.video + media.audio;
+      container.appendChild(mediaGroup);
 
-      container.innerHTML = mediaHTML + `<div class="info">${info}</div>`;
+      const infoBlock = document.createElement("div");
+      infoBlock.className = "info";
+      infoBlock.innerHTML = info;
+      container.appendChild(infoBlock);
 
-      if (downloads.length) {
-        const select = document.createElement("select");
-        select.innerHTML = `<option disabled selected>Select file to download</option>`;
-        downloads.forEach(opt => {
-          const o = document.createElement("option");
-          o.value = opt.url;
-          o.textContent = opt.label;
-          select.appendChild(o);
-        });
-
-        const btn = document.createElement("button");
-        btn.textContent = "Download File";
-        btn.onclick = () => {
-          if (!select.value) return alert("Select a file.");
-          const link = document.createElement("a");
-          link.href = select.value;
-          link.download = "";
-          link.click();
-        };
-
+      if (downloads.length > 0) {
         const downloadDiv = document.createElement("div");
         downloadDiv.className = "download-select";
-        downloadDiv.appendChild(select);
-        downloadDiv.appendChild(btn);
+        downloads.forEach(({ label, url }) => {
+          const btn = document.createElement("button");
+          btn.textContent = `Download ${label}`;
+          btn.onclick = () => window.open(url, "_blank");
+          downloadDiv.appendChild(btn);
+        });
         container.appendChild(downloadDiv);
       }
 
       container.style.animation = "fadeIn 1s forwards";
-
       return container;
     }
 
