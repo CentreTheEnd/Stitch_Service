@@ -129,7 +129,7 @@ export async function setupApp() {
   
     app.get('/downloader/video', (req, res) => {
         //res.status(200).redirect(`/html/downloader_video.html`);
-         res.sendFile(path.join(__dirname,`/html/downloader_video.html`));
+         res.sendFile(path.join(__dirname,`/public/html/downloader_video.html`));
     });
   
   const redirectToError = (res, code) => {
