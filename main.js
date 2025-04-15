@@ -140,7 +140,7 @@ export async function setupApp() {
 
   
 
-  else if (err.status === 404) {
+  if (err.status === 404) {
     errorCode = 404; // Not Found
   }
 
