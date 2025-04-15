@@ -95,6 +95,6 @@ async function yt5sIo(url) {
                     throw new Error("URL tidak valid. Gunakan link Facebook atau Instagram.");
                 }
             } catch (error) {
-                return throw new Error(error.message);
+                 throw new Error(error.message);
             }
         }
