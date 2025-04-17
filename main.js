@@ -139,6 +139,7 @@ export async function setupApp() {
   app.get('/downloader/video', (req, res) => {
   const ip = req.ip;
   const apiKey = global.generateAPIKey(ip);
+  global.isApiKey = apiKey;
 
   const html = _fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
   const modifiedHtml = html.replace('{{API_KEY}}', apiKey);
