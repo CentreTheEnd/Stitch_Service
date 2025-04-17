@@ -19,10 +19,7 @@ dotenv.config();
 
 global.author = '⛊  𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
 
-global.createdKeys = {
-firstKey: "stitch",
-endKey: "stitch_no_hacking_here"
-}
+
 
 //______________________________________________
 
