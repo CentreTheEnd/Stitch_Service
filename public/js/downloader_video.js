@@ -5,6 +5,7 @@ const typeSelect = document.getElementById("typeSelect");
     const loading = document.getElementById("loading");
 
     let apis = [];
+    const apiKey = "{{API_KEY}}";
 
     async function loadApis() {
       try {
@@ -58,7 +59,13 @@ const typeSelect = document.getElementById("typeSelect");
       resultDiv.innerHTML = "";
 
       try {
-        const res = await fetch(url);
+        //const res = await fetch(url);
+        const res = await fetch(url, {
+        headers: {
+       'api-key': 'your-key-here'
+        }
+        });
+          
         const json = await res.json();
 
         
