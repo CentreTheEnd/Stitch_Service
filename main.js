@@ -5,8 +5,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 //import { Low, JSONFile } from 'lowdb';
 import { fileURLToPath } from 'url';
-import fs from "fs/promises";
-import _fs from 'fs';
+//import fs from "fs/promises";
+import fs from 'fs';
 
 
 
@@ -141,7 +141,7 @@ export async function setupApp() {
   const apiKey = global.generateAPIKey(ip);
   global.isApiKey = apiKey;
 
-  const html = _fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
   const modifiedHtml = html.replace('{{API_KEY}}', apiKey);
 
   res.setHeader('Content-Type', 'text/html');
