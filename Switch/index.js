@@ -152,7 +152,8 @@ export async function setupRoutes(app) {
     
     const directoryPathApi = path.join(__dirname, '../Api');
    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
-    
+
+    /*
     app.use(async (req, res, next) => {
     
     //if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
@@ -166,7 +167,7 @@ export async function setupRoutes(app) {
         return res.status(400).json({ status: false, message: 'Missing API Key' });
     }
 
-        /*
+        
 
     let matchedApi = null;
     let section = null;
@@ -229,10 +230,9 @@ export async function setupRoutes(app) {
         console.error('Middleware error:', err);
         return res.status(500).json({ status: false, message: 'Internal server error' });
     }
-
-    */
-        next();
 });
+
+*/
 
     
     
