@@ -6,6 +6,7 @@ import path from 'path';
 //import { Low, JSONFile } from 'lowdb';
 import { fileURLToPath } from 'url';
 import fs from "fs/promises";
+import _fs from 'fs';
 
 
 
@@ -126,7 +127,7 @@ export async function setupApp() {
     //await setupRoutes(app);
 
     console.log(`Server Setup Complete!`);
-  
+  /*
     app.get('/downloader/video', (req, res) => {
         const ip = req.ip;
         const apiKey = global.generateAPIKey(ip);
@@ -134,6 +135,18 @@ export async function setupApp() {
          res.setHeader('api-key', apiKey);
          res.sendFile(path.join(__dirname,`/public/html/downloader_video.html`));
     });
+    */
+  app.get('/downloader/video', (req, res) => {
+  const ip = req.ip;
+  const apiKey = global.generateAPIKey(ip);
+
+  const html = _fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
+  const modifiedHtml = html.replace('{{API_KEY}}', apiKey);
+
+  res.setHeader('Content-Type', 'text/html');
+  res.send(modifiedHtml);
+});
+  
   
   const redirectToError = (res, code) => {
   if (!res.headersSent) {
