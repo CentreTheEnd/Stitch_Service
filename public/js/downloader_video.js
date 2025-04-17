@@ -1,4 +1,4 @@
-const typeSelect = document.getElementById("typeSelect");
+    const typeSelect = document.getElementById("typeSelect");
     const modelSelect = document.getElementById("modelSelect");
     const queryInput = document.getElementById("queryInput");
     const resultDiv = document.getElementById("result");
@@ -62,7 +62,7 @@ const typeSelect = document.getElementById("typeSelect");
         //const res = await fetch(url);
         const res = await fetch(url, {
         headers: {
-       'api-key': 'your-key-here'
+       'api-key': apiKey
         }
         });
           
