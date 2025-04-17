@@ -128,7 +128,10 @@ export async function setupApp() {
     console.log(`Server Setup Complete!`);
   
     app.get('/downloader/video', (req, res) => {
-        //res.status(200).redirect(`/html/downloader_video.html`);
+        const ip = req.ip;
+        const apiKey = global.generateAPIKey(ip);
+      
+         res.setHeader('api-key', apiKey);
          res.sendFile(path.join(__dirname,`/public/html/downloader_video.html`));
     });
   
