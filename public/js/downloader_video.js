@@ -5,7 +5,7 @@
     const loading = document.getElementById("loading");
 
     let apis = [];
-    const apiKey = "{{API_KEY}}";
+    //const apiKey = "{{API_KEY}}";
 
     async function loadApis() {
       try {
