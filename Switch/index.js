@@ -152,7 +152,7 @@ export async function setupRoutes(app) {
     
     const directoryPathApi = path.join(__dirname, '../Api');
    // ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄⌲
-    /*
+    
     app.use(async (req, res, next) => {
     
     //if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
@@ -161,10 +161,12 @@ export async function setupRoutes(app) {
 
     if (!req.originalUrl.toLowerCase().includes('/api/v2') || !req.originalUrl.toLowerCase().startsWith('/api/v2')) return next();
         
-    const apiKeyHeader = req.headers['apikey'];
+    const apiKeyHeader = req.headers['api-key'];
     if (!apiKeyHeader) {
         return res.status(400).json({ status: false, message: 'Missing API Key' });
     }
+
+        /*
 
     let matchedApi = null;
     let section = null;
@@ -227,9 +229,12 @@ export async function setupRoutes(app) {
         console.error('Middleware error:', err);
         return res.status(500).json({ status: false, message: 'Internal server error' });
     }
-});
 
     */
+        next();
+});
+
+    
     
     await loadRouters(directoryPathApi, "v2", app, 'api');
     
