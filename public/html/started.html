@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/css/started.css" />
   <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
 </head>
 <body>
 
@@ -25,7 +27,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero" id="get-started">
+  <section class="hero" id="get-started" data-aos="fade-up">
     <div class="hero-content">
       <img src="your-image.jpg" alt="API Image" class="hero-img" />
       <div class="hero-text">
@@ -39,11 +41,11 @@
   <!-- Features Section -->
   <section class="features-section">
     <div class="features-content">
-      <div class="text-side">
+      <div class="text-side" data-aos="fade-right">
         <h2>Featured Services</h2>
         <p>A collection of smart tools to enhance your projects.</p>
       </div>
-      <div class="cards-side" id="cardContainer">
+      <div class="cards-side" id="cardContainer" data-aos="fade-left">
         <!-- Cards will be added via JS -->
       </div>
     </div>
@@ -53,17 +55,17 @@
   <section class="advantages-section">
     <h2>Why Choose Us?</h2>
     <div class="advantages-grid">
-      <div class="advantage-box">
+      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
         <div class="icon material-icons">flash_on</div>
         <h3>Fast</h3>
         <p>Instant response and high performance across all services.</p>
       </div>
-      <div class="advantage-box">
+      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
         <div class="icon material-icons">lock</div>
         <h3>Secure</h3>
         <p>Strict security standards to protect your data.</p>
       </div>
-      <div class="advantage-box">
+      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
         <div class="icon material-icons">build</div>
         <h3>Flexible</h3>
         <p>Highly customizable and suitable for various applications.</p>
@@ -86,5 +88,12 @@
   </footer>
 
   <script src="/js/started.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true
+  });
+</script>
 </body>
 </html>
