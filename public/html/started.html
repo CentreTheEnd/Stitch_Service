@@ -1,99 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stitch | API Services</title>
-  <link rel="stylesheet" href="/css/started.css" />
-  <!-- Google Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get your unique API key to access powerful services like image uploading and AI tools. Integrate seamlessly into your projects.">
+    <meta name="keywords" content="API key, image upload API, AI tools API, developer services, cloud services">
+    <meta name="theme-color" content="#2563eb">
+    <title>Stitch Api</title>
+    <link rel="stylesheet" href="/css/started.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> <!-- AOS CSS -->
+    <link rel="icon" href="/image/icon.png">
 </head>
 <body>
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="/" class="logo">Stitch<span>Api</span></a>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#">Documentation</a>
+                <a href="#">Pricing</a>
+                <a href="login.html">Login</a>
+                <a href="register.html" class="btn secondary">Sign Up</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="container">
-      <div class="logo">API Services</div>
-      <nav class="nav-links" id="navLinks">
-        <a href="#get-started" class="active"><span class="material-icons">play_circle_filled</span> Get Started</a>
-        <a href="#about"><span class="material-icons">info</span> About</a>
-        <a href="#login"><span class="material-icons">login</span> Login</a>
-        <a href="#signup"><span class="material-icons">app_registration</span> Sign Up</a>
-      </nav>
-      <div class="menu-icon" id="menuToggle">&#9776;</div>
-    </div>
-  </header>
+    <main>
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 id="hero-heading">Unlock Powerful Services with Your API Key</h1>
+                <p class="hero-subtitle">Access image uploading, AI tools, and more through a simple, unified API.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn primary">Get Your API Key</a>
+                </div>
+            </div>
+            <div class="hero-image" aria-hidden="true" data-aos="zoom-in" data-aos-delay="200">
+                <svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Central API node -->
+                    <!-- Central Hub -->
+                    <circle cx="250" cy="200" r="50" fill="var(--primary)" opacity="0.9"/>
+                    <text x="250" y="205" font-size="16" text-anchor="middle" fill="white" font-weight="600">HUB</text>
+                    
+                    <!-- Service Nodes -->
+                    <g transform="translate(100 100)">
+                        <circle cx="0" cy="0" r="30" fill="var(--accent)"/>
+                        <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Images</text>
+                    </g>
+                    <g transform="translate(400 100)">
+                        <circle cx="0" cy="0" r="30" fill="var(--accent)"/>
+                        <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">AI Tools</text>
+                    </g>
+                    <g transform="translate(100 300)">
+                        <circle cx="0" cy="0" r="30" fill="var(--accent)"/>
+                        <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Data</text>
+                    </g>
+                     <g transform="translate(400 300)">
+                        <circle cx="0" cy="0" r="30" fill="var(--accent)"/>
+                        <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">More...</text>
+                    </g>
+                    
+                    <!-- Connection lines with API Key -->
+                     <path d="M250 150 Q 175 125 100 100" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     <path d="M250 150 Q 325 125 400 100" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     <path d="M250 150 Q 175 125 100 100" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     <path d="M250 150 Q 325 125 400 100" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     <path d="M250 250 Q 175 275 100 300" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     <path d="M250 250 Q 325 275 400 300" stroke="var(--primary)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="5,5"/>
+                     
+                    <!-- Animated pulse effect -->
+                    <circle cx="250" cy="200" r="50" fill="none" stroke="var(--primary)" stroke-width="2">
+                        <animate attributeName="r" values="50;70;50" dur="4s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.6;0;0.6" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </section>
 
-  <!-- Hero Section -->
-  <section class="hero" id="get-started" data-aos="fade-up">
-    <div class="hero-content">
-      <img src="your-image.jpg" alt="API Image" class="hero-img" />
-      <div class="hero-text">
-        <h1>Welcome to Stitch API</h1>
-        <p>A platform offering advanced solutions through easy-to-use and efficient APIs.</p>
-        <button>Get Started</button>
-      </div>
-    </div>
-  </section>
+        <section class="stats">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="stat-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3>5,000+</h3>
+                <p>API Keys Issued</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>10+</h3>
+                <p>Available Services</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3>99.9%</h3>
+                <p>Service Uptime</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3>Millions</h3>
+                <p>Requests Processed Daily</p>
+            </div>
+        </section>
 
-  <!-- Features Section -->
-  <section class="features-section">
-    <div class="features-content">
-      <div class="text-side" data-aos="fade-right">
-        <h2>Featured Services</h2>
-        <p>A collection of smart tools to enhance your projects.</p>
-      </div>
-      <div class="cards-side" id="cardContainer" data-aos="fade-left">
-        <!-- Cards will be added via JS -->
-      </div>
-    </div>
-  </section>
+        <section class="features">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>Easy Integration</h3>
+                <p>Connect to all services with a single, unified API key and simple endpoints.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Versatile Services</h3>
+                <p>Access image uploading, AI-powered tools, data processing, and more.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Secure & Scalable</h3>
+                <p>Reliable infrastructure ensures your requests are secure and performance scales.</p>
+            </div>
+        </section>
 
-  <!-- Advantages Section -->
-  <section class="advantages-section">
-    <h2>Why Choose Us?</h2>
-    <div class="advantages-grid">
-      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon material-icons">flash_on</div>
-        <h3>Fast</h3>
-        <p>Instant response and high performance across all services.</p>
-      </div>
-      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon material-icons">lock</div>
-        <h3>Secure</h3>
-        <p>Strict security standards to protect your data.</p>
-      </div>
-      <div class="advantage-box" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon material-icons">build</div>
-        <h3>Flexible</h3>
-        <p>Highly customizable and suitable for various applications.</p>
-      </div>
-    </div>
-  </section>
+        <section class="get-started" data-aos="fade-up">
+            <h2>Get Your API Key in 3 Steps</h2>
+            <div class="steps">
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
+                    <span class="step-number">1</span>
+                    <h3>Sign Up</h3>
+                    <p>Create a free account to instantly generate your unique API key.</p>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <span class="step-number">2</span>
+                    <h3>Explore Services</h3>
+                    <p>Check our documentation for available services like image upload and AI.</p>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
+                    <span class="step-number">3</span>
+                    <h3>Integrate</h3>
+                    <p>Use your API key to easily call services from your application.</p>
+                </div>
+            </div>
+        </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="#get-started"><span class="material-icons">play_circle_filled</span> Get Started</a>
-      <a href="#about"><span class="material-icons">info</span> About</a>
-      <a href="#login"><span class="material-icons">login</span> Login</a>
-      <a href="#signup"><span class="material-icons">app_registration</span> Sign Up</a>
-    </div>
-    <div class="footer-contact">
-      <p>Contact Us: <a href="mailto:developer@example.com">developer@example.com</a></p>
-    </div>
-    <p class="copyright">All rights reserved © 2025</p>
-  </footer>
-
-  <script src="/js/started.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 1000,
-    once: true
-  });
-</script>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="/" class="logo">Stitch<span>Api</span></a>
+                <p>Your central hub for accessing powerful cloud services via API.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Stitch Api. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/js/started.js"></script>
+    <script src="/js/auth-modal.js"></script> <!-- Assuming you might need this -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script> <!-- AOS JS -->
+    <script>
+      AOS.init({
+        duration: 800, // Animation duration
+        once: false // Animation triggers every time you scroll to the element
+      });
+    </script>
 </body>
 </html>
