@@ -65,29 +65,6 @@ body {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background-color: #333;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  .nav-links a {
-    padding: 15px;
-    font-size: 20px;
-  }
-  .menu-icon {
-    display: block;
-  }
-  .nav-links.active {
-    display: flex;
-  }
-}
-
 /* Hero Section Styles */
 .hero {
   display: flex;
@@ -194,6 +171,53 @@ body {
 }
 
 /* Advantages Section Styles */
+/* الأساسيات: إعدادات الإطار */
+.advantages-container {
+    display: flex;
+    flex-wrap: wrap; /* يسمح بلف العناصر حسب الحاجة */
+    justify-content: space-between; /* توزيع العناصر بشكل متساوي */
+    gap: 20px; /* المسافة بين العناصر */
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* إعدادات كل عنصر داخل الإطار */
+.advantage-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%; /* يضمن أن العرض يكون 100% في الشاشات الصغيرة */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* تأثير عند تمرير الفأرة على العنصر */
+.advantage-box:hover {
+    transform: scale(1.05); /* تكبير العنصر عند التمرير */
+}
+
+/* إعدادات الأيقونات */
+.icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+/* إعدادات العنوان */
+h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* إعدادات الوصف */
+p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/*
 .advantages-section {
   text-align: center;
   background-color: #f4f4f4;
@@ -239,6 +263,7 @@ body {
   font-size: 1rem;
   margin-top: 10px;
 }
+*/
 
 /* Footer Styles */
 footer {
@@ -270,4 +295,57 @@ footer .footer-contact p {
 footer .copyright {
   margin-top: 20px;
   font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  .nav-links a {
+    padding: 15px;
+    font-size: 20px;
+  }
+  .menu-icon {
+    display: block;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .advantages-container {
+        justify-content: center; /* تركيز العناصر في المنتصف */
+    }
+
+    .advantage-box {
+        width: 90%; /* العرض سيكون 90% من العرض الكامل في الشاشات الصغيرة */
+        margin: 10px 0; /* إضافة هامش عمودي بين العناصر */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .advantages-container {
+        flex-direction: column; /* ترتيب العناصر عموديًا في الشاشات الصغيرة جدًا */
+    }
+
+    .advantage-box {
+        width: 100%; /* العرض 100% في الشاشات الصغيرة جدًا */
+    }
+
+    .icon {
+        font-size: 40px; /* تقليل حجم الأيقونة */
+    }
+
+    h3 {
+        font-size: 1rem; /* تقليل حجم العنوان */
+    }
+
+    p {
+        font-size: 0.9rem; /* تقليل حجم النص الوصفي */
+    }
 }
