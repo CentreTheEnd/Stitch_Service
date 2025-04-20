@@ -4,7 +4,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* لون عصري متدرج */
+  color: #fff;
+  transition: background 0.5s ease-in-out; /* تأثير للانتقال بين الخلفيات */
 }
 
 .container {
@@ -15,8 +17,9 @@ body {
 
 /* Navbar Styles */
 .navbar {
-  background-color: #333;
+  background-color: #222;
   padding: 15px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .navbar .logo {
@@ -43,8 +46,9 @@ body {
 }
 
 .nav-links a:hover {
-  background-color: #444;
+  background-color: #ff7e5f;
   color: #fff;
+  box-shadow: 0 4px 10px rgba(255, 126, 95, 0.6);
 }
 
 /* Active Link Styles */
@@ -54,33 +58,24 @@ body {
   font-weight: bold;
 }
 
-.nav-links a span {
-  margin-right: 8px; /* Space between icon and text */
-}
-
-.menu-icon {
-  display: none;
-  font-size: 30px;
-  color: white;
-  cursor: pointer;
-}
-
 /* Hero Section Styles */
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1d1d1d;
+  background-color: #333;
   color: white;
   height: 70vh;
   border-radius: 15px;
   margin-bottom: 50px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .hero-img {
   max-width: 300px;
   border-radius: 10px;
   margin-right: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-text h1 {
@@ -100,11 +95,12 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-size: 18px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .hero button:hover {
   background-color: #45a049;
+  transform: scale(1.05);
 }
 
 /* Features Section Styles */
@@ -112,6 +108,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin: 50px 0;
+  gap: 30px;
 }
 
 .features-content {
@@ -122,11 +119,16 @@ body {
 
 .text-side {
   width: 40%;
+  padding: 30px;
+  background-color: #222;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .text-side h2 {
   font-size: 2rem;
   margin-bottom: 20px;
+  color: #ff7e5f;
 }
 
 .text-side p {
@@ -138,6 +140,9 @@ body {
   display: flex;
   gap: 20px;
   overflow-x: scroll;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 10px;
 }
 
 .card {
@@ -146,11 +151,12 @@ body {
   width: 300px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
@@ -171,106 +177,54 @@ body {
 }
 
 /* Advantages Section Styles */
-/* الأساسيات: إعدادات الإطار */
 .advantages-container {
-    display: flex;
-    flex-wrap: wrap; /* يسمح بلف العناصر حسب الحاجة */
-    justify-content: space-between; /* توزيع العناصر بشكل متساوي */
-    gap: 20px; /* المسافة بين العناصر */
-    margin: 20px;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* إعدادات كل عنصر داخل الإطار */
-.advantage-box {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%; /* يضمن أن العرض يكون 100% في الشاشات الصغيرة */
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-/* تأثير عند تمرير الفأرة على العنصر */
-.advantage-box:hover {
-    transform: scale(1.05); /* تكبير العنصر عند التمرير */
-}
-
-/* إعدادات الأيقونات */
-.icon {
-    font-size: 50px;
-    margin-bottom: 10px;
-}
-
-/* إعدادات العنوان */
-h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-/* إعدادات الوصف */
-p {
-    font-size: 1rem;
-    color: #555;
-}
-
-/*
-.advantages-section {
-  text-align: center;
-  background-color: #f4f4f4;
-  padding: 50px 0;
-}
-
-.advantages-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.advantages-grid {
   display: flex;
-  justify-content: center;
-  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .advantage-box {
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
-  width: 250px;
+  width: 30%;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .advantage-box:hover {
-  transform: translateY(-10px);
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.advantage-box .icon {
-  font-size: 40px;
-  color: #4caf50;
+.icon {
+  font-size: 50px;
+  color: #ff7e5f;
+  margin-bottom: 10px;
 }
 
-.advantage-box h3 {
-  margin-top: 15px;
-  font-size: 1.5rem;
+h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.advantage-box p {
+p {
   font-size: 1rem;
-  margin-top: 10px;
+  color: #555;
 }
-*/
 
 /* Footer Styles */
 footer {
-  background-color: #333;
+  background-color: #222;
   color: #fff;
   padding: 20px;
   text-align: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
 }
 
 footer .footer-links {
@@ -286,6 +240,7 @@ footer .footer-links a {
 
 footer .footer-links a:hover {
   text-decoration: underline;
+  color: #ff7e5f;
 }
 
 footer .footer-contact p {
@@ -297,6 +252,7 @@ footer .copyright {
   font-size: 0.8rem;
 }
 
+/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -308,44 +264,48 @@ footer .copyright {
     padding: 20px;
     border-radius: 5px;
   }
+  
   .nav-links a {
     padding: 15px;
     font-size: 20px;
   }
+  
   .menu-icon {
     display: block;
   }
+  
   .nav-links.active {
     display: flex;
   }
+  
   .advantages-container {
-        justify-content: center; /* تركيز العناصر في المنتصف */
-    }
-
-    .advantage-box {
-        width: 90%; /* العرض سيكون 90% من العرض الكامل في الشاشات الصغيرة */
-        margin: 10px 0; /* إضافة هامش عمودي بين العناصر */
-    }
+    justify-content: center;
+  }
+  
+  .advantage-box {
+    width: 90%;
+    margin: 10px 0;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .advantages-container {
-        flex-direction: column; /* ترتيب العناصر عموديًا في الشاشات الصغيرة جدًا */
-    }
+  .advantages-container {
+    flex-direction: column;
+  }
 
-    .advantage-box {
-        width: 100%; /* العرض 100% في الشاشات الصغيرة جدًا */
-    }
+  .advantage-box {
+    width: 100%;
+  }
 
-    .icon {
-        font-size: 40px; /* تقليل حجم الأيقونة */
-    }
+  .icon {
+    font-size: 40px;
+  }
 
-    h3 {
-        font-size: 1rem; /* تقليل حجم العنوان */
-    }
+  h3 {
+    font-size: 1rem;
+  }
 
-    p {
-        font-size: 0.9rem; /* تقليل حجم النص الوصفي */
-    }
+  p {
+    font-size: 0.9rem;
+  }
 }
