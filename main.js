@@ -127,6 +127,11 @@ export async function setupApp() {
     //await setupRoutes(app);
 
     console.log(`Server Setup Complete!`);
+
+app.get('/', (req, res) => {
+         res.sendFile(path.join(__dirname,`/public/html/started.html`));
+    });
+  
   /*
     app.get('/downloader/video', (req, res) => {
         const ip = req.ip;
