@@ -1,5 +1,5 @@
-const params = new URLSearchParams(window.location.search);
-const code = parseInt(params.get("code")) || 500;
+//const params = new URLSearchParams(window.location.search);
+//const code = parseInt(params.get("code")) || 500;
 
 const imageEl = document.getElementById("error-image");
 const titleEl = document.getElementById("error-title");
@@ -33,6 +33,6 @@ const messages = {
 };
 
 //console.log(`Error code: ${code}`); 
-imageEl.src = images[code] || images[500];
-titleEl.textContent = titles[code] || "An Unknown Error Occurred";
-msgEl.textContent = messages[code] || "Please try again later.";
+imageEl.src = images[errorCode] || images[500];
+titleEl.textContent = titles[errorCode] || "An Unknown Error Occurred";
+msgEl.textContent = messages[errorCode] || "Please try again later.";
