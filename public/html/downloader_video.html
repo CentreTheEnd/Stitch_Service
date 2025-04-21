@@ -27,10 +27,6 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links">
-                <a href="/" class="active">Get Started</a>
-                <a href="#">Pricing</a>
-                <a href="login.html">Login</a>
-                <a href="register.html" class="btn secondary">Sign Up</a>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -115,24 +111,9 @@
             offset: 120
         });
 
-        // Image Carousel Logic
-        const carouselImages = document.querySelectorAll('.carousel-image');
-        let currentImageIndex = 0;
-        const intervalTime = 3000;
-
-        function showNextImage() {
-            carouselImages[currentImageIndex].classList.remove('active');
-            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
-            carouselImages[currentImageIndex].classList.add('active');
-        }
-
-        setInterval(showNextImage, intervalTime);
     </script>
 
   <!-- API_KEY -->
-<script>
-  const apiKey = "{{API_KEY}}";
-</script>
   
   <script src="/js/downloader_video.js"></script>
 </body>
