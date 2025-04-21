@@ -31,7 +31,7 @@ main {
     margin: 0 auto 2rem;
     width: 350px; /* Increased to make the image take up more space */
     height: 500px;
-    z-index: 1;
+    /*z-index: 1; */
 }
 
 .error-image-wrapper::before {
@@ -44,7 +44,7 @@ main {
     background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    z-index: 0;
+   /* z-index: 0;*/
     transition: all var(--transition);
 }
 
@@ -57,7 +57,7 @@ main {
     height: 100%;
     object-fit: contain;
     position: relative;
-    z-index: 1;
+    /*z-index: 1;*/
     transition: all var(--transition);
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
 }
@@ -77,7 +77,7 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 p {
@@ -86,7 +86,7 @@ p {
     line-height: 1.8;
     opacity: 0.85;
     color: var(--text-color);
-    z-index: 1;
+    /*z-index: 1;*/
     max-width: 800px;
     text-align: center;
 }
