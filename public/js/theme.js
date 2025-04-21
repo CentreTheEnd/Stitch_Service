@@ -15,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const icon = themeToggle.querySelector('i');
         icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     }
+
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const menuBackdrop = document.querySelector('.menu-backdrop');
     const body = document.body;
+
     function toggleMenu() {
         const isOpen = navLinks.classList.toggle('active');
         menuToggle.classList.toggle('active', isOpen);
@@ -26,13 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
             menuBackdrop.classList.toggle('active', isOpen);
         }
         body.classList.toggle('menu-open', isOpen);
-        // Removed direct style manipulation - will be handled by CSS
     }
+
     menuToggle.addEventListener('click', toggleMenu);
     if (menuBackdrop) {
         menuBackdrop.addEventListener('click', toggleMenu);
     }
-    document.querySelectorAll('.nav-links a:not(.btn)').forEach(link => {
+
+    // تعديل لتشمل جميع الروابط بما في ذلك الأزرار
+    document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
                 toggleMenu();
