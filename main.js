@@ -156,7 +156,11 @@ app.get('/', (req, res) => {
   
   const redirectToError = (res, code) => {
   if (!res.headersSent) {
-    res.status(code).redirect(`/html/error.html?code=${code}`);
+  const html = fs.readFileSync(path.join(__dirname, '/public/html/error.html'), 'utf8');
+  const modifiedHtml = html.replace('{{ERROR_CODE}}', apiKey);
+
+  res.setHeader('Content-Type', 'text/html');
+  res.send(modifiedHtml);
   }
 };
 
