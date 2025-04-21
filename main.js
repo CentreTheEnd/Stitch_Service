@@ -92,6 +92,8 @@ export async function setupApp() {
   //  await loadDatabase();
 
     const app = express();
+    let html;
+    let modifiedHtml;
 
     app.use(cors());
     app.use(express.json());
@@ -146,18 +148,18 @@ app.get('/', (req, res) => {
   const apiKey = global.generateAPIKey(ip);
   global.isApiKey = apiKey;
 
-  const html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
-  const modifiedHtml = html.replace('{{API_KEY}}', apiKey);
+   html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
+   modifiedHtml = html.replace('{{API_KEY}}', apiKey);
 
   res.setHeader('Content-Type', 'text/html');
   res.send(modifiedHtml);
 });
   
   
-  const redirectToError = (res, code) => {
+  const redirectToError = (res, errorCode) => {
   if (!res.headersSent) {
-  const html = fs.readFileSync(path.join(__dirname, '/public/html/error.html'), 'utf8');
-  const modifiedHtml = html.replace('{{ERROR_CODE}}', apiKey);
+   html = fs.readFileSync(path.join(__dirname, '/public/html/error.html'), 'utf8');
+   modifiedHtml = html.replace('{{ERROR_CODE}}', errorCode);
 
   res.setHeader('Content-Type', 'text/html');
   res.send(modifiedHtml);
