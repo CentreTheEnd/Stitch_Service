@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Get your unique API key to access powerful services like image uploading and AI tools. Integrate seamlessly into your projects.">
+  <meta name="keywords" content="API key, image upload API, AI tools API, developer services, cloud services">
+  <meta name="theme-color" content="#2563eb">
   <title>Stitch | Video Downloader</title>
   <link rel="icon" href="https://files.catbox.moe/3vt7fj.webp" type="image/png">
+ 
+  <link rel="stylesheet" href="/css/started.css">
   <link rel="stylesheet" href="/css/downloader_video.css">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
 <body>
-
+  <header class="main-header">
+        <nav class="navbar">
+            <a href="/" class="logo">
+                <img src="/image/icon12.png" alt="StitchApi Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="/" class="active">Get Started</a>
+                <a href="#">Pricing</a>
+                <a href="login.html">Login</a>
+                <a href="register.html" class="btn secondary">Sign Up</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+  </header>
+  <main>
+        <section class="hero" aria-labelledby="hero-heading">
+          
   <h2>Video Downloader</h2>
 
   <div class="card">
@@ -29,6 +59,72 @@
     <div id="loading"></div>
     <div id="result"></div>
   </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <img src="../image/icon13.png" alt="StitchApi Logo" class="logo-img">
+                </a>
+                <p>Your central hub for accessing powerful cloud services via API.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Stitch Api. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="menu-backdrop"></div>
+    <script src="/js/theme.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: false,
+            offset: 120
+        });
+
+        // Image Carousel Logic
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        let currentImageIndex = 0;
+        const intervalTime = 3000;
+
+        function showNextImage() {
+            carouselImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+            carouselImages[currentImageIndex].classList.add('active');
+        }
+
+        setInterval(showNextImage, intervalTime);
+    </script>
 
   <!-- API_KEY -->
 <script>
