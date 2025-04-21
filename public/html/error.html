@@ -7,7 +7,7 @@
     <meta name="keywords" content="error, Stitch API, 404, 500">
     <meta name="theme-color" content="#2563eb">
     <title>Error | Stitch Api</title>
-    <link rel="stylesheet" href="/css/started.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/error.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,14 +17,14 @@
 <body>
     <header class="main-header" data-aos="fade-down" data-aos-duration="800">
         <nav class="navbar">
-            <a href="/" class="logo">
+            <a href="index.html" class="logo">
                 <img src="../image/icon12.png" alt="StitchApi Logo" class="logo-img">
             </a>
             <button class="menu-toggle" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links">
-                <a href="/">Get Started</a>
+                <a href="index.html">Get Started</a>
                 <a href="#">Pricing</a>
                 <a href="login.html">Login</a>
                 <a href="register.html" class="btn secondary">Sign Up</a>
@@ -38,19 +38,17 @@
 
     <main aria-label="Error message">
         <div class="error-image-wrapper">
-            <div class="error-image-wrapper">
-                <img src="../image/002.png" id="error-image" class="error-image" alt="Stitch Error Image">
-            </div>
-            <h1 id="error-title">An Error Occurred</h1>
-            <p id="error-message">Sorry! Something unexpected happened.</p>
-            <a href="/" class="btn primary">Back to Homepage</a>
+            <img src="../image/stitch-error.png" id="error-image" class="error-image" alt="Error Image">
         </div>
+        <h1 id="error-title">An Error Occurred</h1>
+        <p id="error-message">Sorry! Something unexpected happened.</p>
+        <a href="index.html" class="btn primary" >Back to Homepage</a>
     </main>
 
-   <footer class="footer" >
+    <footer class="footer" >
         <div class="footer-content">
             <div class="footer-brand">
-                <a href="/" class="logo">
+                <a href="index.html" class="logo">
                     <img src="../image/icon13.png" alt="StitchApi Logo" class="logo-img">
                 </a>
                 <p>Your central hub for accessing powerful cloud services via API.</p>
@@ -91,15 +89,14 @@
     <script src="/js/theme.js"></script>
     <script src="/js/error.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <!-- ERROR_CODE -->
-
+    
     <script>
         // Force light mode on load to ensure consistency
         document.documentElement.setAttribute('data-theme', 'light');
         
         AOS.init({
             duration: 800,
-            once: false,
+            once: true,
             offset: 120
         });
     </script>
