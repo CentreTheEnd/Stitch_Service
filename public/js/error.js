@@ -6,12 +6,12 @@ const titleEl = document.getElementById("error-title");
 const msgEl = document.getElementById("error-message");
 
 const images = {
-    400: "../photo/002.png",
-    401: "../photo/002.png",
-    403: "../photo/002.png",
-    404: "../photo/002.png",
-    500: "../photo/stitch-error.png", 
-    504: "../photo/002.png",
+    400: "../image/002.png",
+    401: "../image/002.png",
+    403: "../image/002.png",
+    404: "../image/002.png",
+    500: "../image/stitch-error.png", 
+    504: "../image/002.png",
 };
 
 const titles = {
