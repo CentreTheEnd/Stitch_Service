@@ -3,6 +3,7 @@
     const queryInput = document.getElementById("queryInput");
     const resultDiv = document.getElementById("result");
     const loading = document.getElementById("loading");
+    const apiKey = document.querySelector('meta[name="apikey"]').getAttribute('content');
 
     let apis = [];
     //const apiKey = "{{API_KEY}}";
