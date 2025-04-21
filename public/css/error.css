@@ -1,111 +1,165 @@
-* {
-  box-sizing: border-box;
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  color: #333;
+.error-container {
+    background: var(--card-bg);
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition);
 }
 
-.container {
-  background-color: white;
-  padding: 40px 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
-  animation: fadeIn 0.6s ease;
+
+
+
+
+.error-image-wrapper {
+    position: relative;
+    margin: 0 auto 1.5rem;
+    width: 200px;
+    height: 200px;
 }
 
-.icon {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 16px;
+.error-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 0;
+    transition: all var(--transition);
 }
 
-.icon svg {
-  width: 100%;
-  height: 100%;
+.error-image-wrapper:hover::before {
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+}
+
+.error-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+.error-image:hover {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 12px 24px rgba(37, 99, 235, 0.4)) brightness(1.1);
+    animation: logo-glow 0.8s ease-in-out;
 }
 
 h1 {
-  font-size: 24px;
-  margin-bottom: 12px;
-  color: #d32f2f;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 p {
-  font-size: 16px;
-  margin-bottom: 24px;
-  line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    opacity: 0.85;
+    color: var(--text-color);
 }
 
-.btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #1976d2;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
+
+
+@media (max-width: 1024px) {
+    .error-container {
+        max-width: 500px;
+    }
+
+    .error-image-wrapper {
+        width: 180px;
+        height: 180px;
+    }
 }
 
-.btn:hover {
-  background-color: #0d47a1;
+@media (max-width: 768px) {
+    body {
+        padding: 1.5rem;
+    }
+
+    .error-container {
+        padding: 2rem 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .error-image-wrapper {
+        width: 160px;
+        height: 160px;
+    }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive adjustments */
 @media (max-width: 480px) {
-  .container {
-    padding: 30px 20px;
-  }
+    .error-container {
+        padding: 1.5rem 1rem;
+    }
 
-  h1 {
-    font-size: 20px;
-  }
+    h1 {
+        font-size: 1.5rem;
+    }
 
-  p {
-    font-size: 15px;
-  }
+    p {
+        font-size: 0.95rem;
+    }
 
-  .btn {
-    font-size: 15px;
-    padding: 10px 20px;
-  }
+    .error-image-wrapper {
+        width: 140px;
+        height: 140px;
+    }
 
-  .icon {
-    width: 80px;
-    height: 80px;
-  }
+    .btn.primary {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
 }
 
-@media (min-width: 768px) {
-  h1 {
-    font-size: 28px;
-  }
+@media (max-width: 360px) {
+    .error-container {
+        padding: 1.25rem 0.75rem;
+    }
 
-  p {
-    font-size: 17px;
-  }
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .error-image-wrapper {
+        width: 120px;
+        height: 120px;
+    }
 }
