@@ -1,35 +1,37 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+}
 
 main {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.error-container {
-    background: var(--card-bg);
-    padding: 3rem 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
-    border: none;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
     position: relative;
-    overflow: hidden;
-    transition: all var(--transition);
+    padding: 2rem;
+    width: 100%;
 }
-
-
-
-
 
 .error-image-wrapper {
     position: relative;
-    margin: 0 auto 1.5rem;
-    width: 200px;
-    height: 200px;
+    margin: 0 auto 2rem;
+    width: 350px; /* Increased to make the image take up more space */
+    height: 500px;
+    z-index: 1;
 }
 
 .error-image-wrapper::before {
@@ -37,8 +39,8 @@ main {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 220px;
-    height: 220px;
+    width: 450px;
+    height: 450px;
     background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     border-radius: 50%;
@@ -67,7 +69,7 @@ main {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 3rem; /* Increased for prominence */
     margin-bottom: 1rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -75,36 +77,98 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    z-index: 1;
 }
 
 p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
+    font-size: 1.3rem; /* Increased for readability */
+    margin-bottom: 3rem;
     line-height: 1.8;
     opacity: 0.85;
     color: var(--text-color);
+    z-index: 1;
+    max-width: 800px;
+    text-align: center;
 }
 
 
 
 @media (max-width: 1024px) {
-    .error-container {
-        max-width: 500px;
+    .error-image-wrapper {
+        width: 400px;
+        height: 400px;
     }
 
-    .error-image-wrapper {
-        width: 180px;
-        height: 180px;
+    h1 {
+        font-size: 3rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+    }
+
+    .btn.primary {
+        padding: 1.2rem 3rem;
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 768px) {
-    body {
+    main {
         padding: 1.5rem;
     }
 
-    .error-container {
-        padding: 2rem 1.5rem;
+    .error-image-wrapper {
+        width: 350px;
+        height: 350px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.3rem;
+    }
+
+    .btn.primary {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1rem;
+    }
+
+    .error-image-wrapper {
+        width: 300px;
+        height: 300px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+
+    .btn.primary {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    main {
+        padding: 0.75rem;
+    }
+
+    .error-image-wrapper {
+        width: 250px;
+        height: 250px;
     }
 
     h1 {
@@ -115,51 +179,8 @@ p {
         font-size: 1rem;
     }
 
-    .error-image-wrapper {
-        width: 160px;
-        height: 160px;
-    }
-}
-
-@media (max-width: 480px) {
-    .error-container {
-        padding: 1.5rem 1rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    p {
-        font-size: 0.95rem;
-    }
-
-    .error-image-wrapper {
-        width: 140px;
-        height: 140px;
-    }
-
     .btn.primary {
         padding: 0.8rem 1.5rem;
         font-size: 0.95rem;
-    }
-}
-
-@media (max-width: 360px) {
-    .error-container {
-        padding: 1.25rem 0.75rem;
-    }
-
-    h1 {
-        font-size: 1.3rem;
-    }
-
-    p {
-        font-size: 0.9rem;
-    }
-
-    .error-image-wrapper {
-        width: 120px;
-        height: 120px;
     }
 }
