@@ -94,7 +94,7 @@
                 <svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Central node with image -->
     <circle cx="250" cy="200" r="50" fill="var(--primary)" opacity="0.9"/>
-    <image href="/image/icon.png" x="225" y="175" width="50" height="50" clip-path="url(#clipCircle)"/>
+    <image href="/image/icon.png" x="225" y="175" width="60" height="60" clip-path="url(#clipCircle)"/>
 
     <defs>
         <clipPath id="clipCircle">
@@ -102,29 +102,29 @@
         </clipPath>
     </defs>
 
-    <!-- Service Nodes -->
+    <!-- Service Nodes (distributed in a circle) -->
     <g>
-        <g transform="translate(100, 100)">
+        <g transform="translate(250, 200) rotate(0) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Images</text>
         </g>
-        <g transform="translate(400, 100)">
+        <g transform="translate(250, 200) rotate(60) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">AI</text>
         </g>
-        <g transform="translate(100, 300)">
+        <g transform="translate(250, 200) rotate(120) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Tools</text>
         </g>
-        <g transform="translate(400, 300)">
+        <g transform="translate(250, 200) rotate(180) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Search</text>
         </g>
-        <g transform="translate(300, 300)">
+        <g transform="translate(250, 200) rotate(240) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">Download</text>
         </g>
-        <g transform="translate(400, 400)">
+        <g transform="translate(250, 200) rotate(300) translate(100, 0)">
             <circle cx="0" cy="0" r="30" fill="var(--accent)" />
             <text x="0" y="5" font-size="12" text-anchor="middle" fill="var(--text-light)" font-weight="500">More...</text>
         </g>
