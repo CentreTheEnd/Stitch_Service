@@ -17,14 +17,14 @@
 <body>
     <header class="main-header" data-aos="fade-down" data-aos-duration="800">
         <nav class="navbar">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <img src="../image/icon12.png" alt="StitchApi Logo" class="logo-img">
             </a>
             <button class="menu-toggle" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links">
-                <a href="index.html">Get Started</a>
+                <a href="/">Get Started</a>
                 <a href="#">Pricing</a>
                 <a href="login.html">Login</a>
                 <a href="register.html" class="btn secondary">Sign Up</a>
@@ -42,13 +42,13 @@
         </div>
         <h1 id="error-title">An Error Occurred</h1>
         <p id="error-message">Sorry! Something unexpected happened.</p>
-        <a href="index.html" class="btn primary" >Back to Homepage</a>
+        <a href="/" class="btn primary" >Back to Homepage</a>
     </main>
 
     <footer class="footer" >
         <div class="footer-content">
             <div class="footer-brand">
-                <a href="index.html" class="logo">
+                <a href="/" class="logo">
                     <img src="../image/icon13.png" alt="StitchApi Logo" class="logo-img">
                 </a>
                 <p>Your central hub for accessing powerful cloud services via API.</p>
@@ -89,7 +89,9 @@
     <script src="/js/theme.js"></script>
     <script src="/js/error.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+     <script>
+      const errorCode = "{{ERROR_CODE}}";
+    </script>
     <script>
         // Force light mode on load to ensure consistency
         document.documentElement.setAttribute('data-theme', 'light');
