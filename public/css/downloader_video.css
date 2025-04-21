@@ -131,6 +131,9 @@
     }
 
     .info p {
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
       margin: 6px 0;
       font-size: 0.95rem;
       line-height: 1.5;
