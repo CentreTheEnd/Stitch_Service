@@ -1,6 +1,6 @@
 //const params = new URLSearchParams(window.location.search);
 //const code = parseInt(params.get("code")) || 500;
-const errorCode = "{{ERROR_CODE}}";
+
 const imageEl = document.getElementById("error-image");
 const titleEl = document.getElementById("error-title");
 const msgEl = document.getElementById("error-message");
