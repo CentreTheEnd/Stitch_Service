@@ -92,8 +92,11 @@ export async function setupApp() {
   //  await loadDatabase();
 
     const app = express();
+  
     let html;
     let modifiedHtml;
+    let token;
+    let apiKey;
 
     app.use(cors());
     app.use(express.json());
@@ -131,7 +134,14 @@ export async function setupApp() {
     console.log(`Server Setup Complete!`);
 
 app.get('/', (req, res) => {
-         res.sendFile(path.join(__dirname,`/public/html/started.html`));
+         token = req.headers['authorization'];
+         apiKey = req.headers['api-key'];
+  
+         if (token) {
+           
+         } else {
+            res.sendFile(path.join(__dirname,`/public/html/started.html`));
+         }
     });
   
   /*
@@ -145,7 +155,7 @@ app.get('/', (req, res) => {
     */
   app.get('/downloader/video', (req, res) => {
   const ip = req.ip;
-  const apiKey = global.generateAPIKey(ip);
+  apiKey = global.generateAPIKey(ip);
   global.isApiKey = apiKey;
 
    html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
