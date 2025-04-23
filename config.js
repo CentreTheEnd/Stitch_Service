@@ -58,6 +58,10 @@ const config = {
 
 global.author = '⛊  𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
 
+global.authFile = 'Database/Session';
+global.sessionFile = 'tmp/session.json';
+global.tmpFile = 'tmp';
+
 global.owner = config.owner;
 global.github = config.github;
 global.setting = config.setting;
