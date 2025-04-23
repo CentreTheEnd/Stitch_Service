@@ -72,6 +72,7 @@ const config = {
     githubToken: process.env.GITHUB_TOKEN,
     driveKey: process.env.DRIVE_KEY,
     mongoUrl: process.env.MONGO_URL,
+    mailKey: process.env.MAIL_KEY,
   },
   auth: {
     google: {
@@ -100,6 +101,7 @@ global.auth = config.auth;
 global.githubToken = config.setting.githubToken;
 global.driveKey = config.setting.driveKey;
 global.mongoUrl = config.setting.mongoUrl;
+global.mailKey = config.setting.mailKey;
 
 global.googleID = config.auth.google.id;
 global.googleSecret = config.auth.google.secret;
