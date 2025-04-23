@@ -115,7 +115,7 @@ export default router;
 
 //throw new Error(`خطأ أثناء جلب البيانات: ${error.message}`);
 
-> const webUrl = 'https://anime3rb.com/';
+const webUrl = 'https://anime3rb.com/';
 const animearab = {
     search: async (pompart) => {
         const response = await fetch(`${webUrl}search?q=${encodeURIComponent(pompart)}`);
