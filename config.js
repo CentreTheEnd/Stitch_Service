@@ -56,6 +56,8 @@ const config = {
 
 //______________________________________________
 
+global.author = '⛊  𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
+
 global.owner = config.owner;
 global.github = config.github;
 global.setting = config.setting;
