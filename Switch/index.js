@@ -246,7 +246,7 @@ export async function setupRoutes(app) {
         app.get(`/api/v3/accounts/sections/${key}/api`, (req, res) => {
             const apisForCategory = categorizedAccount.data[key].data.map(api => ({
                 ...api,
-                url: `${req.protocol}://${req.get('host')}${api.url}`,
+                url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
             }));
             res.status(200).json({
                 status: true,
@@ -262,7 +262,7 @@ export async function setupRoutes(app) {
             author: route.author,
             data: route.data.map(api => ({
                 ...api,
-                url: `${req.protocol}://${req.get('host')}${api.url}`,
+                url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
             })),
         }));
         res.status(200).json(fullApiRoutes);
@@ -273,7 +273,7 @@ export async function setupRoutes(app) {
             (result, [key, apis]) => {
                 result[key] = apis.data.map(api => ({
                     ...api,
-                    url: `${req.protocol}://${req.get('host')}${api.url}`,
+                    url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
                 }));
                 return result;
             },
@@ -292,7 +292,7 @@ export async function setupRoutes(app) {
         app.get(`/api/v3/apis/sections/${key}/api`, (req, res) => {
             const apisForCategory = categorizedApis.data[key].data.map(api => ({
                 ...api,
-                url: `${req.protocol}://${req.get('host')}${api.url}`,
+                url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
             }));
             res.status(200).json({
                 status: true,
@@ -308,7 +308,7 @@ export async function setupRoutes(app) {
             author: route.author,
             data: route.data.map(api => ({
                 ...api,
-                url: `${req.protocol}://${req.get('host')}${api.url}`,
+                url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
             })),
         }));
         res.status(200).json(fullApiRoutes);
@@ -319,7 +319,7 @@ export async function setupRoutes(app) {
             (result, [key, apis]) => {
                 result[key] = apis.data.map(api => ({
                     ...api,
-                    url: `${req.protocol}://${req.get('host')}${api.url}`,
+                    url: `${req.protocol === 'http' ? 'https' : req.protocol}://${req.get('host')}${api.url}`,
                 }));
                 return result;
             },
