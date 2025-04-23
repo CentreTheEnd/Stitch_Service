@@ -1,4 +1,4 @@
-import { setupApp } from './main.js';
+//import { setupApp } from './main.js';
 
 console.log(`Loading Start Project...`);
 
