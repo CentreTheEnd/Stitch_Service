@@ -89,7 +89,13 @@ app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.send(modifiedHtml);
 });
-  
+
+
+  app.get('/test', (req, res) => {
+         
+            res.sendFile(path.join(__dirname,`/public/html/Test.html`));
+         
+    });
   
   const redirectToError = (res, errorCode) => {
   if (!res.headersSent) {
