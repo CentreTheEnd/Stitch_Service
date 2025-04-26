@@ -187,6 +187,19 @@ body {
     pointer-events: auto;
 }
 
+/* <-- Main Style --> */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+}
+/* <-- --> */
+
 /* -- Footer Styles -- */
 /* Styles for the footer section */
 .footer {
