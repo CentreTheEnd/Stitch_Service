@@ -19,6 +19,59 @@ dotenv.config();
 
 //______________________________________________
 
+global.isBot = function isBotAdvanced(req) {
+    const userAgent = req.headers['user-agent'] || '';
+    const accept = req.headers['accept'] || '';
+    const acceptLanguage = req.headers['accept-language'];
+    const secFetchSite = req.headers['sec-fetch-site'];
+    const secFetchMode = req.headers['sec-fetch-mode'];
+    const secFetchDest = req.headers['sec-fetch-dest'];
+    const upgradeInsecureRequests = req.headers['upgrade-insecure-requests'];
+
+    // كلمات مفتاحية مشهورة للبوتات
+    const botPatterns = [
+        /bot/i,
+        /crawler/i,
+        /spider/i,
+        /crawling/i,
+        /fetch/i,
+        /scraper/i,
+        /python/i,
+        /curl/i,
+        /wget/i,
+        /node\.js/i,
+        /go-http-client/i,
+        /libwww-perl/i,
+        /java/i
+    ];
+
+    // فحص بناءً على User-Agent
+    if (botPatterns.some(pattern => pattern.test(userAgent))) {
+        return true;
+    }
+
+    // فحص إضافي بناءً على headers
+    if (!accept.includes('text/html')) {
+        return true;
+    }
+
+    if (!acceptLanguage) {
+        return true;
+    }
+
+    if (!upgradeInsecureRequests) {
+        return true;
+    }
+
+    if (!secFetchSite || !secFetchMode || !secFetchDest) {
+        return true;
+    }
+
+    // لو كل الفحوصات الطبيعية موجودة => غالبًا متصفح
+    return false;
+};
+
+
 //______________________________________________
 
 //______________________________________________
