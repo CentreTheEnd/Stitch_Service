@@ -340,6 +340,7 @@ export async function setupRoutes(app) {
    app.get('/api/v3/data', (req, res) => {
 
   const reqData = {
+    host: req.get('host'),
     method: req.method,
     url: req.originalUrl,
     headers: req.headers,
