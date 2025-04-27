@@ -366,9 +366,9 @@ export async function setupRoutes(app) {
 
 app.get('/api/v3/check', (req, res) => {
     if (global.isBot(req)) {
-        return res.json({ isBot: true, message: 'تم الكشف أنك بوت!' });
+        return res.json({ isBot: true, message: `Don't try scrape me , to learn first.` });
     } else {
-        return res.json({ isBot: false, message: 'أهلاً بك أيها المستخدم الحقيقي!' });
+        return res.json({ isBot: false, message: 'Welcome pro.' });
     }
 });
     
