@@ -27,6 +27,17 @@ global.isBot = function isBotAdvanced(req) {
     const secFetchMode = req.headers['sec-fetch-mode'];
     const secFetchDest = req.headers['sec-fetch-dest'];
     const upgradeInsecureRequests = req.headers['upgrade-insecure-requests'];
+    const secChUaPlatform = req.headers['sec-ch-ua-platform'];
+    const origin = req.headers['origin'];
+    const xRequestedWith = req.headers['x-requested-with'];
+    const referer = req.headers['referer'];
+    const te = req.headers['te'];
+    const cacheControl = req.headers['cache-control'];
+    const connection = req.headers['connection'];
+    const acceptEncoding = req.headers['accept-encoding'];
+    const dnt = req.headers['dnt'];
+    const secFetchUser = req.headers['sec-fetch-user'];
+    const xForwardedFor = req.headers['x-forwarded-for'];
 
     // كلمات مفتاحية مشهورة للبوتات
     const botPatterns = [
@@ -45,29 +56,90 @@ global.isBot = function isBotAdvanced(req) {
         /java/i
     ];
 
+    // تحديد النقاط
+    let botScore = 0;
+
     // فحص بناءً على User-Agent
     if (botPatterns.some(pattern => pattern.test(userAgent))) {
-        return true;
+        botScore += 3; // نقوم بزيادة النقاط في حال كان هناك تطابق
     }
 
-    // فحص إضافي بناءً على headers
+    // فحص إضافي بناءً على accept
     if (!accept.includes('text/html')) {
-        return true;
+        botScore += 2;
     }
 
+    // فحص accept-language
     if (!acceptLanguage) {
-        return true;
+        botScore += 1;
     }
 
+    // فحص وجود "upgrade-insecure-requests"
     if (!upgradeInsecureRequests) {
-        return true;
+        botScore += 1;
     }
 
+    // فحص sec-fetch-site, sec-fetch-mode, sec-fetch-dest
     if (!secFetchSite || !secFetchMode || !secFetchDest) {
-        return true;
+        botScore += 2;
     }
 
-    // لو كل الفحوصات الطبيعية موجودة => غالبًا متصفح
+    // فحص sec-ch-ua-platform
+    if (!secChUaPlatform || secChUaPlatform === '"Unknown"' || secChUaPlatform === 'Unknown') {
+        botScore += 2;
+    }
+
+    // فحص origin
+    if (!origin) {
+        botScore += 1;
+    }
+
+    // فحص xRequestedWith
+    if (!xRequestedWith || xRequestedWith !== 'XMLHttpRequest') {
+        botScore += 1;
+    }
+
+    // فحص referer
+    if (!referer) {
+        botScore += 1;
+    }
+
+    // فحص cache-control
+    if (!cacheControl) {
+        botScore += 1;
+    }
+
+    // فحص connection
+    if (!connection || connection !== 'keep-alive') {
+        botScore += 1;
+    }
+
+    // فحص accept-encoding
+    if (!acceptEncoding) {
+        botScore += 2;
+    }
+
+    // فحص dnt
+    if (dnt === '1') {
+        botScore += 1;
+    }
+
+    // فحص sec-fetch-user
+    if (!secFetchUser || secFetchUser !== '?1') {
+        botScore += 2;
+    }
+
+    // فحص x-forwarded-for
+    if (!xForwardedFor || !/^\d+\.\d+\.\d+\.\d+$/.test(xForwardedFor)) {
+        botScore += 2;
+    }
+
+    // إذا كانت النقاط تتجاوز عتبة معينة، يعتبر بوت
+    if (botScore >= 10) {
+        return true; // يُعتبر بوتًا
+    }
+
+    // إذا كانت النقاط أقل من العتبة، يعتبر متصفحًا حقيقيًا
     return false;
 };
 
