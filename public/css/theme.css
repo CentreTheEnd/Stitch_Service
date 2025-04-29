@@ -1,5 +1,6 @@
 /* -- Theme Variables -- */
 /* Defines the color scheme and other reusable variables for light and dark themes */
+
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
@@ -34,6 +35,7 @@
 
 /* -- Base Styles -- */
 /* Resets and base styles for the entire page */
+
 * {
     margin: 0;
     padding: 0;
@@ -42,11 +44,6 @@
 }
 
 body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    
     color: var(--text-color);
     background: var(--bg-color);
     line-height: 1.5;
@@ -55,8 +52,26 @@ body {
     transition: background var(--transition), color var(--transition);
 }
 
+/*
+
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    background: var(--bg-color);
+    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: background var(--transition), color var(--transition);
+}
+
+*/
+
 /* -- Header Styles -- */
 /* Styles for the header, including the navbar and logo */
+
 .main-header {
     background: var(--card-bg);
     backdrop-filter: blur(var(--glass-blur));
@@ -96,6 +111,7 @@ body {
 
 /* -- Navigation Links -- */
 /* Styles for the navigation links in the header */
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -124,6 +140,7 @@ body {
 
 /* -- Theme Toggle Button -- */
 /* Styles for the theme toggle button in the header */
+
 .theme-toggle {
     background: rgba(59, 130, 246, 0.1);
     border: none;
@@ -146,6 +163,7 @@ body {
 
 /* -- Menu Toggle (Hamburger) -- */
 /* Styles for the hamburger menu button visible on mobile */
+
 .menu-toggle {
     display: none;
     background: none;
@@ -173,6 +191,7 @@ body {
 
 /* -- Menu Backdrop -- */
 /* Styles for the backdrop that appears behind the mobile menu */
+
 .menu-backdrop {
     position: fixed;
     top: 80px;
@@ -193,6 +212,7 @@ body {
 }
 
 /* <-- Main Style --> */
+
 /*
 main {
     flex: 1;
@@ -244,6 +264,7 @@ main {
 
 /* -- Footer Styles -- */
 /* Styles for the footer section */
+
 .footer {
     padding: 6rem 2rem 4rem;
     background: var(--card-bg);
@@ -332,6 +353,7 @@ main {
 
 /* -- Social Links in Footer -- */
 /* Styles for the social media icons in the footer */
+
 .social-links {
     display: flex;
     gap: 1.5rem;
@@ -368,6 +390,7 @@ main {
 
 /* -- Button Styles -- */
 /* Styles for buttons used across the site */
+
 .btn {
     padding: 1rem 2rem;
     border-radius: var(--border-radius);
@@ -406,6 +429,7 @@ main {
 
 /* -- Input Field Styles -- */
 /* Styles for input fields used across the site */
+
 input, select {
     padding: 12px 15px;
     border: 1px solid rgba(59, 130, 246, 0.3);
@@ -427,6 +451,7 @@ input:focus, select:focus {
 
 /* -- Card Styles -- */
 /* Styles for reusable card components with glassmorphic effect */
+
 .card {
     background: var(--card-bg);
     border: var(--glass-border);
@@ -463,6 +488,7 @@ input:focus, select:focus {
 
 /* -- Animations -- */
 /* Keyframe animations used for various effects */
+
 @keyframes logo-glow {
     0% {
         filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2)) brightness(1);
@@ -492,6 +518,7 @@ input:focus, select:focus {
 
 /* -- Responsive Design -- */
 /* Adjustments for smaller screens */
+
 @media (max-width: 768px) {
     .logo-img {
         height: 36px;
