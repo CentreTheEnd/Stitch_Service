@@ -3,7 +3,7 @@ const modelSelect = document.querySelector(".select-res.model");
 const queryInput = document.querySelector(".input-res.query");
 const resultDiv = document.getElementById("result");
 const loading = document.getElementById("loading");
-const apiKey = document.querySelector('meta[name="apikey"]').getAttribute('content');
+const apiKey = document.querySelector('meta[name="apikey"]')?.getAttribute('content') || "";
 
 let apis = [];
 
@@ -65,7 +65,6 @@ async function handleDownload() {
     });
 
     const json = await res.json();
-
     loading.style.display = "none";
 
     if (!json.status || !json.data) {
@@ -75,7 +74,6 @@ async function handleDownload() {
 
     const container = renderData(json.data);
     resultDiv.appendChild(container);
-
   } catch (err) {
     loading.style.display = "none";
     resultDiv.innerHTML = `<p>Error: ${err.message}</p>`;
@@ -86,7 +84,10 @@ function renderData(obj) {
   const container = document.createElement("div");
   container.className = "media-block";
 
-  let info = "", const infoList = [], media = { thumb: "", image: "", video: "", audio: "" }, downloads = [];
+  let info = "";
+  const infoList = [];
+  const media = { thumb: "", image: "", video: "", audio: "" };
+  const downloads = [];
 
   const renderMedia = (type, val) => {
     (Array.isArray(val) ? val : [val]).forEach((v, i) => {
@@ -113,12 +114,10 @@ function renderData(obj) {
     else {
       if (typeof val === "object") {
         for (const sub in val) {
-          info += `<p><strong>${key}.${sub}</strong>: ${val[sub]}</p>`;
-          infoList.push({ label: `${key}.${sub}`, value: val[sub]});
+          infoList.push({ label: `${key}.${sub}`, value: val[sub] });
         }
       } else {
-        info += `<p><strong>${key}</strong>: ${val}</p>`;
-        infoList.push({ label: key, value: val});
+        infoList.push({ label: key, value: val });
       }
     }
   }
@@ -128,50 +127,22 @@ function renderData(obj) {
   mediaGroup.innerHTML = media.thumb + media.image + media.video + media.audio;
   container.appendChild(mediaGroup);
 
-    /*
-const infoContainer = document.createElement("div");
-infoContainer.className = "info";
-
-// قائمة بالمعلومات التي تريد عرضها
-const infoList = [
-  { label: "Title", value: video.title },
-  { label: "Duration", value: video.duration },
-  { label: "Views", value: video.views },
-  { label: "Likes", value: video.likes },
-  { label: "Uploader", value: video.uploader },
-  { label: "Upload Date", value: video.uploadDate }
-];
-
-// إنشاء العناصر بتنسيق: العنوان ثم القيمة (كل منهما في عنصر منفصل داخل نفس الصف)
-infoList.forEach(({ label, value }) => {
-  const labelElement = document.createElement("strong");
-  labelElement.textContent = `${label}:`;
-
-  const valueElement = document.createElement("span");
-  valueElement.textContent = value;
-
-  infoContainer.appendChild(labelElement);
-  infoContainer.appendChild(valueElement);
-});
-
-document.body.appendChild(infoContainer);
-
-    */
   const infoBlock = document.createElement("div");
   infoBlock.className = "info";
 
   infoList.forEach(({ label, value }) => {
-  const labelElement = document.createElement("strong");
-  labelElement.textContent = `${label}:`;
+    const labelElement = document.createElement("strong");
+    labelElement.textContent = `${label}:`;
+    const valueElement = document.createElement("span");
+    valueElement.textContent = value;
 
-  const valueElement = document.createElement("span");
-  valueElement.textContent = value;
+    const row = document.createElement("div");
+    row.className = "info-row";
+    row.appendChild(labelElement);
+    row.appendChild(valueElement);
+    infoBlock.appendChild(row);
+  });
 
-  infoBlock.appendChild(labelElement);
-  infoBlock.appendChild(valueElement);
-});
-    
-  //infoBlock.innerHTML = info;
   container.appendChild(infoBlock);
 
   if (downloads.length > 0) {
