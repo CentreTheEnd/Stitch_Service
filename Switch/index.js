@@ -2,10 +2,14 @@ import path from "path";
 import axios from 'axios';
 import { fileURLToPath } from 'url';
 import fs from "fs/promises";
+import syntaxError from 'syntax-error';
+import { format } from 'util';
+import { createRequire } from 'module';
 import { User } from '../Database/Mongo/models.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(__dirname);
 
 const apiRoutes = [
     {
@@ -339,12 +343,39 @@ export async function setupRoutes(app) {
    app.post('/api/v3/eval', (req, res) => {
   const { code } = req.body;
 
+  let result = '';
+  let error = '';
+
   try {
-    const result = eval(code);
-    res.json({ success: true, result });
-  } catch (error) {
-    res.json({ success: false, error: error.message });
+    let executionLimit = 15;
+
+    const exec = new (async () => {}).constructor(
+      'print', 'm', 'handler', 'require', 'conn', 'Array', 'process', 'args', 
+      'groupMetadata', 'module', 'exports', 'argument', code
+    );
+
+    result = await exec.call(
+      {},
+      (...args) => {
+        if (--executionLimit < 1) return;
+        console.log(...args);
+        return args;
+      },
+      code
+    );
+  } catch (err) {
+ 
+    const errMsg = syntaxError(code, 'Execution Function', {
+      allowReturnOutsideFunction: true,
+      allowAwaitOutsideFunction: true,
+      sourceType: 'module',
+    });
+
+    if (errMsg) error = 'Error: ' + errMsg;
+    result = err;
   }
+
+  res.json({ result: result || 'No result returned', error });
 });
     
    app.get('/api/v3/data', (req, res) => {
