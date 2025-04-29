@@ -169,7 +169,7 @@ export async function setupRoutes(app) {
     const apiKeyHeader = req.headers['api-key'];
     
         
-    if (!apiKeyHeader || apiKeyHeader !== global.isApiKey) { // || apiKeyHeader !== global.isApiKey
+    if (!apiKeyHeader) { // || apiKeyHeader !== global.isApiKey
         return res.status(400).json({ status: false, message: 'Missing API Key' });
     } 
 
