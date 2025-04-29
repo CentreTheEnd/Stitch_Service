@@ -59,14 +59,24 @@
             
             <h2>Video Downloader</h2>
             <div class="card-content">
-             <div class="selectors">
-              <select id="typeSelect">
-               <option disabled selected>Select type...</option>
-              </select>
-              <select id="modelSelect">
-               <option disabled selected>Select model...</option>
-              </select>
-             </div>
+  <div class="selectors">
+    <select class="select-res type">
+      <option disabled selected>Select type...</option>
+    </select>
+    <select class="select-res model">
+      <option disabled selected>Select model...</option>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <input type="text" class="input-res query" placeholder="Enter video URL or text..." />
+    <button onclick="handleDownload()">Download</button>
+  </div>
+
+  <div id="loading" style="display: none;"></div>
+  <div id="result"></div>
+</div>
+
 
              <div class="input-group">
               <input type="text" id="queryInput" placeholder="Enter video URL or text..." />
