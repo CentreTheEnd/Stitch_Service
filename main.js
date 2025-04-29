@@ -93,9 +93,13 @@ app.get('/', (req, res) => {
 
   app.get('/test', (req, res) => {
          
-            res.sendFile(path.join(__dirname,`/public/html/Test.html`));
+   res.sendFile(path.join(__dirname,`/public/html/Test.html`));
+  });
+
+  app.get('/eval', (req, res) => {
          
-    });
+  res.sendFile(path.join(__dirname,`/public/html/eval.html`));
+  });
   
   const redirectToError = (res, errorCode) => {
   if (!res.headersSent) {
