@@ -143,12 +143,14 @@
 }
 
 .top-wrapper {
+  width: 100%;
   display: block;
   margin-bottom: 15px;
   text-align: center;
 }
 
 .thumb-container {
+  width: 100%;
   margin: 0 auto 15px;
   max-width: 300px;
 }
@@ -160,6 +162,7 @@
 }
 
 .info {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
@@ -169,6 +172,7 @@
 }
 
 .info-row {
+  width: 100%;
   color: var(--text-color);
   text-align: left;
   word-wrap: break-word;
@@ -176,6 +180,7 @@
 }
 
 .info-row strong {
+  width: 100%;
   color: var(--primary);
   font-weight: bold;
   text-align: left;
