@@ -164,8 +164,25 @@
 }
 
 .hide-btn-res {
+background: var(--bg-color);
+color: var(--text-color);
+transition: all var(--transition);
+padding: 0.6rem 1.2rem;
+border-radius: 8px;
+border: 1px solid var(--accent);
+cursor: pointer;
+transition: all var(--transition);
+display: flex;
+align-items: center;
+gap: 0.5em;
 font-size: 1.1rem;
 }
+
+.hide-btn-res:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary);
+}
+
 /*
 .media-group {
   margin-top: 10px;
