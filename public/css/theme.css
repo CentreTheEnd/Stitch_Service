@@ -261,7 +261,6 @@ main {
     max-width: 600px;
     */
     display: flex;
-    flex: 1;
     flex-direction: column;
     flex-wrap: wrap;
     max-width: 600px;
