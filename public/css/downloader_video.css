@@ -6,7 +6,7 @@
   padding: 2rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  max-width: 800px;
+ /* max-width: 800px;*/
   margin: 2rem auto;
   backdrop-filter: blur(var(--glass-blur));
   border: var(--glass-border);
@@ -172,8 +172,8 @@ border-radius: 8px;
 border: 1px solid var(--accent);
 cursor: pointer;
 transition: all var(--transition);
-display: flex;
 align-items: center;
+margin: 2rem auto;
 gap: 0.5em;
 font-size: 1.1rem;
 }
