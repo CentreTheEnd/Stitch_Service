@@ -92,13 +92,13 @@ function renderData(obj) {
     (Array.isArray(val) ? val : [val]).forEach((v, i) => {
       if (!v) return;
       const element = {
-        thumb: `<img class=\"thumb-img\" src=\"${v}\" />`,
-        image: `<img class=\"media-image hidden\" src=\"${v}\" controls></img>`,
-        video: `<video class=\"media-video hidden\" src=\"${v}\" controls></video>`,
-        audio: `<audio class=\"media-audio hidden\" src=\"${v}\" controls></audio>`
+        thumb: `<img class="thumb-img" src="${v}" />`,
+        image: `<img class="media-image hidden" src="${v}" />`,
+        video: `<video class="media-video hidden" src="${v}" controls></video>`,
+        audio: `<audio class="media-audio hidden" src="${v}" controls></audio>`
       }[type];
       media[type] += element;
-      downloads.push({ label: `${type.toUpperCase()} ${i+1}`, url: v });
+      downloads.push({ label: `${type.toUpperCase()} ${i + 1}`, url: v });
     });
   };
 
@@ -122,9 +122,11 @@ function renderData(obj) {
   // Top wrapper
   const topWrapper = document.createElement("div");
   topWrapper.className = "top-wrapper";
+
   const thumbDiv = document.createElement("div");
   thumbDiv.className = "thumb-container";
   thumbDiv.innerHTML = media.thumb;
+
   const infoDiv = document.createElement("div");
   infoDiv.className = "info";
   infoList.forEach(({ label, value }) => {
@@ -133,30 +135,33 @@ function renderData(obj) {
     row.innerHTML = `<strong>${label}:</strong> <span>${value}</span>`;
     infoDiv.appendChild(row);
   });
+
   topWrapper.appendChild(thumbDiv);
   topWrapper.appendChild(infoDiv);
   container.appendChild(topWrapper);
+
+  // Media group (initially hidden)
+  const mediaGroup = document.createElement("div");
+  mediaGroup.className = "media-group hidden";
+  mediaGroup.innerHTML = media.video + media.audio + media.image;
+  container.appendChild(mediaGroup);
 
   // Toggle media button
   if (media.video || media.audio || media.image) {
     const toggleBtn = document.createElement("button");
     toggleBtn.className = "hide-btn-res";
-    toggleBtn.innerHTML = `<i class=\"fas fa-eye\"></i> Show Media`;
+    toggleBtn.innerHTML = `<i class="fas fa-eye"></i> Show Media`;
+
     toggleBtn.onclick = () => {
-      container.querySelectorAll(".media-video, .media-audio, .media-image").forEach(el => el.classList.toggle("hidden"));
-      const shown = !container.querySelector(".media-video, .media-audio, .media-image").classList.contains("hidden");
+      mediaGroup.classList.toggle("hidden");
+      const shown = !mediaGroup.classList.contains("hidden");
       toggleBtn.innerHTML = shown
-        ? `<i class=\"fas fa-eye-slash\"></i> Hide Media`
-        : `<i class=\"fas fa-eye\"></i> Show Media`;
+        ? `<i class="fas fa-eye-slash"></i> Hide Media`
+        : `<i class="fas fa-eye"></i> Show Media`;
     };
+
     container.appendChild(toggleBtn);
   }
-
-  // Media group
-  const mediaGroup = document.createElement("div");
-  mediaGroup.className = "media-group";
-  mediaGroup.innerHTML = media.video + media.audio + media.image;
-  container.appendChild(mediaGroup);
 
   // Download buttons
   if (downloads.length) {
@@ -165,7 +170,7 @@ function renderData(obj) {
     downloads.forEach(({ label, url }) => {
       const btn = document.createElement("button");
       btn.className = "button-res";
-      btn.innerHTML = `<i class=\"fas fa-download\"></i> Download ${label}`;
+      btn.innerHTML = `<i class="fas fa-download"></i> Download ${label}`;
       btn.onclick = () => window.open(url, "_blank");
       downloadDiv.appendChild(btn);
     });
