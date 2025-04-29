@@ -167,7 +167,7 @@ export async function setupRoutes(app) {
     if (!req.originalUrl.toLowerCase().includes('/api/v2') || !req.originalUrl.toLowerCase().startsWith('/api/v2')) return next();
         
     const apiKeyHeader = req.headers['api-key'];
-    const verKey req.headers['x-vercel-dev'];
+    const verKey req.headers['x-dev'];
          
     const verCo req.headers['dev-co'];
         
