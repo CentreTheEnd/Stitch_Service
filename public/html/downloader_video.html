@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Get your unique API key to access powerful services like image uploading and AI tools. Integrate seamlessly into your projects.">
-  <meta name="keywords" content="API key, image upload API, AI tools API, developer services, cloud services">
-  <meta name="theme-color" content="#2563eb">
-  <meta name="apikey" content="{{API_KEY}}">
-  <title>Stitch | Video Downloader</title>
-  <link rel="icon" href="https://files.catbox.moe/3vt7fj.webp" type="image/png">
- 
-  <link rel="stylesheet" href="/css/theme.css">
-  <link rel="stylesheet" href="/css/downloader_video.css">
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Add Page Info Here -->
+    <title>Stitch Service | Video Downloader</title>
+    <!--
+    <link rel="icon" href="/image/icon12.png">
+    -->
+    <link rel="icon" href="https://files.catbox.moe/3vt7fj.webp" type="image/png">
+    <meta name="description" content="Get your unique API key to access powerful services like image uploading and AI tools. Integrate seamlessly into your projects.">
+    <meta name="keywords" content="API key, image upload API, AI tools API, developer services, cloud services">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Add Tools Usege Page Here -->
+    <meta name="apikey" content="{{API_KEY}}">
+    <meta name="session" content="{{SESSION}}">
+    <meta name="cookies" content="{{COOKIES}}">
+    <meta name="uuid" content="{{UUID}}">
+    
+    <!-- Add import File Css Here -->
+    <link rel="stylesheet" href="/css/downloader_video.css">
+    
+    <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    
 </head>
+
 <body>
-  <header class="main-header">
+    <header class="main-header">
         <nav class="navbar">
             <a href="/" class="logo">
                 <img src="/image/icon12.png" alt="StitchApi Logo" class="logo-img">
@@ -27,41 +40,47 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links">
+                <a href="/" class="active">Get Started</a>
+                <a href="#">Pricing</a>
+                <a href="login.html">Login</a>
+                <a href="register.html" class="btn secondary">Sign Up</a>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
         </nav>
-  </header>
-  <main>
-    <!--
+    </header>
+
+    <main>
         <section class="hero" aria-labelledby="hero-heading">
-    -->
-     <section class="hero" aria-labelledby="hero-heading">
-<div class="hero-content" data-aos="fade-up" data-aos-duration="800">
-          
-  <h2>Video Downloader</h2>
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+            
+            <!-- Add Code Here -->
+            
+            <h2>Video Downloader</h2>
+            <div class="card">
+             <div class="selectors">
+              <select id="typeSelect">
+               <option disabled selected>Select type...</option>
+              </select>
+              <select id="modelSelect">
+               <option disabled selected>Select model...</option>
+              </select>
+             </div>
 
-  <div class="card">
-    <div class="selectors">
-      <select id="typeSelect">
-        <option disabled selected>Select type...</option>
-      </select>
-      <select id="modelSelect">
-        <option disabled selected>Select model...</option>
-      </select>
-    </div>
+             <div class="input-group">
+              <input type="text" id="queryInput" placeholder="Enter video URL or text..." />
+              <button onclick="handleDownload()">Download</button>
+             </div>
 
-    <div class="input-group">
-      <input type="text" id="queryInput" placeholder="Enter video URL or text..." />
-      <button onclick="handleDownload()">Download</button>
-    </div>
-
-    <div id="loading"></div>
-    <div id="result"></div>
-  </div>
-       </div>
-     </section>
+             <div id="loading"></div>
+             <div id="result"></div>
+             </div>
+            
+            <!-- End Code Here -->
+                
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -106,9 +125,14 @@
     </footer>
 
     <div class="menu-backdrop"></div>
+    
+    <!-- Add import File Css Here -->
+    <script src="/js/downloader_video.js"></script>
+    
     <script src="/js/theme.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+
         AOS.init({
             duration: 800,
             once: false,
@@ -116,10 +140,5 @@
         });
 
     </script>
-
-  <!-- API_KEY -->
-  
-  <script src="/js/downloader_video.js"></script>
 </body>
 </html>
-
