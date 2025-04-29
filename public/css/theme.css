@@ -261,14 +261,10 @@ main {
     max-width: 600px;
     */
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    max-width: 600px;
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    gap: 20px;
-    
+    color: var(--primary);
 }
 
 /* <-- --> */
