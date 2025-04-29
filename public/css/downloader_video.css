@@ -24,9 +24,9 @@ h2 {
   margin-bottom: 20px;
 }
 
-select,
-input,
-button {
+select-res,
+input-res,
+button-res {
   padding: 12px 15px;
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -39,14 +39,14 @@ button {
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
-select:focus,
-input:focus {
+select-res:focus,
+input-res:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-button {
+button-res {
   background-color: var(--primary);
   color: #ffffff;
   border: none;
@@ -55,7 +55,7 @@ button {
   min-width: 120px;
 }
 
-button:hover {
+button-res:hover {
   background-color: var(--primary-dark);
 }
 
@@ -175,9 +175,9 @@ audio-res {
     flex-direction: column;
   }
 
-  select,
-  input,
-  button {
+  select-res,
+  input-res,
+  button-res {
     width: 100%;
   }
 
