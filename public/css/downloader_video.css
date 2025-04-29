@@ -119,9 +119,9 @@ button:hover {
   margin-top: 20px;
 }
 
-img,
-video,
-audio {
+img-res,
+video-res,
+audio-res {
   max-width: 100%;
   max-height: 300px;
   border-radius: 10px;
@@ -149,9 +149,9 @@ audio {
   gap: 10px;
 }
 
-.media-block .media-group img,
-.media-block .media-group video,
-.media-block .media-group audio {
+.media-block .media-group img-res,
+.media-block .media-group video-res,
+.media-block .media-group audio-res {
   margin: 5px;
 }
 
@@ -188,9 +188,9 @@ audio {
     align-items: center;
   }
 
-  img,
-  video,
-  audio {
+  img-res,
+  video-res,
+  audio-res {
     max-height: 250px;
   }
 
