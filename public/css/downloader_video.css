@@ -12,6 +12,7 @@
   border: var(--glass-border);
   transition: all var(--transition);
   font-size: 1rem;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .card-content h2 {
@@ -50,6 +51,7 @@
   background: var(--bg-color);
   color: var(--text-color);
   transition: all var(--transition);
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .select-res:focus {
@@ -99,7 +101,7 @@
 
 #loading {
   text-align: center;
-  margin-top: 20px;
+  margin: 2rem auto;
   display: none;
 }
 
@@ -166,7 +168,6 @@
 
 .info-row strong {
   color: var(--primary);
-  /* display: inline-block; */
   font-weight: bold;
   text-align: left;
 }
@@ -246,6 +247,13 @@ gap: 0.5em;
   .button-res {
     width: 100%;
   }
+
+  .info-row strong,
+  .info-row span {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.5rem;
+  }
 }
 
 @media (max-width: 400px) {
@@ -264,7 +272,8 @@ gap: 0.5em;
   }
 
   .thumb-container {
-    max-width: 100%;
+    width: 100%;
+    /* max-width: 100%; */
   }
 
   .info {
@@ -273,6 +282,7 @@ gap: 0.5em;
 
   .info-row strong,
   .info-row span {
+    width: 100%;
     font-size: 0.85rem;
   }
 }
