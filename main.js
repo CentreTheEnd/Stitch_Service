@@ -6,7 +6,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 
-
+import syntaxError from 'syntax-error';
+import { format } from 'util';
+import { createRequire } from 'module';
 
 //______________________________________________
 
