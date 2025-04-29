@@ -340,7 +340,8 @@ export async function setupRoutes(app) {
         res.status(200).json(errorLogs);
     });
 
-   app.post('/api/v3/eval', (req, res) => {
+  /*
+ app.post('/api/v3/eval', (req, res) => {
   const { code } = req.body;
 
   let result = '';
@@ -369,6 +370,7 @@ export async function setupRoutes(app) {
 
   res.json({ result, error });
 });
+    */
     
    app.get('/api/v3/data', (req, res) => {
 
