@@ -165,10 +165,12 @@
     box-shadow: var(--box-shadow);
 }
 
+/*
 .video-res, .audio-res {
     width: 100%;
     max-width: 480px;
 }
+*/
 
 /* Info Block */
 .info {
