@@ -57,6 +57,7 @@ export async function setupApp() {
     let modifiedHtml;
     let token;
     let apiKey;
+    let ip;
 
     app.use(cors());
     app.use(express.json());
@@ -69,13 +70,18 @@ export async function setupApp() {
 
     console.log(`Server Setup Complete!`);
 
+app.use((req, res, next) => {
+  res.setHeader('x-dev', "0");
+  res.setHeader('dev-co', "?1");
+  next();
+});
+
 app.get('/', (req, res) => {
          token = req.headers['authorization'];
-
-         const ip = req.ip;
-  apiKey = global.generateAPIKey(ip);
-  global.isApiKey = apiKey;
-req.apiKey = apiKey;
+         ip = req.ip;
+         apiKey = global.generateAPIKey(ip);
+         global.isApiKey = apiKey;
+         req.apiKey = apiKey;
         
 
          res.setHeader('api-key', apiKey);
@@ -91,7 +97,15 @@ req.apiKey = apiKey;
   
   app.get('/downloader/video', (req, res) => {
   
-    apiKey = req.apiKey || req.headers['api-key'];
+         ip = req.ip;
+         apiKey = req.headers['api-key'] || global.generateAPIKey(ip);
+         global.isApiKey = apiKey;
+        
+
+         res.setHeader('api-key', apiKey);
+         res.setHeader('x-dev', "0");
+         res.setHeader('dev-co', "?1");
+    
    html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
    modifiedHtml = html.replace('{{API_KEY}}', apiKey);
 
