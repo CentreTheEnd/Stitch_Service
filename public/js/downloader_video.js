@@ -1,154 +1,194 @@
-    const typeSelect = document.getElementById("typeSelect");
-    const modelSelect = document.getElementById("modelSelect");
-    const queryInput = document.getElementById("queryInput");
-    const resultDiv = document.getElementById("result");
-    const loading = document.getElementById("loading");
-    const apiKey = document.querySelector('meta[name="apikey"]').getAttribute('content');
+const typeSelect = document.querySelector(".select-res.type");
+const modelSelect = document.querySelector(".select-res.model");
+const queryInput = document.querySelector(".input-res.query");
+const resultDiv = document.getElementById("result");
+const loading = document.getElementById("loading");
+const apiKey = document.querySelector('meta[name="apikey"]').getAttribute('content');
 
-    let apis = [];
-    //const apiKey = "{{API_KEY}}";
+let apis = [];
 
-    async function loadApis() {
-      try {
-        const res = await fetch("/api/v3/apis/sections/Download/api");
-        const json = await res.json();
-        apis = json.data;
-      
+async function loadApis() {
+  try {
+    const res = await fetch("/api/v3/apis/sections/Download/api");
+    const json = await res.json();
+    apis = json.data;
 
-        const tags = [...new Set(apis.map(api => api.tag))];
-        tags.forEach(tag => {
-          const opt = document.createElement("option");
-          opt.value = tag;
-          opt.textContent = tag;
-          typeSelect.appendChild(opt);
-        });
-      } catch (err) {
-        alert("Error loading APIs: " + err.message);
+    const tags = [...new Set(apis.map(api => api.tag))];
+    tags.forEach(tag => {
+      const opt = document.createElement("option");
+      opt.value = tag;
+      opt.textContent = tag;
+      typeSelect.appendChild(opt);
+    });
+  } catch (err) {
+    alert("Error loading APIs: " + err.message);
+  }
+}
+
+typeSelect.addEventListener("change", () => {
+  modelSelect.innerHTML = '<option disabled selected>Select model...</option>';
+  const filtered = apis.filter(api => api.tag === typeSelect.value);
+  filtered.forEach(api => {
+    const opt = document.createElement("option");
+    opt.value = api.model;
+    opt.textContent = api.model;
+    modelSelect.appendChild(opt);
+  });
+});
+
+async function handleDownload() {
+  const type = typeSelect.value;
+  const model = modelSelect.value;
+  const query = queryInput.value.trim();
+
+  if (!type || !model || !query) {
+    return alert("Please fill all fields.");
+  }
+
+  const selectedApi = apis.find(api => api.tag === type && api.model === model);
+  if (!selectedApi) return alert("Model not found.");
+
+  const queryKey = Object.keys(selectedApi.query)[0];
+  const apiUrl = selectedApi.url.startsWith("http://")
+    ? selectedApi.url.replace("http://", "https://")
+    : selectedApi.url;
+  const url = `${apiUrl}?${queryKey}=${encodeURIComponent(query)}`;
+
+  loading.style.display = "block";
+  resultDiv.innerHTML = "";
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'api-key': apiKey
       }
-    }
-
-    typeSelect.addEventListener("change", () => {
-      modelSelect.innerHTML = '<option disabled selected>Select model...</option>';
-      const filtered = apis.filter(api => api.tag === typeSelect.value);
-      filtered.forEach(api => {
-        const opt = document.createElement("option");
-        opt.value = api.model;
-        opt.textContent = api.model;
-        modelSelect.appendChild(opt);
-      });
     });
 
-    async function handleDownload() {
-      const type = typeSelect.value;
-      const model = modelSelect.value;
-      const query = queryInput.value.trim();
+    const json = await res.json();
 
-      if (!type || !model || !query) {
-        return alert("Please fill all fields.");
-      }
+    loading.style.display = "none";
 
-      const selectedApi = apis.find(api => api.tag === type && api.model === model);
-      if (!selectedApi) return alert("Model not found.");
-
-      const queryKey = Object.keys(selectedApi.query)[0];
-      const apiUrl = selectedApi.url.startsWith("http://")
-  ? selectedApi.url.replace("http://", "https://")
-  : selectedApi.url;
-      const url = `${apiUrl}?${queryKey}=${encodeURIComponent(query)}`;
-
-      loading.style.display = "block"; // Show loading
-      resultDiv.innerHTML = "";
-
-      try {
-        //const res = await fetch(url);
-        const res = await fetch(url, {
-        headers: {
-       'api-key': apiKey
-        }
-        });
-          
-        const json = await res.json();
-
-        
-        loading.style.display = "none"; // Hide loading
-
-        if (!json.status || !json.data) {
-          resultDiv.innerHTML = "<p>No valid data found.</p>";
-          return;
-        }
-
-        const container = renderData(json.data);
-        resultDiv.appendChild(container);
-
-      } catch (err) {
-        loading.style.display = "none"; // Hide loading
-        resultDiv.innerHTML = `<p>Error: ${err.message}</p>`;
-      }
+    if (!json.status || !json.data) {
+      resultDiv.innerHTML = "<p>No valid data found.</p>";
+      return;
     }
 
-    function renderData(obj) {
-      const container = document.createElement("div");
-      container.className = "media-block";
+    const container = renderData(json.data);
+    resultDiv.appendChild(container);
 
-      let info = "", media = { thumb: "", image: "", video: "", audio: "" }, downloads = [];
+  } catch (err) {
+    loading.style.display = "none";
+    resultDiv.innerHTML = `<p>Error: ${err.message}</p>`;
+  }
+}
 
-      const renderMedia = (type, val) => {
-        (Array.isArray(val) ? val : [val]).forEach((v, i) => {
-          if (!v) return;
-          const element = {
-            thumb: `<img src="${v}" alt="Thumbnail" />`,
-            image: `<img src="${v}" alt="Image" />`,
-            video: `<video src="${v}" controls></video>`,
-            audio: `<audio src="${v}" controls></audio>`
-          }[type];
-          media[type] += element;
-          downloads.push({ label: `${type.toUpperCase()} ${i + 1}`, url: v });
-        });
-      };
+function renderData(obj) {
+  const container = document.createElement("div");
+  container.className = "media-block";
 
-      for (const key in obj) {
-        const val = obj[key];
-        if (!val) continue;
-        const k = key.toLowerCase();
-        if (k.includes("thumb")) renderMedia("thumb", val);
-        else if (k.includes("image")) renderMedia("image", val);
-        else if (k.includes("video")) renderMedia("video", val);
-        else if (k.includes("audio")) renderMedia("audio", val);
-        else {
-          if (typeof val === "object") {
-            for (const sub in val) {
-              info += `<p><strong>${key}.${sub}</strong>: ${val[sub]}</p>`;
-            }
-          } else {
-            info += `<p><strong>${key}</strong>: ${val}</p>`;
-          }
+  let info = "", const infoList = [], media = { thumb: "", image: "", video: "", audio: "" }, downloads = [];
+
+  const renderMedia = (type, val) => {
+    (Array.isArray(val) ? val : [val]).forEach((v, i) => {
+      if (!v) return;
+      const element = {
+        thumb: `<img class="img-res" src="${v}" alt="Thumbnail" />`,
+        image: `<img class="img-res" src="${v}" alt="Image" />`,
+        video: `<video class="video-res" src="${v}" controls></video>`,
+        audio: `<audio class="audio-res" src="${v}" controls></audio>`
+      }[type];
+      media[type] += element;
+      downloads.push({ label: `${type.toUpperCase()} ${i + 1}`, url: v });
+    });
+  };
+
+  for (const key in obj) {
+    const val = obj[key];
+    if (!val) continue;
+    const k = key.toLowerCase();
+    if (k.includes("thumb")) renderMedia("thumb", val);
+    else if (k.includes("image")) renderMedia("image", val);
+    else if (k.includes("video")) renderMedia("video", val);
+    else if (k.includes("audio")) renderMedia("audio", val);
+    else {
+      if (typeof val === "object") {
+        for (const sub in val) {
+          info += `<p><strong>${key}.${sub}</strong>: ${val[sub]}</p>`;
+          infoList.push({ label: `${key}.${sub}`, value: val[sub]});
         }
+      } else {
+        info += `<p><strong>${key}</strong>: ${val}</p>`;
+        infoList.push({ label: key, value: val});
       }
-
-      const mediaGroup = document.createElement("div");
-      mediaGroup.className = "media-group";
-      mediaGroup.innerHTML = media.thumb + media.image + media.video + media.audio;
-      container.appendChild(mediaGroup);
-
-      const infoBlock = document.createElement("div");
-      infoBlock.className = "info";
-      infoBlock.innerHTML = info;
-      container.appendChild(infoBlock);
-
-      if (downloads.length > 0) {
-        const downloadDiv = document.createElement("div");
-        downloadDiv.className = "download-select";
-        downloads.forEach(({ label, url }) => {
-          const btn = document.createElement("button");
-          btn.textContent = `Download ${label}`;
-          btn.onclick = () => window.open(url, "_blank");
-          downloadDiv.appendChild(btn);
-        });
-        container.appendChild(downloadDiv);
-      }
-
-      container.style.animation = "fadeIn 1s forwards";
-      return container;
     }
+  }
 
-    loadApis();
+  const mediaGroup = document.createElement("div");
+  mediaGroup.className = "media-group";
+  mediaGroup.innerHTML = media.thumb + media.image + media.video + media.audio;
+  container.appendChild(mediaGroup);
+
+    /*
+const infoContainer = document.createElement("div");
+infoContainer.className = "info";
+
+// قائمة بالمعلومات التي تريد عرضها
+const infoList = [
+  { label: "Title", value: video.title },
+  { label: "Duration", value: video.duration },
+  { label: "Views", value: video.views },
+  { label: "Likes", value: video.likes },
+  { label: "Uploader", value: video.uploader },
+  { label: "Upload Date", value: video.uploadDate }
+];
+
+// إنشاء العناصر بتنسيق: العنوان ثم القيمة (كل منهما في عنصر منفصل داخل نفس الصف)
+infoList.forEach(({ label, value }) => {
+  const labelElement = document.createElement("strong");
+  labelElement.textContent = `${label}:`;
+
+  const valueElement = document.createElement("span");
+  valueElement.textContent = value;
+
+  infoContainer.appendChild(labelElement);
+  infoContainer.appendChild(valueElement);
+});
+
+document.body.appendChild(infoContainer);
+
+    */
+  const infoBlock = document.createElement("div");
+  infoBlock.className = "info";
+
+  infoList.forEach(({ label, value }) => {
+  const labelElement = document.createElement("strong");
+  labelElement.textContent = `${label}:`;
+
+  const valueElement = document.createElement("span");
+  valueElement.textContent = value;
+
+  infoBlock.appendChild(labelElement);
+  infoBlock.appendChild(valueElement);
+});
+    
+  //infoBlock.innerHTML = info;
+  container.appendChild(infoBlock);
+
+  if (downloads.length > 0) {
+    const downloadDiv = document.createElement("div");
+    downloadDiv.className = "download-select";
+    downloads.forEach(({ label, url }) => {
+      const btn = document.createElement("button");
+      btn.className = "button-res";
+      btn.textContent = `Download ${label}`;
+      btn.onclick = () => window.open(url, "_blank");
+      downloadDiv.appendChild(btn);
+    });
+    container.appendChild(downloadDiv);
+  }
+
+  container.style.animation = "fadeIn 1s forwards";
+  return container;
+}
+
+loadApis();
