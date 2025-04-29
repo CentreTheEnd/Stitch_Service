@@ -1,25 +1,47 @@
-textarea, pre {
-  width: 100%;
-  box-sizing: border-box;
+/*
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+*/
+
+h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+textarea {
+  font-family: monospace;
   padding: 10px;
   font-size: 16px;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
 }
 
 button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.result {
+button:hover {
+  background-color: #45a049;
+}
+
+#output {
   margin-top: 20px;
-  background: #eaeaea;
   padding: 10px;
-  border-radius: 4px;
-  white-space: pre-wrap;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+#result {
+  color: green;
+}
+
+#error {
+  color: red;
+  font-weight: bold;
 }
