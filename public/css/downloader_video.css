@@ -162,6 +162,10 @@
   color: var(--primary);
 }
 
+.hide-btn-res {
+font-size: 1.1rem;
+}
+
 .media-group {
   margin-top: 10px;
   display: flex;
