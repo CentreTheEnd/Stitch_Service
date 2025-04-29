@@ -79,7 +79,7 @@ req.apiKey = apiKey;
         
 
          res.setHeader('api-key', apiKey);
-         res.setHeader('x-vercel-dev', "0");
+         res.setHeader('x-dev', "0");
          res.setHeader('dev-co', "?1");
   
          if (token) {
