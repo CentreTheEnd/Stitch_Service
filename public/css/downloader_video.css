@@ -159,11 +159,14 @@
 .info-row {
   color: var(--text-color);
   text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .info-row strong {
   color: var(--primary);
   display: inline-block;
+  font-weight: bold;
   text-align: left;
 }
 
@@ -178,7 +181,6 @@ cursor: pointer;
 align-items: center;
 margin: 2rem auto;
 gap: 0.5em;
-font-size: 1.1rem;
 }
 
 .hide-btn-res:hover {
