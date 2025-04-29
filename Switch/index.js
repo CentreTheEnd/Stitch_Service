@@ -346,36 +346,28 @@ export async function setupRoutes(app) {
   let result = '';
   let error = '';
 
-  try {
-    let executionLimit = 15;
+  const wrappedCode = `return (async () => {\n${code}\n})()`;
 
-    const exec = new (async () => {}).constructor(
-      'print', 'm', 'handler', 'require', 'conn', 'Array', 'process', 'args', 
-      'groupMetadata', 'module', 'exports', 'argument', code
-    );
+  const err = syntaxError(wrappedCode, 'exec.js', {
+    allowReturnOutsideFunction: true,
+    allowAwaitOutsideFunction: true,
+    sourceType: 'module'
+  });
 
-    result = await exec.call(
-      {},
-      (...args) => {
-        if (--executionLimit < 1) return;
-        console.log(...args);
-        return args;
-      },
-      code
-    );
-  } catch (err) {
- 
-    const errMsg = syntaxError(code, 'Execution Function', {
-      allowReturnOutsideFunction: true,
-      allowAwaitOutsideFunction: true,
-      sourceType: 'module',
-    });
-
-    if (errMsg) error = 'Error: ' + errMsg;
-    result = err;
+  if (err) {
+    return res.json({ result: '', error: err.toString() });
   }
 
-  res.json({ result: result || 'No result returned', error });
+  try {
+    const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+    const func = new AsyncFunction(wrappedCode);
+    const execResult = await func();
+    result = format(execResult);
+  } catch (e) {
+    error = e.toString();
+  }
+
+  res.json({ result, error });
 });
     
    app.get('/api/v3/data', (req, res) => {
