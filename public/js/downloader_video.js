@@ -140,11 +140,11 @@ function renderData(obj) {
   // Toggle media button
   if (media.video || media.audio || media.image) {
     const toggleBtn = document.createElement("button");
-    toggleBtn.className = "toggle-btn";
+    toggleBtn.className = "hide-btn-res";
     toggleBtn.innerHTML = `<i class=\"fas fa-eye\"></i> Show Media`;
     toggleBtn.onclick = () => {
-      container.querySelectorAll(".media-video, .media-audio").forEach(el => el.classList.toggle("hidden"));
-      const shown = !container.querySelector(".media-image, .media-video, .media-audio").classList.contains("hidden");
+      container.querySelectorAll(".media-video, .media-audio, .media-image").forEach(el => el.classList.toggle("hidden"));
+      const shown = !container.querySelector(".media-video, .media-audio, .media-image").classList.contains("hidden");
       toggleBtn.innerHTML = shown
         ? `<i class=\"fas fa-eye-slash\"></i> Hide Media`
         : `<i class=\"fas fa-eye\"></i> Show Media`;
