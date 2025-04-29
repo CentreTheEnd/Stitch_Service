@@ -193,6 +193,7 @@ body {
 }
 
 /* <-- Main Style --> */
+/*
 main {
     flex: 1;
     width: 100%;
@@ -216,7 +217,27 @@ main {
     padding: 20px;
     text-align: center;
     justify-content: flex-start;
-    gap: 20px; /* تباعد بين العناصر */
+    gap: 20px;
+}
+*/
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6rem 0;
+    min-height: 80vh;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
 }
 
 /* <-- --> */
