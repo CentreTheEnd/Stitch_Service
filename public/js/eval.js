@@ -1,21 +1,18 @@
-function runCode() {
-  const code = document.getElementById('code').value;
-  const resultElement = document.getElementById('result');
+async function executeCode() {
+  const code = document.getElementById('codeInput').value;
 
-  fetch('/api/v3/eval', {
+  // إرسال الكود إلى السيرفر عبر POST
+  const response = await fetch('/api/v3/eval', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ code })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      resultElement.textContent = `Result:\n${data.result}`;
-    } else {
-      resultElement.textContent = `Error:\n${data.error}`;
-    }
-  })
-  .catch(err => {
-    resultElement.textContent = `Fetch Error:\n${err.message}`;
   });
+
+  const data = await response.json();
+
+  // عرض النتيجة أو الخطأ
+  document.getElementById('result').textContent = data.result || '';
+  document.getElementById('error').textContent = data.error || '';
 }
