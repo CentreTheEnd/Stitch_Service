@@ -71,7 +71,16 @@ export async function setupApp() {
 
 app.get('/', (req, res) => {
          token = req.headers['authorization'];
-         apiKey = req.headers['api-key'];
+
+         const ip = req.ip;
+  apiKey = global.generateAPIKey(ip);
+  global.isApiKey = apiKey;
+req.apiKey = apiKey;
+        
+
+         res.setHeader('api-key', apiKey);
+         res.setHeader('x-vercel-dev', "0");
+         res.setHeader('dev-co', "?1");
   
          if (token) {
            
@@ -81,10 +90,8 @@ app.get('/', (req, res) => {
     });
   
   app.get('/downloader/video', (req, res) => {
-  const ip = req.ip;
-  apiKey = global.generateAPIKey(ip);
-  global.isApiKey = apiKey;
-
+  
+    apiKey = req.apiKey || req.headers['api-key'];
    html = fs.readFileSync(path.join(__dirname, '/public/html/downloader_video.html'), 'utf8');
    modifiedHtml = html.replace('{{API_KEY}}', apiKey);
 
