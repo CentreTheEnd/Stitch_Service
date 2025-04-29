@@ -66,7 +66,6 @@
     "nodemailer": "^6.9.8",
     "terminal-image": "^2.0.0",
     "url-regex-safe": "^3.0.0",
-    "uuid": "*",
     "request": "^2.88.2",
     "path": "^0.12.7",
     "passport": "^0.5.0",
