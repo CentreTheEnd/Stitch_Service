@@ -93,6 +93,7 @@ button:hover {
   animation: fadeIn 1s forwards;
 }
 
+/*
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -102,6 +103,7 @@ button:hover {
     opacity: 1;
   }
 }
+*/
 
 .media-block h3 {
   margin-top: 20px;
