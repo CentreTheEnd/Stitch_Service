@@ -20,6 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.nav-links');
     const menuBackdrop = document.querySelector('.menu-backdrop');
     const body = document.body;
+    const year = new Date().getFullYear();
+    const element = document.querySelector('.copyright p');
+    
+    if (element) {
+       element.textContent = `© 2020 - ${year} Stitch Service.`;
+       element.style.cursor = 'pointer';
+       
+        element.addEventListener('click', () => {
+          window.location.href = '/about';
+    });
+    }
+
 
     function toggleMenu() {
         const isOpen = navLinks.classList.toggle('active');
