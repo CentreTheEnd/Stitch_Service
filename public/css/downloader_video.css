@@ -24,6 +24,7 @@
 
 .form-group {
   flex: 1;
+  transition: all var(--transition);
 }
 
 .form-group label {
@@ -35,6 +36,8 @@
 .form-group label i {
   margin-right: 0.5em;
 }
+
+
 
 .selectors {
   display: flex;
@@ -80,6 +83,11 @@
 .input-res.query:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+.form-group:hover .selectors {
+    transform: scale(1.1);
+    background: rgba(59, 130, 246, 0.2);
 }
 
 .button-res {
