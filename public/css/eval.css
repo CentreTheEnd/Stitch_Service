@@ -1,0 +1,25 @@
+textarea, pre {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 20px;
+  background: #eaeaea;
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
