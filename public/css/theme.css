@@ -439,6 +439,7 @@ main {
 /* -- Input Field Styles -- */
 /* Styles for input fields used across the site */
 
+/*
 input, select {
     padding: 12px 15px;
     border: 1px solid rgba(59, 130, 246, 0.3);
@@ -458,9 +459,12 @@ input:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+*/
+
 /* -- Card Styles -- */
 /* Styles for reusable card components with glassmorphic effect */
 
+/*
 .card {
     background: var(--card-bg);
     border: var(--glass-border);
@@ -494,6 +498,8 @@ input:focus, select:focus {
 .card:hover::before {
     transform: scaleX(1);
 }
+
+*/
 
 /* -- Animations -- */
 /* Keyframe animations used for various effects */
@@ -652,10 +658,12 @@ input:focus, select:focus {
         margin-top: 4rem;
     }
 
+    /*
     input, select {
         width: 100%;
         max-width: 100%;
     }
+    */
 }
 
 @media (max-width: 480px) {
