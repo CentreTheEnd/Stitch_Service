@@ -10,18 +10,15 @@
   margin: 2rem auto;
   color: var(--text-color);
   transition: all var(--transition);
-  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .card-content:hover {
   border: 3px solid var(--highlight-color);
-  box-shadow: 0 6px 20px rgba(0, 196, 204, 0.4);
-  transform: scale(1.06);
-}
-
-.card-content:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 6px 20px rgba(0, 196, 204, 0.4);
+  transform: scale(1.06);
+  backdrop-filter: blur(5px);
 }
 
 .card-content h2 {
