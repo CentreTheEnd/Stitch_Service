@@ -14,3 +14,28 @@
   border: 3px solid var(--highlight-color);
   box-shadow: 0 6px 20px rgba(0, 196, 204, 0.4);
 }
+
+.card-content h2 {
+  margin: 2rem auto;
+  color: var(--primary);
+  text-align: center;
+}
+
+/* --> Selectors Style <-- */
+.selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* --> Input Group Style <-- */
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
