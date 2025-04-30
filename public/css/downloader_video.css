@@ -14,11 +14,10 @@
 
 .card-content:hover {
   border: 3px solid var(--highlight-color);
-  outline: none;
   border-color: var(--primary);
-  box-shadow: 0 6px 20px rgba(0, 196, 204, 0.4);
+  box-shadow: var(--glass-border);
   transform: scale(1.06);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(var(--glass-blur));
 }
 
 .card-content h2 {
