@@ -17,7 +17,8 @@
     --box-shadow-dark: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
 
     --glass-blur: 12px;
-    --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+    --glass-border-light: 1px solid rgba(0, 0, 0, 0.15);
+    --glass-border-dark: 1px solid rgba(255, 255, 255, 0.15);
     --transition: cubic-bezier(0.4, 0, 0.2, 1) 300ms;
 }
 
@@ -25,14 +26,16 @@
     --text-color: var(--text-dark);
     --bg-color: var(--bg-dark);
     --card-bg: var(--card-bg-dark);
-    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --box-shadow: var(--box-shadow-dark);
+    --glass-border: var(--glass-border-dark);
 }
 
 [data-theme="light"] {
     --text-color: var(--text-light);
     --bg-color: var(--bg-light);
     --card-bg: var(--card-bg-light);
+    --box-shadow: var(--box-shadow-light);
+    --glass-border: var(--glass-border-light);
 }
 
 /* -- Base Styles -- */
