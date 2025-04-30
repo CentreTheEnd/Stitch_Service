@@ -206,6 +206,46 @@
   transform: scale(1.05);
 }
 
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+  padding: 1rem;
+  background-color: var(--card-bg); 
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color); /* خط فاصل بين الصفوف */
+}
+
+.info-row strong {
+  font-weight: 700;
+  color: var(--primary); /* لون النص بالخط العريض */
+  font-size: 1.1rem;
+}
+
+.info-row span {
+  font-weight: 400;
+  color: var(--text-color); /* اللون الافتراضي للنص */
+  font-size: 1rem;
+}
+
+/* إذا أردت إضافة تأثيرات تحويم على .info-row */
+.info-row:hover {
+  background-color: var(--bg-light); /* خلفية خفيفة عند التحويم */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* تأثير ظل خفيف */
+  cursor: pointer;
+}
+
+/*
 .info {
   text-align: center;
   color: var(--text-color);
@@ -226,6 +266,7 @@
 .info-row span {
   color: var(--accent);
 }
+*/
 
 .hide-btn-res {
   padding: 0.6rem 1.5rem;
@@ -253,6 +294,12 @@
   gap: 1rem; 
   margin: 1rem 0;
   transition: all var(--transition);
+}
+
+.media-group.hidden {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
 }
 
 .media-video, .media-audio, .media-image {
@@ -285,9 +332,10 @@
 .download-wrapper {
   flex: 1 1 45%;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: row; /* ترتيب العناصر بشكل أفقي */
+  flex-wrap: wrap; /* السماح بتلف العناصر في حال كانت هناك مساحة ضيقة */
+  justify-content: space-between; /* توزيع العناصر بشكل متساوي بين المساحة المتاحة */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
   margin: 1rem 0;
   padding: 1rem;
   background: var(--card-bg);
@@ -302,6 +350,7 @@
   transform: scale(1.02);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+
 
 .download-wrapper select {
   width: 100%;
@@ -383,6 +432,7 @@
   100% { color: var(--primary); }
 }
 
+
 @media (max-width: 600px) {
   .form-group {
     flex: 1 1 100%;
@@ -390,4 +440,43 @@
     align-items: center;
     text-align: center;
   }
+
+  /* تعديل .info لتتناسب مع الشاشات الصغيرة */
+  .info {
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .info-row {
+    display: flex;
+    flex-direction: column; /* تغيير الاتجاه إلى عمودي */
+    align-items: center; /* محاذاة العناصر في المنتصف */
+    text-align: center;
+    gap: 0.5rem; /* إضافة مسافة بين العناصر */
+  }
+
+  .info-row strong, .info-row span {
+    font-size: 0.9rem; /* تصغير حجم النص */
+  }
+
+  /* تعديل .download-wrapper لتتناسب مع الشاشات الصغيرة */
+  .download-wrapper {
+    flex: 1 1 100%; /* جعل العناصر تشغل 100% من العرض */
+    display: flex;
+    flex-direction: column; /* ترتيب العناصر عموديًا */
+    align-items: center; /* محاذاة العناصر في المنتصف */
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  /* تعديل .media-group لتتناسب مع الشاشات الصغيرة */
+  .media-group {
+    display: flex;
+    flex-direction: column; /* ترتيب العناصر عموديًا */
+    gap: 1rem; /* إضافة مسافة بين العناصر */
+    align-items: center; /* محاذاة العناصر في المنتصف */
+  }
+
 }
+
