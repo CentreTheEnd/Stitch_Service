@@ -2,17 +2,25 @@
 .card-content {
   width: 100%;
   background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-color: var(--text-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 2rem;
   margin: 2rem auto;
   color: var(--text-color);
   transition: all var(--transition);
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .card-content:hover {
   border: 3px solid var(--highlight-color);
   box-shadow: 0 6px 20px rgba(0, 196, 204, 0.4);
+}
+
+.card-content:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .card-content h2 {
