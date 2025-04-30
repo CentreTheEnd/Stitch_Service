@@ -77,8 +77,8 @@
   display: inline-block;
   position: relative;
   color: var(--primary);
-  animation: dots-spin 1s linear infinite, color-cycle 4s linear infinite;
-  background-color: currentColor;
+  animation: dots-spin 1s linear infinite, color-cycle 1.2s linear infinite;
+  background-color: transparent;
   box-shadow:
     1.5em 0 currentColor,
     0 1.5em currentColor,
@@ -95,7 +95,7 @@
   0%   { color: var(--primary); }
   25%  { color: var(--accent); }
   50%  { color: var(--secondary); }
-  75%  { color: #f59e0b; }
+  75%  { color: #f59e0b; } /* أصفر */
   100% { color: var(--primary); }
 }
 
