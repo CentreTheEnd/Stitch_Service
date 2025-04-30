@@ -220,53 +220,27 @@
 
 .info-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border-color); /* خط فاصل بين الصفوف */
+  border-bottom: 1px solid var(--border-color); 
 }
 
 .info-row strong {
   font-weight: 700;
-  color: var(--primary); /* لون النص بالخط العريض */
+  color: var(--primary); 
   font-size: 1.1rem;
 }
 
 .info-row span {
   font-weight: 400;
-  color: var(--text-color); /* اللون الافتراضي للنص */
+  color: var(--text-color); 
   font-size: 1rem;
+  text-align: left;    
+  white-space: normal;  
+  word-break: break-word;  
 }
-
-/* إذا أردت إضافة تأثيرات تحويم على .info-row */
-.info-row:hover {
-  background-color: var(--bg-light); /* خلفية خفيفة عند التحويم */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* تأثير ظل خفيف */
-  cursor: pointer;
-}
-
-/*
-.info {
-  text-align: center;
-  color: var(--text-color);
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5rem 0;
-  font-size: 1rem;
-}
-
-.info-row strong {
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.info-row span {
-  color: var(--accent);
-}
-*/
 
 .hide-btn-res {
   padding: 0.6rem 1.5rem;
@@ -332,10 +306,10 @@
 .download-wrapper {
   flex: 1 1 45%;
   display: flex;
-  flex-direction: row; /* ترتيب العناصر بشكل أفقي */
-  flex-wrap: wrap; /* السماح بتلف العناصر في حال كانت هناك مساحة ضيقة */
-  justify-content: space-between; /* توزيع العناصر بشكل متساوي بين المساحة المتاحة */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+  flex-direction: row; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  align-items: center; 
   margin: 1rem 0;
   padding: 1rem;
   background: var(--card-bg);
@@ -351,10 +325,10 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-
 .download-wrapper select {
   width: 100%;
   padding: 0.6rem 1rem;
+  margin: 2rem auto;
   font-size: 1rem;
   border: 1px solid var(--accent);
   border-radius: var(--border-radius);
