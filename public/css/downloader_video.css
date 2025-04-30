@@ -50,17 +50,48 @@
   flex: 1 1 45%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: var(--glass-border);
+  transition: all var(--transition);
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.form-group:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .form-group label {
   font-weight: 600;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   color: var(--primary);
   display: flex;
-  text-align: center;
   align-items: center;
   gap: 0.5rem;
+  font-size: 1rem;
+  transition: color var(--transition);
 }
+
+.form-group label:hover {
+  color: var(--accent);
+}
+
+.form-group label i {
+  font-size: 1.1rem;
+  color: var(--accent);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.form-group label:hover i {
+  transform: scale(1.2);
+  color: var(--primary);
+}
+
 
 .form-group select {
   width: 100%;
@@ -104,7 +135,7 @@
   outline: none;
 }
 
-.form-group button {
+.button-res {
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
   border: none;
@@ -116,7 +147,7 @@
   box-shadow: var(--box-shadow);
 }
 
-.form-group button:hover {
+.button-res:hover {
   background-color: var(--primary-dark);
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
@@ -156,7 +187,15 @@
   0%   { color: var(--primary); }
   25%  { color: var(--accent); }
   50%  { color: var(--secondary); }
-  75%  { color: #f59e0b; } /* أصفر */
+  75%  { color: #f59e0b; } 
   100% { color: var(--primary); }
 }
 
+@media (max-width: 600px) {
+  .form-group {
+    flex: 1 1 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+}
