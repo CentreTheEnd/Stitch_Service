@@ -57,6 +57,7 @@
   margin-bottom: 0.4rem;
   color: var(--primary);
   display: flex;
+  text-align: center;
   align-items: center;
   gap: 0.5rem;
 }
