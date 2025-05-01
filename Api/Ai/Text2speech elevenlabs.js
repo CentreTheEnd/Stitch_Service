@@ -6,8 +6,8 @@ import { fileTypeFromBuffer } from 'file-type';
 
 const router = express.Router();
 
-router.get('/text2speech', async (req, res) => {
-  const { q, gender, name, key, s1, s2, s3 } = req.query;
+router.get('/text2speech/elevenlabs', async (req, res) => {
+  const { q, gender, name, s1, s2, s3 } = req.query;
   const genders = ["female", "male"];
 
   if (!q) {
@@ -28,9 +28,6 @@ router.get('/text2speech', async (req, res) => {
       return res.status(400).json({ status: false, message: `الأسماء المتاحة لجنس "${selectedGender}"`, names: namesList });
     }
 
-    if (!key || key !== '2004') {
-    return res.status(400).json({ status: false, message: 'من فضلك أدخل المفتاح (key).' });
-    }
 
     const voiceData = genderModels[name];
     if (!voiceData) {
@@ -50,16 +47,16 @@ router.get('/text2speech', async (req, res) => {
 
 
 const usedRouterKeys = {
-  tag: "ai speech",
+  tag: "Genreat voice",
+  model: "elevenlabs",
   description: "ai convert text to speech ",
   query: { 
     q: "text",
-    gender: "Voice gender",
+    gender: ["female", "male"],
     name: "Speaker's name",
     s1: "Speed of sound",
     s2: "stability of sound",
     s3: "similarity of sound",
-    key: "key lock"
   },
   limited: 5,
   status: true,
