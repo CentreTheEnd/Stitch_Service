@@ -163,7 +163,7 @@ export async function setupRoutes(app) {
     //if (req.originalUrl.toLowerCase().includes('/api/v1/User/CreateApikey')) return next();    
     //if (!req.originalUrl.toLowerCase().includes('/api/v1') && !req.originalUrl.toLowerCase().includes('/api/v2')) return next();
     //if (req.originalUrl.toLowerCase().includes('/api/v1/Auth')) return next();
-
+/*
     if (!req.originalUrl.toLowerCase().includes('/api/v2') || !req.originalUrl.toLowerCase().startsWith('/api/v2')) return next();
         
     const apiKeyHeader = req.headers['api-key'];
@@ -172,7 +172,7 @@ export async function setupRoutes(app) {
     if (!apiKeyHeader) { // || apiKeyHeader !== global.isApiKey
         return res.status(400).json({ status: false, message: 'Missing API Key' });
     } 
-
+*/
         /*
 
     let matchedApi = null;
