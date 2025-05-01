@@ -125,7 +125,7 @@ async function getTaskStatus(taskId) {
 async function pollTaskStatus(taskId) {
     let status = -1;
     let data = {};
-    const interval = 5000;
+    const interval = 100;
 
     while (status !== 0) {
         data = await getTaskStatus(taskId);
