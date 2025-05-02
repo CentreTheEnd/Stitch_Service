@@ -85,7 +85,7 @@ app.get('/', (req, res) => {
   const page = req.query.page || 'register';
 
 html = fs.readFileSync(path.join(__dirname, '/public/html/auth.html'), 'utf8');
-modifiedHtml = html.replace('{{AUTH_KEY}}', apiKey);
+modifiedHtml = html.replace('{{AUTH_KEY}}', page);
 
   res.setHeader('Content-Type', 'text/html');
   res.send(modifiedHtml);
