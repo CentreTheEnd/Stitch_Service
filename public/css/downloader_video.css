@@ -164,7 +164,7 @@
 .media-block {
   width: 100%;
   max-width: 100%;
-/*  background: var(--card-bg);*/
+  background: var(--card-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
   padding: 1rem;
@@ -173,12 +173,13 @@
   transition: all var(--transition);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
   backdrop-filter: blur(var(--glass-blur));
 }
 
 .media-block:hover {
-  transform: translateY(-4px) scale(1.02);
+/*  transform: translateY(-4px) scale(1.02); */
   border-color: var(--primary);
   box-shadow: 0 0 10px var(--accent);
 }
@@ -189,7 +190,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background-color: var(--bg-light);
+/*  background-color: var(--bg-light); */
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-light);
   transition: all var(--transition);
@@ -256,6 +257,7 @@
 .hide-btn-res {
   width: 90%;
   max-width: 100%;
+  margin: 2rem auto;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
   border: none;
@@ -324,6 +326,7 @@
   flex-wrap: wrap; 
   justify-content: space-between; 
   align-items: center; 
+  text-align: center;
   margin: 1rem 0;
   padding: 1rem;
   background: var(--card-bg);
@@ -362,9 +365,9 @@
 .download-btn {
   width: 90%;
   max-width: 100%;
+  margin: 2rem auto;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
-  margin: 1rem 0;
   border: none;
   border-radius: var(--border-radius);
   background-color: var(--primary);
