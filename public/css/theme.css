@@ -193,20 +193,15 @@ body {
 .theme-toggle {
     background: rgba(59, 130, 246, 0.1);
     border: none;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: var(--text-color);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 6rem 0;
     height: 40px;
     width: 40px;
-  /*
-    width: 48px;
-    height: 48px;
-  */
     border-radius: 50%;
     transition: all var(--transition);
 }
@@ -223,12 +218,11 @@ body {
     display: none;
     background: none;
     border: none;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: var(--text-color);
     cursor: pointer;
     height: 40px;
     width: 40px;
-    padding: 6rem 0;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -251,10 +245,11 @@ body {
 
 .menu-backdrop {
     position: fixed;
+    display: none;
     top: 80px;
-    left: 0;
+    /*left: 0;*/
     right: 0;
-    bottom: 0;
+  /*  bottom: 0;*/
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
     z-index: 99;
@@ -269,6 +264,14 @@ body {
 .menu-backdrop.active {
     opacity: 1;
     pointer-events: auto;
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    text-align: center;
+    justify-content: flex-start;
+    gap: 20px;
 }
 
 /* <-- Main Style --> */
@@ -302,7 +305,6 @@ main {
 */
 
 main {
-   /* max-width: 1200px; */
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
