@@ -1,0 +1,99 @@
+.auth-section-container {
+  display: flex;
+  gap: 24px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: auto;
+}
+
+.auth-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-circle {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 20px;
+  padding: 0 12px;
+  overflow: hidden;
+}
+
+.auth-circle.active {
+  background-color: #4a90e2;
+  color: #fff;
+  transform: translateX(-10px) scale(1.2);
+  width: auto;
+  padding: 0 16px 0 12px;
+}
+
+.auth-circle .circle-text {
+  opacity: 0;
+  margin-left: 8px;
+  white-space: nowrap;
+  color: white;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+.auth-circle.active .circle-text {
+  opacity: 1;
+}
+
+.auth-content {
+  flex: 1;
+  position: relative;
+  min-height: 250px;
+}
+
+.auth-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.auth-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.auth-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.auth-section input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.auth-section button {
+  padding: 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
