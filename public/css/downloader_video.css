@@ -16,7 +16,7 @@
 .card-content:hover {
   border: 2px solid var(--highlight-color);
   box-shadow: var(--box-shadow);
-  transform: scale(1.06);
+/*  transform: scale(1.06); */
   backdrop-filter: blur(calc(var(--glass-blur) * 1.2));
 }
 
@@ -64,7 +64,7 @@
 }
 
 .form-group:hover {
-  transform: scale(1.02);
+/*  transform: scale(1.02); */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -91,7 +91,7 @@
 }
 
 .form-group label:hover i {
-  transform: scale(1.2);
+/*  transform: scale(1.2); */
   color: var(--primary);
 }
 
@@ -141,7 +141,7 @@
 }
 
 .button-res {
-  width: 100%;
+  width: 90%;
   max-width: 100%;
   margin: 2rem auto;
   padding: 0.6rem 1.5rem;
@@ -157,14 +157,14 @@
 
 .button-res:hover {
   background-color: var(--primary-dark);
-  transform: scale(1);
+/*  transform: scale(1); */
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
 }
 
 .media-block {
   width: 100%;
   max-width: 100%;
-  background: var(--card-bg);
+/*  background: var(--card-bg);*/
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
   padding: 1rem;
@@ -254,6 +254,8 @@
 }
 
 .hide-btn-res {
+  width: 90%;
+  max-width: 100%;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
   border: none;
@@ -267,7 +269,7 @@
 
 .hide-btn-res:hover {
   background-color: var(--primary-dark);
-  transform: scale(1);
+/*  transform: scale(1); */
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
 }
 
@@ -297,7 +299,7 @@
 }
 
 .media-video:hover, .media-audio:hover, .media-image:hover {
-  transform: scale(1.05);
+  transform: scale(1);
 }
 
 .media-video {
@@ -333,7 +335,7 @@
 }
 
 .download-wrapper:hover {
-  transform: scale(1.02);
+/*  transform: scale(1.02); */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -358,7 +360,7 @@
 }
 
 .download-btn {
-  width: 100%;
+  width: 90%;
   max-width: 100%;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
@@ -374,7 +376,7 @@
 
 .download-btn:hover {
   background-color: var(--primary-dark);
-  transform: scale(1.05);
+/*  transform: scale(1.05); */
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
 }
   
