@@ -1,3 +1,5 @@
+const selectAuth = document.querySelector('meta[name="select-auth"]')?.getAttribute('content') || "register";
+
 function showSection(section) {
   const sections = ['register', 'login', 'reset'];
   const buttons = document.querySelectorAll('.auth-circle');
@@ -18,7 +20,7 @@ function showSection(section) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => showSection('register'));
+document.addEventListener('DOMContentLoaded', () => showSection(selectAuth));
 
 if (window.location.search.includes("page=")) {
           const newUrl = window.location.origin + window.location.pathname;
