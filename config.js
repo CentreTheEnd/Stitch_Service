@@ -154,13 +154,23 @@ const config = {
     email: process.env.OWNER_EMAIL,
   },
   github: {
-    repoOwner: process.env.GITHUB_REPO_OWNER,
+    owner: process.env.GITHUB_REPO_OWNER,
+    repo: process.env.GITHUB_REPO_NAME,
+    database: process.env.GITHUB_REPO_FILE_PATH,
+    branch: process.env.GITHUB_REPO_BRANCH,
+    token: process.env.GITHUB_TOKEN,
   },
   setting: {
     githubToken: process.env.GITHUB_TOKEN,
     driveKey: process.env.DRIVE_KEY,
     mongoUrl: process.env.MONGO_URL,
     mailKey: process.env.MAIL_KEY,
+    tokenKey: process.env.JWT_SECRET_KEY,
+    apiKey: {
+        first: process.env.API_KEY_FIRST,
+        medium: process.env.API_KEY_MEDIUM,
+        end: process.env.API_KEY_END,
+    },
   },
   auth: {
     google: {
