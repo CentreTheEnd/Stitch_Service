@@ -50,6 +50,7 @@
 .form-group {
   flex: 1 1 45%;
   display: flex;
+  width: 100%;
   max-width: 100%;
   flex-direction: column;
   justify-content: center;
@@ -240,13 +241,14 @@
 }
 
 .info-row strong {
-  font-weight: 700;
+  font-weight: 50;
   color: var(--primary); 
   font-size: 1.1rem;
+  text-align: left;
 }
 
 .info-row span {
-  font-weight: 400;
+  font-weight: 50;
   color: var(--text-color); 
   font-size: 1rem;
   text-align: left;    
@@ -323,6 +325,8 @@
 .download-wrapper {
   flex: 1 1 100%;
   display: flex;
+  width: 100%;
+  max-width: 100%;
   flex-direction: row; 
   flex-wrap: wrap; 
   justify-content: space-between; 
