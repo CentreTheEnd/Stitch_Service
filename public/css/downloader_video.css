@@ -179,7 +179,7 @@
 }
 
 .media-block:hover {
-/*  transform: translateY(-4px) scale(1.02); */
+  transform: translateY(-4px); 
   border-color: var(--primary);
   box-shadow: 0 0 10px var(--accent);
 }
@@ -284,6 +284,7 @@
   margin: 2rem auto;
   padding: 0.6rem 1.5rem;
   transition: all var(--transition);
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .media-group.hidden {
@@ -320,7 +321,7 @@
 }
 
 .download-wrapper {
-  flex: 1 1 45%;
+  flex: 1 1 100%;
   display: flex;
   flex-direction: row; 
   flex-wrap: wrap; 
@@ -331,16 +332,18 @@
   padding: 1rem;
   background: var(--card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+/*  box-shadow: var(--box-shadow); */
   border: var(--glass-border);
-  transition: all var(--transition);
+/*  transition: all var(--transition);*/
   backdrop-filter: blur(var(--glass-blur));
 }
 
+/*
 .download-wrapper:hover {
-/*  transform: scale(1.02); */
+  transform: scale(1.02); 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+*/
 
 .download-wrapper select {
   width: 100%;
@@ -433,9 +436,7 @@
     width: 100%;
     align-items: center;
     text-align: center;
-  }
-
-  /* تعديل .info لتتناسب مع الشاشات الصغيرة */
+  
   .info {
     width: 100%;
     text-align: center;
@@ -444,32 +445,31 @@
 
   .info-row {
     display: flex;
-    flex-direction: column; /* تغيير الاتجاه إلى عمودي */
-    align-items: center; /* محاذاة العناصر في المنتصف */
-    text-align: center;
-    gap: 0.5rem; /* إضافة مسافة بين العناصر */
+    flex-direction: column; 
+    align-items: center; 
+    text-align: left;
+    gap: 0.5rem; 
   }
 
   .info-row strong, .info-row span {
-    font-size: 0.9rem; /* تصغير حجم النص */
+    font-size: 0.9rem; 
+    text-align: left;
   }
 
-  /* تعديل .download-wrapper لتتناسب مع الشاشات الصغيرة */
   .download-wrapper {
-    flex: 1 1 100%; /* جعل العناصر تشغل 100% من العرض */
+    flex: 1 1 100%; 
     display: flex;
-    flex-direction: column; /* ترتيب العناصر عموديًا */
-    align-items: center; /* محاذاة العناصر في المنتصف */
+    flex-direction: column; 
+    align-items: center; 
     justify-content: center;
     padding: 1rem;
   }
 
-  /* تعديل .media-group لتتناسب مع الشاشات الصغيرة */
   .media-group {
     display: flex;
-    flex-direction: column; /* ترتيب العناصر عموديًا */
-    gap: 1rem; /* إضافة مسافة بين العناصر */
-    align-items: center; /* محاذاة العناصر في المنتصف */
+    flex-direction: column; 
+    gap: 1rem; 
+    align-items: center; 
   }
 
 }
