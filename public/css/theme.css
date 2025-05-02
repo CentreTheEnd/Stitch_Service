@@ -133,7 +133,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -172,6 +173,7 @@ body {
     font-weight: 500;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .nav-links a:hover, .nav-links button:hover {
@@ -197,8 +199,13 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    height: 40px;
+    width: auto;
+  /*
     width: 48px;
     height: 48px;
+  */
     border-radius: 50%;
     transition: all var(--transition);
 }
@@ -218,11 +225,12 @@ body {
     font-size: 1.75rem;
     color: var(--text-color);
     cursor: pointer;
-    width: 48px;
-    height: 48px;
+    height: 40px;
+    width: auto;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
+    text-align: center;
     transition: all var(--transition);
 }
 
@@ -250,6 +258,9 @@ body {
     z-index: 99;
     opacity: 0;
     pointer-events: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
