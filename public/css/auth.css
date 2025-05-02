@@ -1,13 +1,25 @@
 .auth-section-container {
   display: flex;
   gap: 24px;
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  max-width: 800px;
-  margin: auto;
+  width: 100%;
+  max-width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  margin: 2rem auto;
+  color: var(--text-color);
+  transition: all var(--transition);
+  backdrop-filter: blur(var(--glass-blur));
 }
+/*
+{
+  border: 2px solid var(--highlight-color);
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(calc(var(--glass-blur) * 1.2));
+}
+*/
 
 .auth-options {
   display: flex;
