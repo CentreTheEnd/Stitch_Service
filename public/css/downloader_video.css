@@ -1,6 +1,7 @@
 /* --> Cards Style <-- */
 .card-content {
   width: 100%;
+  
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
@@ -49,6 +50,7 @@
 .form-group {
   flex: 1 1 45%;
   display: flex;
+  max-width: 100%;
   flex-direction: column;
   justify-content: center;
   margin: 1rem 0;
@@ -68,6 +70,7 @@
 
 .form-group label {
   font-weight: 600;
+  max-width: 100%;
   margin-bottom: 0.5rem;
   color: var(--primary);
   display: flex;
@@ -95,6 +98,7 @@
 
 .form-group select {
   width: 100%;
+  max-width: 100%;
   padding: 0.6rem 1rem;
   font-size: 1rem;
   border: 1px solid var(--accent);
@@ -119,6 +123,7 @@
 
 .form-group input {
   width: 100%;
+  max-width: 100%;
   padding: 0.6rem 1rem;
   font-size: 1rem;
   border: 1px solid var(--accent);
@@ -157,6 +162,8 @@
 }
 
 .media-block {
+  width: 100%;
+  max-width: 100%;
   background: var(--card-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
