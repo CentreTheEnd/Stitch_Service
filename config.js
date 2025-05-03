@@ -233,28 +233,24 @@ global.users_db = {
 
   sha: async function () {
     const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
-    const res = await axios.get(url, { this.headers });
+    const res = await axios.get(url, { headers: this.headers });  // تعديل هنا
     return res.data.sha;
   },
 
   getData: async function () {
-      try {
-    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
-    const res = await axios.get(url, { this.headers });
-    const content = Buffer.from(res.data.content, 'base64').toString();
-    
-    return JSON.parse(content);
-
-        } catch (error) {
-    //throw new Error(`Error get Data : ${error.message}`);
-          return {url: url, token: this.repoToken, headers: this.headers};
-      }
+    try {
+      const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
+      const res = await axios.get(url, { headers: this.headers });  // تعديل هنا
+      const content = Buffer.from(res.data.content, 'base64').toString();
+      return JSON.parse(content);
+    } catch (error) {
+      return { url: url, token: this.repoToken, headers: this.headers };
+    }
   },
 
   updateData: async function (users, commitMessage = 'update') {
     const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
     const sha = await this.sha();
-
     const res = await axios.put(
       `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}`,
       {
@@ -263,11 +259,11 @@ global.users_db = {
         sha,
         branch: this.repoBranch
       },
-      { this.headers }
+      { headers: this.headers }  // تعديل هنا
     );
-
     return res.data;
   },
+
 
   getUsers: async function () {
     const users = await this.getData();
