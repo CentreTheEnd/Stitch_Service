@@ -76,8 +76,7 @@ global.users_db = {
     );
 
     return res.data;
-  }
-  
+  },  
   
   getUsers: async function () {
     const users = await global.users_db.getData();
