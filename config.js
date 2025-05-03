@@ -240,14 +240,16 @@ global.users_db = {
   },
 
   getData: async function () {
+      try {
     const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
     const res = await axios.get(url, { headers: this.headers() });
     const content = Buffer.from(res.data.content, 'base64').toString();
-    console.log('URL:', url);
-    console.log('Token:', this.repoToken.slice(0, 5) + '...');
-    console.log('users:', content);
-      
+    
     return JSON.parse(content);
+
+        } catch (error) {
+    throw new Error(`Error get Data : ${error.message}`);
+      }
   },
 
   updateData: async function (users, commitMessage = 'update') {
