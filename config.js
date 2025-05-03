@@ -226,29 +226,28 @@ global.users_db = {
   repoToken: global.github.token,
   repoBranch: global.github.branch || 'main',
 
-  headers: function () {
-    return {
+  headers: {
       Authorization: `Bearer ${this.repoToken}`,
       Accept: 'application/vnd.github+json'
-    };
   },
 
   sha: async function () {
     const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
-    const res = await axios.get(url, { headers: this.headers() });
+    const res = await axios.get(url, { headers: this.headers });
     return res.data.sha;
   },
 
   getData: async function () {
       try {
     const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
-    const res = await axios.get(url, { headers: this.headers() });
+    const res = await axios.get(url, { headers: this.headers });
     const content = Buffer.from(res.data.content, 'base64').toString();
     
     return JSON.parse(content);
 
         } catch (error) {
-    throw new Error(`Error get Data : ${error.message}`);
+    //throw new Error(`Error get Data : ${error.message}`);
+          return {url: url, token: this.repoToken, headers: this.headers};
       }
   },
 
@@ -264,7 +263,7 @@ global.users_db = {
         sha,
         branch: this.repoBranch
       },
-      { headers: this.headers() }
+      { headers: this.headers }
     );
 
     return res.data;
