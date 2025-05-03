@@ -32,6 +32,7 @@ global.generateAPIKey = (ipOrString = "default") => {
 
 
 
+
 global.users_db = {
   owner: global.github.owner,
   repo: global.github.repo,
@@ -41,37 +42,37 @@ global.users_db = {
 
   headers: function () {
     return {
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${global.users_db.token}`,
       Accept: 'application/vnd.github+json'
     };
   },
 
   sha: async function () {
-    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}?ref=${this.branch}`;
-    const res = await axios.get(url, { headers: this.headers() });
+    const url = `https://api.github.com/repos/${global.users_db.owner}/${global.users_db.repo}/contents/${global.users_db.path}?ref=${global.users_db.branch}`;
+    const res = await axios.get(url, { headers: global.users_db.headers() });
     return res.data.sha;
   },
 
   getData: async function () {
-    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}?ref=${this.branch}`;
-    const res = await axios.get(url, { headers: this.headers() });
+    const url = `https://api.github.com/repos/${global.users_db.owner}/${global.users_db.repo}/contents/${global.users_db.path}?ref=${global.users_db.branch}`;
+    const res = await axios.get(url, { headers: global.users_db.headers() });
     const content = Buffer.from(res.data.content, 'base64').toString();
     return JSON.parse(content);
   },
 
   updateData: async function (users, commitMessage = 'update') {
     const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    const sha = await this.sha();
+    const sha = await global.users_db.sha();
 
     const res = await axios.put(
-      `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}`,
+      `https://api.github.com/repos/${global.users_db.owner}/${global.users_db.repo}/contents/${global.users_db.path}`,
       {
         message: commitMessage,
         content,
         sha,
-        branch: this.branch
+        branch: global.users_db.branch
       },
-      { headers: this.headers() }
+      { headers: global.users_db.headers() }
     );
 
     return res.data;
@@ -79,7 +80,7 @@ global.users_db = {
   
   
   getUsers: async function () {
-    const users = await this.getData();
+    const users = await global.users_db.getData();
     /*
     for (const email in users) {
       const user = users[email];
@@ -90,4 +91,6 @@ global.users_db = {
     return users;
   },
 };
+
+
 
