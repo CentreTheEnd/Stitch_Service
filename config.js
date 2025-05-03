@@ -219,6 +219,56 @@ global.discordUrl = config.auth.discord.oauth2;
 
 //______________________________________________
 
+global.users_db = {
+  repoOwner: global.github.owner,
+  repoName: global.github.repo,
+  repoPath: global.github.database,
+  repoToken: global.github.token,
+  repoBranch: global.github.branch || 'main',
+
+  headers: function () {
+    return {
+      Authorization: `Bearer ${this.repoToken}`,
+      Accept: 'application/vnd.github+json'
+    };
+  },
+
+  sha: async function () {
+    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
+    const res = await axios.get(url, { headers: this.headers() });
+    return res.data.sha;
+  },
+
+  getData: async function () {
+    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
+    const res = await axios.get(url, { headers: this.headers() });
+    const content = Buffer.from(res.data.content, 'base64').toString();
+    return JSON.parse(content);
+  },
+
+  updateData: async function (users, commitMessage = 'update') {
+    const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    const sha = await this.sha();
+
+    const res = await axios.put(
+      `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}`,
+      {
+        message: commitMessage,
+        content,
+        sha,
+        branch: this.repoBranch
+      },
+      { headers: this.headers() }
+    );
+
+    return res.data;
+  },
+
+  getUsers: async function () {
+    const users = await this.getData();
+    return users;
+  },
+};
 
 
 //______________________________________________
