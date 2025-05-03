@@ -2,27 +2,27 @@ import crypto from 'crypto';
 
 
 global.users_db = {
-  owner: global.github.owner,
-  repo: global.github.repo,
-  path: global.github.database,
-  token: global.github.token,
-  branch: global.github.branch || 'main',
+  repoOwner: global.github.owner,
+  repoName: global.github.repo,
+  repoPath: global.github.database,
+  repoToken: global.github.token,
+  repoBranch: global.github.branch || 'main',
 
   headers: function () {
     return {
-      Authorization: `Bearer ${this.token}`,  // استخدام this بدلاً من global.users_db.token
+      Authorization: `Bearer ${this.repoToken}`,
       Accept: 'application/vnd.github+json'
     };
   },
 
   sha: async function () {
-    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}?ref=${this.branch}`;
+    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
     const res = await axios.get(url, { headers: this.headers() });
     return res.data.sha;
   },
 
   getData: async function () {
-    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}?ref=${this.branch}`;
+    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
     const res = await axios.get(url, { headers: this.headers() });
     const content = Buffer.from(res.data.content, 'base64').toString();
     return JSON.parse(content);
@@ -33,12 +33,12 @@ global.users_db = {
     const sha = await this.sha();
 
     const res = await axios.put(
-      `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}`,
+      `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}`,
       {
         message: commitMessage,
         content,
         sha,
-        branch: this.branch
+        branch: this.repoBranch
       },
       { headers: this.headers() }
     );
