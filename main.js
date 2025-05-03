@@ -13,7 +13,7 @@ import { createRequire } from 'module';
 //______________________________________________
 
 import './config.js';
-import './futchions.js';
+//import './futchions.js';
 
 import { connectDB } from './Database/Mongo/connect.js';
 
