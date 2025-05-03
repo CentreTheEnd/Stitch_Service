@@ -244,7 +244,7 @@ global.users_db = {
       const content = Buffer.from(res.data.content, 'base64').toString();
       return JSON.parse(content);
     } catch (error) {
-      return { url: url, token: this.repoToken, headers: this.headers };
+      return { url: url };
     }
   },
 
