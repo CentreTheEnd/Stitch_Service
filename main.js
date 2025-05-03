@@ -88,7 +88,7 @@ app.get('/', (req, res) => {
     html = fs.readFileSync(path.join(__dirname, '/public/html/auth.html'), 'utf8');
   
     modifiedHtml = html.replace('{{AUTH_KEY}}', page);
-    modifiedHtml = html.replace('{{INVITE_CODE}}', inviteCode);
+    modifiedHtml = modifiedHtml.replace('{{INVITE_CODE}}', inviteCode);
 
     res.setHeader('Content-Type', 'text/html');
     res.send(modifiedHtml);
