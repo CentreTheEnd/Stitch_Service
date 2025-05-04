@@ -219,19 +219,31 @@ global.discordUrl = config.auth.discord.oauth2;
 
 //______________________________________________
 
-global.users_db = {
+global.db = {
+  data: {
   repoOwner: global.github.owner,
   repoName: global.github.repo,
   repoPath: global.github.database,
   repoToken: global.github.token,
   repoBranch: global.github.branch || 'main',
 
+  apikey: {
+  first: global.setting.apiKey.first,
+  medium: global.setting.apiKey.medium,
+  end: global.setting.apiKey.end,
+  },
+
+  tokenKey: global.setting.tokenKey,
+
+  emailKey: global.setting.mailKey,
+
+  github: {
 
   sha: async function () {
-    const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
+    const url = `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}?ref=${this.data.repoBranch}`;
     const res = await axios.get(url, {
     headers: {
-      Authorization: `Bearer ${this.repoToken}`,
+      Authorization: `Bearer ${this.data.repoToken}`,
       Accept: 'application/vnd.github+json',
     }, 
     });
@@ -239,10 +251,10 @@ global.users_db = {
   },
 
   getData: async function () {
-      const url = `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}?ref=${this.repoBranch}`;
+      const url = `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}?ref=${this.data.repoBranch}`;
       const res = await axios.get(url, { 
       headers: {
-      Authorization: `Bearer ${this.repoToken}`,
+      Authorization: `Bearer ${this.data.repoToken}`,
       Accept: 'application/vnd.github+json',
     }, 
     });
@@ -251,29 +263,39 @@ global.users_db = {
   },
 
   updateData: async function (users, commitMessage = 'update') {
+
     const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    const sha = await this.sha();
+    const sha = await this.data.github.sha();
+
     const res = await axios.put(
-      `https://api.github.com/repos/${this.repoOwner}/${this.repoName}/contents/${this.repoPath}`,
+      `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}`,
       {
         message: commitMessage,
         content,
         sha,
-        branch: this.repoBranch
+        branch: this.data.repoBranch
       },
       { 
     headers: {
-      Authorization: `Bearer ${this.repoToken}`,
+      Authorization: `Bearer ${this.data.repoToken}`,
       Accept: 'application/vnd.github+json',
       }, 
       });
-    
+
     return res.data;
+  }
+
+  }
+
   },
 
+  users: {
+
   getUsers: async function () {
-    const users = await this.getData();
+    const users = await this.data.github.getData();
     return users;
+  }
+
   }
 };
 
