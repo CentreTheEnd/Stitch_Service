@@ -221,83 +221,85 @@ global.discordUrl = config.auth.discord.oauth2;
 
 global.db = {
   data: {
-  repoOwner: global.github.owner,
-  repoName: global.github.repo,
-  repoPath: global.github.database,
-  repoToken: global.github.token,
-  repoBranch: global.github.branch || 'main',
+    repoOwner: global.github.owner,
+    repoName: global.github.repo,
+    repoPath: global.github.database,
+    repoToken: global.github.token,
+    repoBranch: global.github.branch || 'main',
 
-  apikey: {
-  first: global.setting.apiKey.first,
-  medium: global.setting.apiKey.medium,
-  end: global.setting.apiKey.end,
-  },
+    apikey: {
+      first: global.setting.apiKey.first,
+      medium: global.setting.apiKey.medium,
+      end: global.setting.apiKey.end,
+    },
 
-  tokenKey: global.setting.tokenKey,
+    tokenKey: global.setting.tokenKey,
+    emailKey: global.setting.mailKey,
 
-  emailKey: global.setting.mailKey,
+    github: {
 
-  github: {
-
-  sha: async function () {
-    const url = `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}?ref=${this.data.repoBranch}`;
-    const res = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${this.data.repoToken}`,
-      Accept: 'application/vnd.github+json',
-    }, 
-    });
-    return res.data.sha;
-  },
-
-  getData: async function () {
-      const url = `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}?ref=${this.data.repoBranch}`;
-      const res = await axios.get(url, { 
-      headers: {
-      Authorization: `Bearer ${this.data.repoToken}`,
-      Accept: 'application/vnd.github+json',
-    }, 
-    });
-      const content = Buffer.from(res.data.content, 'base64').toString();
-      return JSON.parse(content);
-  },
-
-  updateData: async function (users, commitMessage = 'update') {
-
-    const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    const sha = await this.data.github.sha();
-
-    const res = await axios.put(
-      `https://api.github.com/repos/${this.data.repoOwner}/${this.data.repoName}/contents/${this.data.repoPath}`,
-      {
-        message: commitMessage,
-        content,
-        sha,
-        branch: this.data.repoBranch
+      sha: async function () {
+        const data = global.db.data;
+        const url = `https://api.github.com/repos/${data.repoOwner}/${data.repoName}/contents/${data.repoPath}?ref=${data.repoBranch}`;
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${data.repoToken}`,
+            Accept: 'application/vnd.github+json',
+          },
+        });
+        return res.data.sha;
       },
-      { 
-    headers: {
-      Authorization: `Bearer ${this.data.repoToken}`,
-      Accept: 'application/vnd.github+json',
-      }, 
-      });
 
-    return res.data;
-  }
+      getData: async function () {
+        const data = global.db.data;
+        const url = `https://api.github.com/repos/${data.repoOwner}/${data.repoName}/contents/${data.repoPath}?ref=${data.repoBranch}`;
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${data.repoToken}`,
+            Accept: 'application/vnd.github+json',
+          },
+        });
+        const content = Buffer.from(res.data.content, 'base64').toString();
+        return JSON.parse(content);
+      },
 
-  }
+      updateData: async function (users, commitMessage = 'update') {
+        const data = global.db.data;
+        const content = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+        const sha = await global.db.data.github.sha();
+
+        const res = await axios.put(
+          `https://api.github.com/repos/${data.repoOwner}/${data.repoName}/contents/${data.repoPath}`,
+          {
+            message: commitMessage,
+            content,
+            sha,
+            branch: data.repoBranch,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${data.repoToken}`,
+              Accept: 'application/vnd.github+json',
+            },
+          }
+        );
+
+        return res.data;
+      },
+    },
 
   },
 
   users: {
 
-  getUsers: async function () {
-    const users = await this.data.github.getData();
-    return users;
-  }
+    getUsers: async function () {
+      const users = await global.db.data.github.getData();
+      return users;
+    }
 
   }
 };
+
 
 //______________________________________________
 
