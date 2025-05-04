@@ -7,7 +7,7 @@ router.get('/users', async (req, res) => {
   
   try {
     
-const users = await global.users_db.getData();
+const users = await global.db.users.getUsers();
   
     res.status(200).json({
       success: true,
