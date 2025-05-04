@@ -1,4 +1,4 @@
-/*
+
 import express from 'express';
 
 const router = express.Router();
@@ -19,4 +19,4 @@ const users = await global.users_db.getData();
 });
 
 export default router;
-*/
+
