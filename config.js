@@ -222,7 +222,9 @@ global.discordUrl = config.auth.discord.oauth2;
 //______________________________________________
 
 global.db = {
+
   data: {
+
     repoOwner: global.github.owner,
     repoName: global.github.repo,
     repoPath: global.github.database,
@@ -289,7 +291,6 @@ global.db = {
         return res.data;
       },
     },
-
   },
 
   users: {
@@ -299,26 +300,91 @@ global.db = {
       return users;
     },
 
-    generateToken: function (payload) {
-  const secret = global.db.data.tokenKey || 'default_secret';
-  return jwt.sign(payload, secret); 
-    },
-
     verifyToken: function (token) {
-  const secret = global.db.data.tokenKey || 'default_secret';
-  try {
-    return jwt.verify(token, secret);
-  } catch (err) {
-    return null; 
-  }
+      const secret = global.db.data.tokenKey || 'default_secret';
+      try {
+        return jwt.verify(token, secret);
+      } catch (err) {
+        return null;
+      }
     },
 
-     decodeToken: function (token) {
-  return jwt.decode(token); 
-    }
+    decodeToken: function (token) {
+      return jwt.decode(token);
+    },
+  },
+  
+  genrate: {
+  
+  APIKey: function (email, id) {
+      const { first, medium, end } = global.db.data.apikey;
+      let apiKey;
+      let isUnique = false;
 
+      while (!isUnique) {
+        const randomNumbers = crypto.randomInt(10000, 99999);
+        const randomHex = crypto.randomBytes(6).toString("hex");
+        const combined = email + medium + randomHex + id + end;
+        const md5Hash = crypto.createHash("md5").update(combined, "utf-8").digest("hex");
+        const reversedHash = md5Hash.split("").reverse().join("");
+        apiKey = `${first}-${randomNumbers}-${reversedHash}`;
+        if (!global.db.checkExistingAPIKey(apiKey)) {
+          isUnique = true;
+        }
+      }
+
+      global.db.generatedAPIKeys.add(apiKey);
+      return apiKey;
+  },
+
+  Token: function (payload) {
+      const secret = global.db.data.tokenKey || 'default_secret';
+      let token;
+      let isUnique = false;
+
+      while (!isUnique) {
+        token = jwt.sign(payload, secret);
+        if (!global.db.checkExistingToken(token)) {
+          isUnique = true;
+        }
+      }
+
+      global.db.generatedTokens.add(token);
+      return token;
+  },
+  
+  Cookies: function (sessionId) {
+    return {
+      'Set-Cookie': `sessionId=${sessionId}; HttpOnly; Path=/; SameSite=Strict`,
+    };
+  },
+  
+  Session: function (number = 16) {
+    const sessionId = crypto.randomBytes(number).toString('hex');
+    return sessionId;
+  },
+  
+  UUID: function () {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.randomBytes(1)[0] & 15 >> c / 4).toString(16)
+    );
   }
+  
+  },
+
+  checkExistingAPIKey: function (apiKey) {
+      return global.db.generatedAPIKeys.has(apiKey);
+    },
+
+  checkExistingToken: function (token) {
+      return global.db.generatedTokens.has(token);
+    },
+
+  generatedAPIKeys: new Set(),
+  generatedTokens: new Set()
+  
 };
+
 
 
 //______________________________________________
