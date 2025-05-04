@@ -2,6 +2,8 @@ import axios from 'axios';
 import fetch from "node-fetch";
 import * as cheerio from "cheerio";
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+
 
 import {watchFile, unwatchFile} from 'fs';
 import {fileURLToPath} from 'url';
@@ -295,6 +297,24 @@ global.db = {
     getUsers: async function () {
       const users = await global.db.data.github.getData();
       return users;
+    },
+
+    generateToken: function (payload) {
+  const secret = global.db.data.tokenKey || 'default_secret';
+  return jwt.sign(payload, secret); 
+    },
+
+    verifyToken: function (token) {
+  const secret = global.db.data.tokenKey || 'default_secret';
+  try {
+    return jwt.verify(token, secret);
+  } catch (err) {
+    return null; 
+  }
+    },
+
+     decodeToken: function (token) {
+  return jwt.decode(token); 
     }
 
   }
