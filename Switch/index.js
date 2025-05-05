@@ -6,11 +6,16 @@ import syntaxError from 'syntax-error';
 import { format } from 'util';
 import { createRequire } from 'module';
 import os from 'os';
+import multer from 'multer';
+import { fileTypeFromBuffer } from 'file-type';
+
 import { User } from '../Database/Mongo/models.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(__dirname);
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 const apiRoutes = [
     {
@@ -414,7 +419,33 @@ app.get('/api/v3/check', (req, res) => {
 
 */
 
- app.get('/api/v3/shorten', async (req, res) => {
+
+app.post('/api/v3/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ status: false, error: 'No file provided' });
+    }
+
+    const buffer = req.file.buffer;
+    const { name, url, size, path } = await shortLinks.upload(buffer, req.file.originalname); 
+    
+    const links = await shortLinks.get();
+    links[name] = { name, url, size, path };
+    
+    await shortLinks.save(links);
+    
+    const link = `https://${req.get('host')}/api/v3/shorten/view/${url}`;
+    
+    const file = { name, url: link, size };
+    
+    res.status(200).json({ status: true, file: file });
+
+  } catch (err) {
+    res.status(500).json({ status: false, error: err.message });
+  }
+});
+
+app.get('/api/v3/shorten', async (req, res) => {
   const { url } = req.query; 
   
   if (!url) return res.status(400).json({ status: false, error: 'Missing URL' });
@@ -427,7 +458,7 @@ app.get('/api/v3/check', (req, res) => {
     
     await shortLinks.save(links);
     
-    res.status(200).json({ status: true, url: `https://${req.get('host')}/api/v3/shorten/file/${code}` });
+    res.status(200).json({ status: true, url: `https://${req.get('host')}/api/v3/shorten/view/${code}` });
     
     } catch (err) {
     console.error('Shorten error:', err.message);
@@ -435,20 +466,7 @@ app.get('/api/v3/check', (req, res) => {
   }
 });
 
-app.get('/api/v3/shorten/view/:code', async (req, res) => {
-  const { code } = req.params;
 
-  try {
-    const links = await shortLinks.get();
-    const url = links[code];
-    
-    if (!url) return res.status(404).json({ status: false, error: 'Link not found' });
-    res.redirect(url);
-  } catch (err) {
-    console.error('Redirect error:', err.message);
-    res.status(500).json({ status: false, error: 'Failed to redirect' });
-  }
-});
 
 app.get('/api/v3/shorten/file/:code', async (req, res) => {
   const { code } = req.params;
@@ -501,6 +519,28 @@ app.get('/api/v3/shorten/file/:code', async (req, res) => {
   }
 });
 
+
+
+app.get('/api/v3/shorten/delete/:code', async (req, res) => {
+  const { code } = req.params;
+
+  try {
+    const links = await shortLinks.get();
+
+    if (!links[code]) {
+      return res.status(404).json({ status: false, error: 'Link not found' });
+    }
+
+    delete links[code];
+    await shortLinks.save(links);
+
+    res.status(200).json({ status: true, message: 'Shortlink deleted' });
+  } catch (err) {
+    console.error('Delete error:', err.message);
+    res.status(500).json({ status: false, error: 'Failed to delete shortlink' });
+  }
+});
+
   
 
 const shortLinks = {
@@ -508,7 +548,49 @@ token: global.github.token,
 owner: 'CentreTheEnd',
 repo: 'Database-Service',
 path: 'Tools/shortlinks.json',
+storage: 'Storage',
 branch: 'main',
+
+upload: async function (buffer, name) {
+  try {
+  
+  const { ext, mime } = (await fileTypeFromBuffer(buffer)) || { ext: 'bin', mime: 'application/octet-stream' };
+  
+  const type = mime.split('/')[0];
+  
+  const fileName = name ? name : type + Math.random().toString(36).substring(8, 35) + '.' + ext;
+
+  const filePath = `${this.storage}/${type}/${fileName}`;
+  
+  const content = buffer.toString('base64');
+  
+  const response = await axios.put(
+      `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${filePath}`,
+      {
+        message: `Upload file: ${fileName}`,
+        content: content,
+        branch: this.branch
+      },
+      {
+        headers: {
+          'Authorization': `token ${this.token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      }
+  );
+  
+  const fileUrl = `https://raw.githubusercontent.com/${this.owner}/${this.repo}/${this.branch}/${filePath}`;
+  const fileSize = buffer.length;
+  
+  return { name: fileName, url: fileUrl, size: fileSize, path: filePath };
+  
+  } catch (error) {
+    console.error('Error uploading to GitHub:', error.message);
+    throw new Error(error.message);
+  }
+
+},
 
 save: async function (json) {
     const sha = await this.sha();
