@@ -449,7 +449,7 @@ app.get('/api/v3/shorten/view/:code', async (req, res) => {
   }
 });
 
-app.delete('/api/v3/shorten/delete/:code', async (req, res) => {
+app.get('/api/v3/shorten/delete/:code', async (req, res) => {
   const { code } = req.params;
 
   try {
