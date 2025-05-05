@@ -408,7 +408,107 @@ app.get('/api/v3/check', (req, res) => {
         return res.json({ isBot: false, message: 'Welcome pro.' });
     }
 });
+
+app.get('/api/v3/shorten/:url', async (req, res) => {
+  const url = req.params.url; 
+  
+  if (!url) return res.status(400).json({ status: false, error: 'Missing URL' });
+
+  try {
+    const links = await shortLinks.get();
+    const code = Math.random().toString(36).substring(2, 2 + 6) + '_' + Math.random().toString(10).substring(4, 8);
     
+    links[code] = url;
+    
+    await shortLinks.save(links);
+    
+    res.status(200).json({ status: true, url: `https://${req.get('host')}/api/v3/shorten/view/${code}` });
+    
+    } catch (err) {
+    console.error('Shorten error:', err.message);
+    res.status(500).json({ status: false, error: 'Failed to shorten URL' });
+  }
+});
+
+app.get('/api/v3/shorten/view/:code', async (req, res) => {
+  const code = req.params.code;
+
+  try {
+    const links = await shortLinks.get();
+    const url = links[code];
+    
+    if (!url) return res.status(404).json({ status: false, error: 'Link not found' });
+    res.redirect(url);
+  } catch (err) {
+    console.error('Redirect error:', err.message);
+    res.status(500).json({ status: false, error: 'Failed to redirect' });
+  }
+});
+    
+  
+
+const shortLinks = {
+token: global.github.token,
+owner: 'CentreTheEnd',
+repo: 'Database-Service',
+path: 'Tools/shortlinks.json',
+branch: 'main',
+
+save: async function (json) {
+    const sha = await this.sha();
+    const content = Buffer.from(JSON.stringify(json, null, 2)).toString('base64');
+    
+    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}`;
+
+    await axios.put(
+      url,
+      {
+        message: 'Update shortlinks',
+        content,
+        branch: this.branch,
+        sha
+      },
+      {
+        headers: {
+          Authorization: `token ${this.token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.github.v3+json'
+        }
+      }
+    );
+
+},
+
+get: async function () {
+      const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${data.repoPath}?ref=${this.branch}`;
+      try {
+      const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            Accept: 'application/vnd.github+json',
+          },
+        });
+      const content = Buffer.from(res.data.content, 'base64').toString();
+     return JSON.parse(content);
+     
+     } catch (err) {
+     console.error('Failed to fetch shortlinks:', err.message);
+      return {};
+    }
+},
+
+sha: async function () {
+    const url = `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.path}?ref=${this.branch}`;
+    const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            Accept: 'application/vnd.github+json',
+          },
+        });
+    return res.data.sha;
+}
+
+}
     
 }
 
