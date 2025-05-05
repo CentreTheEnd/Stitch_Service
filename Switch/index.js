@@ -449,6 +449,35 @@ app.get('/api/v3/shorten/view/:code', async (req, res) => {
   }
 });
 
+app.get('/api/v3/shorten/file/:code', async (req, res) => {
+  const { code } = req.params;
+  const viewMode = req.query.view === 'true';
+
+  try {
+    const links = await shortLinks.get();
+    const entry = links[code];
+    const url = typeof entry === 'string' ? entry : entry.url;
+
+    if (!url) return res.status(404).json({ status: false, error: 'Link not found' });
+
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+
+    const fileName = path.basename(new URL(url).pathname);
+    const contentType = response.headers['content-type'] || 'application/octet-stream';
+
+    res.setHeader('Content-Type', contentType);
+
+    if (!viewMode) {
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    }
+
+    res.send(Buffer.from(response.data));
+  } catch (err) {
+    console.error('Download/view error:', err.message);
+    res.status(500).json({ status: false, error: 'Failed to fetch content' });
+  }
+});
+
 app.get('/api/v3/shorten/delete/:code', async (req, res) => {
   const { code } = req.params;
 
