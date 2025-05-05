@@ -5,6 +5,7 @@ import fs from "fs/promises";
 import syntaxError from 'syntax-error';
 import { format } from 'util';
 import { createRequire } from 'module';
+import os from 'os';
 import { User } from '../Database/Mongo/models.js'
 
 const __filename = fileURLToPath(import.meta.url);
@@ -451,7 +452,6 @@ app.get('/api/v3/shorten/view/:code', async (req, res) => {
 
 app.get('/api/v3/shorten/file/:code', async (req, res) => {
   const { code } = req.params;
-  const viewMode = req.query.view === 'true';
 
   try {
     const links = await shortLinks.get();
@@ -460,41 +460,44 @@ app.get('/api/v3/shorten/file/:code', async (req, res) => {
 
     if (!url) return res.status(404).json({ status: false, error: 'Link not found' });
 
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    const axiosOptions = {
+      responseType: 'arraybuffer',
+      headers: {}
+    };
+
+    if (url.includes('github.com') || url.includes('raw.githubusercontent.com')) {
+      axiosOptions.headers = {
+        Authorization: `Bearer ${shortLinks.token}`,
+        Accept: 'application/vnd.github.v3.raw',
+      };
+    }
+
+    const response = await axios.get(url, axiosOptions);
 
     const fileName = path.basename(new URL(url).pathname);
+    const tempPath = path.join(os.tmpdir(), fileName);
     const contentType = response.headers['content-type'] || 'application/octet-stream';
 
-    res.setHeader('Content-Type', contentType);
+    await fs.writeFile(tempPath, response.data);
 
-    if (!viewMode) {
-      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    res.set('Content-Type', contentType);
+
+    const inlineTypes = ['image/', 'video/', 'audio/', 'text/'];
+
+    if (inlineTypes.some(t => contentType.startsWith(t))) {
+      res.set('Content-Disposition', `inline; filename="${fileName}"`);
+    } else {
+      res.set('Content-Disposition', `attachment; filename="${fileName}"`);
     }
 
-    res.send(Buffer.from(response.data));
+    res.sendFile(tempPath, err => {
+      fs.unlink(tempPath).catch(console.error); 
+      if (err) console.error('SendFile error:', err.message);
+    });
+
   } catch (err) {
-    console.error('Download/view error:', err.message);
-    res.status(500).json({ status: false, error: 'Failed to fetch content' });
-  }
-});
-
-app.get('/api/v3/shorten/delete/:code', async (req, res) => {
-  const { code } = req.params;
-
-  try {
-    const links = await shortLinks.get();
-
-    if (!links[code]) {
-      return res.status(404).json({ status: false, error: 'Link not found' });
-    }
-
-    delete links[code];
-    await shortLinks.save(links);
-
-    res.status(200).json({ status: true, message: 'Shortlink deleted' });
-  } catch (err) {
-    console.error('Delete error:', err.message);
-    res.status(500).json({ status: false, error: 'Failed to delete shortlink' });
+    console.error('SendFile error:', err.message);
+    res.status(500).json({ status: false, error: 'Failed to load file' });
   }
 });
 
