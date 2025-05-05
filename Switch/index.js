@@ -426,7 +426,7 @@ app.get('/api/v3/check', (req, res) => {
     
     await shortLinks.save(links);
     
-    res.status(200).json({ status: true, url: `https://${req.get('host')}/api/v3/shorten/view/${code}` });
+    res.status(200).json({ status: true, url: `https://${req.get('host')}/api/v3/shorten/file/${code}` });
     
     } catch (err) {
     console.error('Shorten error:', err.message);
