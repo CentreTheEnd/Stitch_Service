@@ -282,12 +282,16 @@ body {
 
 main {
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     max-width: 100%;
     margin: 0 auto;
     padding: 2rem;
 }
 
-.hero {
+.main-local {
     display: flex;
     width: 100%;
     max-width: 100%;
@@ -298,7 +302,7 @@ main {
     min-height: 80vh;
 }
 
-.hero-content {
+.main-local-content {
     display: flex;
     width: 100%;
     max-width: 100%;
