@@ -1,3 +1,4 @@
+/*
 const selectAuth = document.querySelector('meta[name="select-auth"]')?.getAttribute('content') || "register";
 
 function showSection(section) {
@@ -26,3 +27,5 @@ if (window.location.search.includes("page=")) {
           const newUrl = window.location.origin + window.location.pathname;
           window.history.replaceState({}, document.title, newUrl);
         }
+
+        */
