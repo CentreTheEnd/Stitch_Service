@@ -1,31 +1,23 @@
-/*
-const selectAuth = document.querySelector('meta[name="select-auth"]')?.getAttribute('content') || "register";
+function flipTo(mode) {
+  const card = document.getElementById('authCard');
+  const reset = document.getElementById('resetForm');
+  reset.style.display = 'none';
 
-function showSection(section) {
-  const sections = ['register', 'login', 'reset'];
-  const buttons = document.querySelectorAll('.auth-circle');
-
-  sections.forEach(id => {
-    const el = document.getElementById(`${id}-section`);
-    if (id === section) {
-      el.style.display = 'block';
-      setTimeout(() => el.classList.add('active'), 10);
-    } else {
-      el.classList.remove('active');
-      setTimeout(() => el.style.display = 'none', 400);
-    }
-  });
-
-  buttons.forEach((btn, index) => {
-    btn.classList.toggle('active', sections[index] === section);
-  });
+  if (mode === 'login') {
+    card.classList.remove('signup');
+    card.classList.add('login');
+  } else if (mode === 'signup') {
+    card.classList.remove('login');
+    card.classList.add('signup');
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => showSection(selectAuth));
+function showReset() {
+  document.getElementById('resetForm').style.display = 'block';
+  document.getElementById('authCard').style.display = 'none';
+}
 
-if (window.location.search.includes("page=")) {
-          const newUrl = window.location.origin + window.location.pathname;
-          window.history.replaceState({}, document.title, newUrl);
-        }
-
-        */
+function hideReset() {
+  document.getElementById('resetForm').style.display = 'none';
+  document.getElementById('authCard').style.display = 'block';
+}
