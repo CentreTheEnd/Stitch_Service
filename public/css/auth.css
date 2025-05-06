@@ -6,15 +6,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /*
   background: #f0f0f0;
   perspective: 1000px;
   position: relative;
   margin: 0;
+  */
 }
 
 .auth-card {
-  width: 320px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s ease-in-out;
@@ -76,7 +78,7 @@
 
 .socials i {
   font-size: 18px;
-  margin: 0 6px;
+  margin: 3px 6px;
   cursor: pointer;
 }
 
