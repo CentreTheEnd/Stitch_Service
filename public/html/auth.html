@@ -58,65 +58,57 @@
             
             <!-- Add Code Here -->
        <div class="auth-container">
-        <div class="auth-card">
-         <div class="auth-inner" id="authInner">
-
-      <!-- Login -->
-      <div class="auth-face front login">
-        <h2>Login</h2>
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
-        <a href="#" onclick="flipTo('reset')">Forgot password?</a>
-        <button>Login</button>
-        <div class="bottom">
-          <p>Don't have an account? <span onclick="flipTo('signup')">Sign up</span></p>
-          <div class="alt-login">
-            <span>or login by</span>
-            <div class="providers">
-              <i class="fab fa-google"></i>
-              <i class="fab fa-discord"></i>
-              <i class="fab fa-github"></i>
-            </div>
-          </div>
+  <div class="auth-card signup" id="authCard">
+    <!-- Front Face: Login -->
+    <div class="auth-face front">
+      <h2>Login</h2>
+      <input type="email" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <a href="#" onclick="showReset()">Forgot password?</a>
+      <button>Login</button>
+      <div class="bottom-text">
+        <p>Don't have an account? <span onclick="flipTo('signup')">Sign-up</span></p>
+        <p>__ or by __</p>
+        <div class="socials">
+          <i class="fab fa-google"></i>
+          <i class="fab fa-discord"></i>
+          <i class="fab fa-github"></i>
         </div>
-      </div>
-
-      <!-- Sign-up -->
-      <div class="auth-face back signup">
-        <h2>Sign Up</h2>
-        <input type="file" accept="image/*">
-        <input type="text" placeholder="Name & Username">
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
-        <input type="text" placeholder="Phone number">
-        <input type="text" placeholder="Invite code">
-        <button>Sign Up</button>
-        <div class="bottom">
-          <p>Already have an account? <span onclick="flipTo('login')">Login</span></p>
-          <div class="alt-login">
-            <span>or sign up by</span>
-            <div class="providers">
-              <i class="fab fa-google"></i>
-              <i class="fab fa-discord"></i>
-              <i class="fab fa-github"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reset password -->
-      <div class="auth-face reset">
-        <h2>Reset Password</h2>
-        <input type="email" placeholder="Your Email">
-        <button>Restart</button>
-        <div class="bottom">
-          <p>Remember your password? <span onclick="flipTo('login')">Login</span></p>
-        </div>
-      </div>
-
-         </div>
       </div>
     </div>
+
+    <!-- Back Face: Sign-up -->
+    <div class="auth-face back">
+      <h2>Sign-up</h2>
+      <input type="file" accept="image/*">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Username">
+      <input type="email" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <input type="text" placeholder="Phone Number">
+      <input type="text" placeholder="Invite Code">
+      <button>Sign-up</button>
+      <div class="bottom-text">
+        <p>Already have an account? <span onclick="flipTo('login')">Login</span></p>
+        <p>__ or by __</p>
+        <div class="socials">
+          <i class="fab fa-google"></i>
+          <i class="fab fa-discord"></i>
+          <i class="fab fa-github"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Form Separate -->
+  <div class="reset-form" id="resetForm">
+    <h2>Reset Password</h2>
+    <input type="email" placeholder="Email">
+    <button>Restart</button>
+    <p>Remembered? <span onclick="hideReset()">Go back</span></p>
+  </div>
+</div>
+
 
             <!-- End Code Here -->
                 
@@ -185,11 +177,6 @@
             offset: 120
         });
         
-        function flipTo(view) {
-        const inner = document.getElementById('authInner');
-        inner.className = 'auth-inner';
-        inner.classList.add(view);
-        }
 
     </script>
 </body>
