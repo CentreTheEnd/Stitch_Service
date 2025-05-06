@@ -186,9 +186,185 @@
     <!-- Add import File Css Here -->
     <script src="/js/auth.js"></script>
     
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Add Page Info Here -->
+    <title>Stitch Service | Video Downloader</title>
+    
+    <link rel="icon" href="/image/icon12.png">
+    
+    <meta name="title" content="Stitch Service | Video Downloader">
+    <meta name="description" content="Download all videos from all social media platforms using the link.">
+    <meta name="keywords" content="API key, image upload API, AI tools API, developer services, cloud services">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Add Tools Usege Page Here -->
+    <meta name="apikey" content="{{API_KEY}}">
+    <meta name="session" content="{{SESSION}}">
+    <meta name="cookies" content="{{COOKIES}}">
+    <meta name="uuid" content="{{UUID}}">
+    
+    <!-- Add import File Css Here -->
+    <link rel="stylesheet" href="/css/auth.css">
+    
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+   
+    
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="/" class="logo">
+                <img src="/image/icon12.png" alt="StitchApi Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="#card-content" class="active">Downloader Video</a>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/profile" class="btn secondary">Profile</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+            
+            <!-- Add Code Here -->
+       <div class="auth-container">
+        <div class="auth-card">
+         <div class="auth-inner" id="authInner">
+
+      <!-- Login -->
+      <div class="auth-face front login">
+        <h2>Login</h2>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <a href="#" onclick="flipTo('reset')">Forgot password?</a>
+        <button>Login</button>
+        <div class="bottom">
+          <p>Don't have an account? <span onclick="flipTo('signup')">Sign up</span></p>
+          <div class="alt-login">
+            <span>or login by</span>
+            <div class="providers">
+              <i class="fab fa-google"></i>
+              <i class="fab fa-discord"></i>
+              <i class="fab fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign-up -->
+      <div class="auth-face back signup">
+        <h2>Sign Up</h2>
+        <input type="file" accept="image/*">
+        <input type="text" placeholder="Name & Username">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <input type="text" placeholder="Phone number">
+        <input type="text" placeholder="Invite code">
+        <button>Sign Up</button>
+        <div class="bottom">
+          <p>Already have an account? <span onclick="flipTo('login')">Login</span></p>
+          <div class="alt-login">
+            <span>or sign up by</span>
+            <div class="providers">
+              <i class="fab fa-google"></i>
+              <i class="fab fa-discord"></i>
+              <i class="fab fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reset password -->
+      <div class="auth-face reset">
+        <h2>Reset Password</h2>
+        <input type="email" placeholder="Your Email">
+        <button>Restart</button>
+        <div class="bottom">
+          <p>Remember your password? <span onclick="flipTo('login')">Login</span></p>
+        </div>
+      </div>
+
+         </div>
+      </div>
+    </div>
+
+            <!-- End Code Here -->
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <img src="../image/icon13.png" alt="StitchApi Logo" class="logo-img">
+                </a>
+                <p>Your central hub for accessing powerful cloud services via API.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                   
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Tiktok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Stitch Api. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="menu-backdrop"></div>
+    
+    <!-- Add import File Css Here -->
+    <script src="/js/auth.js"></script>
+    
     <script src="/js/theme.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script>
 
         AOS.init({
@@ -196,8 +372,13 @@
             once: false,
             offset: 120
         });
+        
+        function flipTo(view) {
+        const inner = document.getElementById('authInner');
+        inner.className = 'auth-inner';
+        inner.classList.add(view);
+        }
 
     </script>
-
 </body>
 </html>
