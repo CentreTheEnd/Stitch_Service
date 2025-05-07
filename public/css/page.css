@@ -1,31 +1,124 @@
+/* -- Theme Variables -- */
+/* Defines the color scheme and other reusable variables for light and dark themes */
 
 :root {
+  /* الألوان الأساسية */
+  --primary-light: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #3b82f6;
+  --accent: #60a5fa;
 
+  /* النص والخلفيات العامة */
+  --text-light: #1f2937;
+  --text-dark: #f3f4f6;
+  --bg-light: #ffffff;
+  --bg-dark: #111827;
+
+  /* خلفيات البطاقات */
+  --card-bg-light: rgba(255, 255, 255, 0.95);
+  --card-bg-dark: rgba(17, 24, 39, 0.85);
+
+  /* حدود، زوايا، ظل */
+  --border-radius: 12px;
+  --box-shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --box-shadow-dark: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+  --card-border-light: rgba(0, 0, 0, 0.06);
+  --card-border-dark: rgba(255, 255, 255, 0.06);
+
+  /* زجاجي وتأثيرات */
+  --glass-blur: 12px;
+  --glass-border-light: 1px solid rgba(0, 0, 0, 0.15);
+  --glass-border-dark: 1px solid rgba(255, 255, 255, 0.15);
+
+  /* التمرير */
+  --scrollbar-thumb-light: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-dark: rgba(255, 255, 255, 0.2);
+  --scrollbar-track-light: rgba(0, 0, 0, 0.05);
+  --scrollbar-track-dark: rgba(255, 255, 255, 0.05);
+
+  /* الحقول */
+  --input-bg-light: rgba(0, 0, 0, 0.03);
+  --input-bg-dark: rgba(255, 255, 255, 0.05);
+  --input-border-light: rgba(0, 0, 0, 0.1);
+  --input-border-dark: rgba(255, 255, 255, 0.1);
+  --input-focus-border: var(--primary);
+
+  /* النصوص والروابط */
+  --link-color: #2563eb;
+  --link-hover-color: #1d4ed8;
+
+  /* مؤثرات */
+  --highlight-color: #2563eb;
+  --transition: cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+}
+
+
+[data-theme="light"] {
+  --text-color: var(--text-light);
+  --bg-color: var(--bg-light);
+  --card-bg: var(--card-bg-light);
+  --box-shadow: var(--box-shadow-light);
+  --card-border: var(--card-border-light);
+  --glass-border: var(--glass-border-light);
+  --scrollbar-thumb: var(--scrollbar-thumb-light);
+  --scrollbar-track: var(--scrollbar-track-light);
+  --input-bg: var(--input-bg-light);
+  --input-border: var(--input-border-light);
+}
+
+[data-theme="dark"] {
+  --text-color: var(--text-dark);
+  --bg-color: var(--bg-dark);
+  --card-bg: var(--card-bg-dark);
+  --box-shadow: var(--box-shadow-dark);
+  --card-border: var(--card-border-dark);
+  --glass-border: var(--glass-border-dark);
+  --scrollbar-thumb: var(--scrollbar-thumb-dark);
+  --scrollbar-track: var(--scrollbar-track-dark);
+  --input-bg: var(--input-bg-dark);
+  --input-border: var(--input-border-dark);
+}
+
+
+/* -- Base Styles -- */
+/* Resets and base styles for the entire page */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
+  color: var(--text-color);
+  background: var(--bg-color);
+  line-height: 1.5;
+  font-size: 1rem;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  transition: background var(--transition), color var(--transition);
   background-image: url('/images/background.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
 }
 
-header,
-main,
-footer {
-  background-color: rgba(255, 255, 255, 0.4); 
-  backdrop-filter: blur(4px); 
-}
 
 .header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: none;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #ddd;
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--box-shadow);
+  position: sticky; 
+  text-align: center;
+  top: 0;
+  z-index: 100;
 }
 
 .header-left,
