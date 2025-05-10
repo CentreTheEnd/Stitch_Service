@@ -78,14 +78,14 @@ const text = `أنت المعلم مجدي نخنوخ.
 
 
 const usedRouterKeys = {
-  tag: "ai chat",
+  tag: "chat",
+  model: "Egyptian_GPT-3.5",
   description: "ai chat language Arabic Egypt",
   query: { 
     q: "Question text",
-    user: "name user",
-    key: "key lock"
+    pompart: "text pompart"
   },
-  limited: 2,
+  limited: 5,
   status: true,
   price: "free"
 };
