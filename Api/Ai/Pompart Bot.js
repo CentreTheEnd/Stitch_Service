@@ -62,13 +62,14 @@ router.get('/Bot', async (req, res) => {
 });
 
 const usedRouterKeys = {
-  tag: "ai chat",
+  tag: "chat",
+  model: "pompart_GPT-3.5",
   description: "ai chat language Arabic Egypt",
   query: { 
     q: "Question text",
     pompart: "text pompart"
   },
-  limited: 2,
+  limited: 5,
   status: true,
   price: "free"
 };
