@@ -434,7 +434,7 @@ app.post('/api/v3/upload', upload.single('file'), async (req, res) => {
     
     await shortLinks.save(links);
     
-    const link = `https://${req.get('host')}/api/v3/upload/view/${name}`;
+    const link = `https://${req.get('host')}/api/v3/Converter/url/local/view/${name}`;
     
     const file = { name, url: link, size };
     
@@ -468,7 +468,7 @@ app.get('/api/v3/shorten', async (req, res) => {
 
 
 
-app.get('/api/v3/upload/view/:code', async (req, res) => {
+app.get('/api/v3/Converter/url/local/view/:code', async (req, res) => {
   const { code } = req.params;
 
   try {
@@ -521,7 +521,7 @@ app.get('/api/v3/upload/view/:code', async (req, res) => {
 
 
 
-app.get('/api/v3/shorten/delete/:code', async (req, res) => {
+app.get('/api/v3/Converter/url/local/delete/:code', async (req, res) => {
   const { code } = req.params;
 
   try {
