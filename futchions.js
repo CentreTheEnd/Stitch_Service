@@ -1,5 +1,19 @@
 import crypto from 'crypto';
+import path from "path";
+import axios from 'axios';
+import { fileURLToPath } from 'url';
+import fs from "fs/promises";
+import syntaxError from 'syntax-error';
+import { format } from 'util';
+import { createRequire } from 'module';
+import os from 'os';
+import multer from 'multer';
+import { fileTypeFromBuffer } from 'file-type';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 
 global.createdKeys = {
