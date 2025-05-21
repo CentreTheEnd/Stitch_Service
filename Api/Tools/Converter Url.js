@@ -29,7 +29,7 @@ router.post('/Converter/url/local', upload.single('file'), async (req, res) => {
     if (req.file && req.file.buffer) {
       // 1. ملف مرفوع مباشرًا
       fileBuffer = req.file.buffer;
-      fileName = req.file.originalname || || `file-${getFormattedTimestamp()}`;
+      fileName = req.file.originalname || `file-${getFormattedTimestamp()}`;
 
     } else if (req.body.file && typeof req.body.file === 'string') {
       const input = req.body.file.trim();
