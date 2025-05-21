@@ -16,7 +16,7 @@ import {fileTypeFromBuffer} from 'file-type';
 import moment from 'moment-timezone';
 
 import dotenv from "dotenv";
-import './futchions.js';
+// import './futchions.js';
 dotenv.config();
 
 //______________________________________________
@@ -397,4 +397,4 @@ global.moment = moment;
 
 //______________________________________________
 
-
+await import('./futchions.js');
