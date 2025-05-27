@@ -54,11 +54,8 @@ const writecream = {
       });
 
       const imageBuffer = Buffer.from(response.data);
-
-      const { ext } = await fileTypeFromBuffer(imageBuffer);
-      if (!ext) throw new Error('Could not determine file type');
-
-      const imageName = `image_writecream.${ext}`;
+      
+      const imageName = `image_writecream.png`;
 
       const form = new FormData();
       form.append('fileToUpload', imageBuffer, { filename: imageName });
