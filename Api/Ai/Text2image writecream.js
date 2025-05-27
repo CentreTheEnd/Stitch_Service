@@ -52,8 +52,8 @@ const writecream = {
         headers: writecream.headers,
         responseType: 'arraybuffer'
       });
-/*
-      const imageBuffer = Buffer.from(response.data);
+      
+      const imageBuffer = Buffer.from(response.data.data);
       
       const imageName = `image_writecream.png`;
 
@@ -72,8 +72,6 @@ const writecream = {
       if (!uploadLink.startsWith('https://')) throw new Error('File upload failed: ' + uploadLink);
 
       return uploadLink;
-*/
-      return response.data;
       
     } catch (error) {
       throw new Error('Image generation/upload error: ' + error.message);
