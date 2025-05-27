@@ -41,45 +41,36 @@ const writecream = {
     'Accept-Encoding': 'gzip, deflate, br, zstd',
     'Accept-Language': 'en,ar-EG;q=0.9,ar;q=0.8,en-US;q=0.7'
   },
-
   image: async (prompt, ratioIndex = 0) => {
     const ratio = writecream.ratios[ratioIndex] || "1:1";
     try {
       const imageUrl = `${writecream.url}?prompt=${encodeURIComponent(prompt)}&aspect_ratio=${ratio}&link=writecream.com`;
+      const response = await axios.get(imageUrl, { headers: writecream.headers });
 
-      const response = await axios.get(imageUrl, {
-        headers: writecream.headers,
-        responseType: 'arraybuffer'
-      });
+      const result = response.data;
 
-      const contentType = response.headers['content-type'] || '';
-      if (!contentType.startsWith('image/')) {
-        const errorText = Buffer.from(response.data).toString('utf-8');
-        throw new Error(`Invalid content-type (${contentType}): ${errorText}`);
+      if (!result || !result.image_link || result.status !== "success") {
+        throw new Error("API did not return a valid image link");
       }
 
-      const imageBuffer = Buffer.from(response.data);
-      const fileType = await fileTypeFromBuffer(imageBuffer);
+      const imageRes = await axios.get(result.image_link, { responseType: 'arraybuffer' });
+      const imageBuffer = imageRes.data;
 
-      if (!fileType) {
-        throw new Error('Failed to detect file type from image buffer');
-      }
+      const type = await fileTypeFromBuffer(imageBuffer);
+      const ext = type?.ext || 'jpg';
+      const imageName = `image_writecream.${ext}`;
 
-      const imageName = `image_writecream.${fileType.ext}`;
       const form = new FormData();
-      form.append('fileToUpload', imageBuffer, { filename: imageName });
+      form.append('fileToUpload', imageBuffer, imageName);
       form.append('reqtype', 'fileupload');
 
       const uploadRes = await fetch('https://catbox.moe/user/api.php', {
         method: 'POST',
-        body: form,
-        headers: form.getHeaders()
+        body: form
       });
-
       const uploadLink = await uploadRes.text();
-      if (!uploadLink.startsWith('https://')) {
-        throw new Error('File upload failed: ' + uploadLink);
-      }
+
+      if (!uploadLink.startsWith('https://')) throw new Error('File upload failed');
 
       return uploadLink;
 
@@ -102,7 +93,6 @@ router.get('/text2image/writecream', async (req, res) => {
         index,
         ratio: value
       }));
-
       return res.json({
         status: true,
         message: "Please provide a ratio index using &ratio=number",
