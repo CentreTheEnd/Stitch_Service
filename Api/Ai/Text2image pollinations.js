@@ -142,7 +142,7 @@ router.get('/text2image/pollinations', async (req, res) => {
     res.json({
       status: true,
       creator: "pollinations",
-      url: imageUrl,
+      data: imageUrl,
       prompt: q,
       model: pollinations.models[modelIndex].name
     });
