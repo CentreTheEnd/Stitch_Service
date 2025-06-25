@@ -135,6 +135,8 @@ const downloaderto = {
 
         const res = {
           title,
+          info,
+          thumbnail: info.image,
           image: info.image,
           video: download_url,
           audio: download_url
