@@ -67,6 +67,7 @@ async function tiktok(url) {
       result.likes = t.data.like || t.data.likes;
       result.author = clean(t.data.author);
       result.author_name = clean(t.data.author_name);
+      result.audio_url = t.data.links[3].a || ""
       result.thumbnail = t.data.cover;
       result.imagel = t.data.author_a;
       result.video = t.data.links[2].a || "";
