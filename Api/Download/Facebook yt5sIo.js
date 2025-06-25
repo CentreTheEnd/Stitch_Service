@@ -85,12 +85,12 @@ async function yt5sIo(url) {
               
               if (links.length === 0) throw new Error("Tidak ada video yang dapat diunduh.");
 
-                    return { thumb, video: links[0].link };
+                    return { thumb, video: links[0].link, audio_url: links[0].link };
                 } else if (/^(https?:\/\/)?(www\.)?(instagram\.com\/(p|reel)\/).+/i.test(url)) {
                     const video = $('a[title="Download Video"]').attr("href");
                     const thumb = $('img').attr("src");
                     if (!video || !thumb) throw new Error("Video tidak ditemukan.");
-                    return { thumb, video };
+                    return { thumb, video, audio_url: video};
                 } else {
                     throw new Error("URL tidak valid. Gunakan link Facebook atau Instagram.");
                 }
